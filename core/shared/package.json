@@ -1,7 +1,7 @@
 {
   "name": "@etotama/shared",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "lib/index.js",
   "license": "MIT",
   "dependencies": {
     "kefir": "^3.8.6",
