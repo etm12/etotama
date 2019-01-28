@@ -4,9 +4,12 @@
   "private": true,
   "dependencies": {
     "@etotama/shared": "^1.0.0",
+    "infestines": "^0.4.11",
     "karet": "^4.0.1",
     "karet.util": "^0.19.1",
     "kefir": "^3.8.6",
+    "kefir.partial.lenses": "^14.17.0",
+    "kefir.ramda": "^0.26.0",
     "partial.lenses": "^14.17.0",
     "ramda": "^0.26.1",
     "react": "^16.7.0",
