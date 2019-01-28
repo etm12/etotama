@@ -1,9 +1,40 @@
 import * as U from 'karet.util';
 
-const store = U.atom();
+//
+
+const initialState = {
+  canvas: {
+    width: 24,
+    height: 24,
+    scale: 16,
+  },
+  mouse: {
+    position: [0, 0],
+  },
+  palette: {
+    selected: null,
+    colors: [
+      '#f00',
+      '#ff0',
+      '#0f0',
+      '#0ff',
+      "#00f",
+    ],
+  },
+};
+
+//
+
+const store = U.atom(initialState);
 
 export default store;
 
 //
 
-store.log('store');
+U.thru(
+  store,
+  U.debounce(500),
+  U.on({
+    value: state => console.log('state updated => %o', state),
+  })
+).onEnd(() => {});
