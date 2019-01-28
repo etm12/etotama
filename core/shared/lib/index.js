@@ -1,8 +1,8 @@
 // @ts-check
 /// <reference path="./index.d.ts" />
+import * as K from 'kefir';
 import * as R from 'ramda';
 import * as L from 'partial.lenses';
-import * as K from 'kefir';
 
 // #region String parsing
 export const camelTokens = R.match(/(^[a-z]+|[A-Z][a-z]+)/g);
@@ -37,3 +37,16 @@ export const obsObjectL = L.lens(
   L.modify(L.keys, kebabCamel),
 );
 // #endregion
+
+// #region Canvas
+export function _pixelScaledDimensions (scale, obj) {
+  return L.modify(L.values, R.multiply(scale), obj);
+}
+
+export const pixelScaledDimensions = (scale, size) => K.combine(
+  [scale, size],
+  (m, x) => m * x,
+).log('pixelScaled');
+// #endregion
+
+export * from './image-data';
