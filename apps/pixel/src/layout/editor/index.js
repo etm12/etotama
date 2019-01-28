@@ -36,7 +36,7 @@ export default function Editor ({ canvas, mouse }) {
   //
 
   return (
-    <article className="app__editor editor">
+    <article className="app__editor editor layout layout--editor">
       <React.Fragment>
         {U.sink(U.parallel([
           updateMousePosition,
