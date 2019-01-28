@@ -1,1 +1,38 @@
-.editor {}
+@mixin absolute-top-left {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.editor {
+  border: dashed 1px #f00;
+  position: relative;
+}
+
+.editor__canvas {
+  border: dashed 1px #00f;
+}
+
+.canvas {
+  border: dashed 1px #0f0;
+  @include absolute-top-left;
+}
+
+.canvas__body {
+  border: dotted 1px #f00;
+}
+
+.grid {
+  @include absolute-top-left;
+  pointer-events: none;
+}
+
+.grid__body {
+  border: dashed 1px #00f;
+
+  // SVG
+  line {
+    stroke: #f00;
+    stroke-width: .5px;
+  }
+}
