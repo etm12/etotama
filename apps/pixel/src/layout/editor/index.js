@@ -24,10 +24,12 @@ export default function Editor ({ canvas, mouse }) {
 
   const takeEventsFrom = takeEvents(domRef);
 
+  const onMouseMove = takeEventsFrom('mousemove');
+
   //
 
   const updateMousePosition = U.thru(
-    takeEventsFrom('mousemove'),
+    onMouseMove,
     M.propListFor('pageX', 'pageY'),
     M.scalePositionWith(scale),
     U.set(U.view('position', mouse)),
@@ -36,18 +38,20 @@ export default function Editor ({ canvas, mouse }) {
   //
 
   return (
-    <article className="app__editor editor layout layout--editor">
-      <React.Fragment>
-        {U.sink(U.parallel([
-          updateMousePosition,
-        ]))}
-      </React.Fragment>
-      <Canvas domRef={domRef}
-              className="editor__canvas"
-              size={[width, height]}
+    <article className="layout layout--editor">
+      <div className="editor">
+        <React.Fragment>
+          {U.sink(U.parallel([
+            updateMousePosition,
+          ]))}
+        </React.Fragment>
+        <Canvas domRef={domRef}
+                className="editor__canvas"
+                size={[width, height]}
+                scale={scale} />
+        <Grid size={[width, height]}
               scale={scale} />
-      <Grid size={[width, height]}
-            scale={scale} />
+      </div>
     </article>
   );
 }

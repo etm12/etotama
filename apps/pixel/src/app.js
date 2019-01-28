@@ -9,7 +9,7 @@ import * as M from './meta';
  */
 export default function App ({ state }) {
   return (
-    <main className="app">
+    <main className="app layout--root">
       <Layout.Header />
 
       <Layout.Editor
