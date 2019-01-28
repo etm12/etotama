@@ -2,7 +2,7 @@ import * as React from 'karet';
 import * as U from 'karet.util';
 import * as R from 'kefir.ramda';
 
-export default function Grid ({ size, scale }) {
+export default function Grid ({ size, scale, style }) {
   const [width, height] = U.destructure(size);
 
   const scaledWidth = R.multiply(scale, width);
@@ -24,10 +24,7 @@ export default function Grid ({ size, scale }) {
   return (
     <div className="grid">
       <svg className="grid__body"
-           style={{
-             width: scaledWidth,
-             height: scaledHeight,
-           }}>
+           style={style}>
         {U.thru(
           R.range(0, R.inc(width)),
           R.map(i =>

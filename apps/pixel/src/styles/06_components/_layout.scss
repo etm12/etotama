@@ -13,4 +13,8 @@
   &.layout--header {
     grid-column-end: span 2;
   }
+
+  &.layout--editor {
+    position: relative;
+  }
 }

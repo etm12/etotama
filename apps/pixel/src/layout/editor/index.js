@@ -1,9 +1,13 @@
 import * as React from 'karet';
+import * as L from 'kefir.partial.lenses';
 import * as U from 'karet.util';
+import * as R from 'kefir.ramda';
+import { color } from 'd3-color';
 
 import Canvas from './canvas';
 import Grid from './grid';
 import * as M from './meta';
+import * as S from '@etotama/shared';
 
 //
 
@@ -18,38 +22,85 @@ const takeEvents = source => type => U.thru(
 /**
  * @param {Props} props
  */
-export default function Editor ({ canvas, mouse }) {
+export default function Editor ({ canvas, mouse, palette }) {
   const domRef = U.variable();
+  const domContext = U.mapValue(S.getContext, domRef);
+  const domOffset = U.mapValue(S.getBoundingRect, domRef);
   const { width, height, scale } = U.destructure(canvas);
+  const { colors, selected: selectedColor } = U.destructure(palette);
 
   const takeEventsFrom = takeEvents(domRef);
 
+  const onMouseDown = takeEventsFrom('mousedown');
   const onMouseMove = takeEventsFrom('mousemove');
 
-  //
+  const scaledSize = {
+    width: R.multiply(scale, width),
+    height: R.multiply(scale, height),
+  };
 
-  const updateMousePosition = U.thru(
+  const domOffsetValue = U.thru(
+    domOffset,
+    M.propListFor('left', 'top'),
+  );
+
+  const mousePixelPosition = U.thru(
     onMouseMove,
     M.propListFor('pageX', 'pageY'),
+    U.view(M.negateWithOffset(domOffsetValue)),
     M.scalePositionWith(scale),
-    U.set(U.view('position', mouse)),
   )
+
+  const clickedMousePixel = U.sampledBy(onMouseDown, mousePixelPosition);
+
+  const selectedAsColor = U.mapValue(R.compose(
+    L.modify(L.last, R.multiply(255)),
+    R.values,
+    color,
+  ), selectedColor);
+
+  const drawPixelOnClick = U.thru(
+    clickedMousePixel,
+    U.flatMapLatest(pos => U.combine(
+      [pos, selectedAsColor, domContext],
+      (p, c, ctx) => ({ pos: p, color: c, ctx }),
+    )),
+    U.skipDuplicates((prev, next) => R.equals(prev.pos, next.pos)),
+    U.on({
+      value: ({ pos, color: c, ctx }) => {
+        const imageData = new ImageData(
+          new Uint8ClampedArray(c),
+          1,
+        )
+
+        ctx.putImageData(imageData, pos[0], pos[1]);
+      }
+    })
+  );
+
+  // Side-effects
+
+  const updateMousePosition = U.set(U.view('position', mouse), mousePixelPosition);
 
   //
 
   return (
     <article className="layout layout--editor">
-      <div className="editor">
+      <div className="editor"
+           style={scaledSize}>
         <React.Fragment>
           {U.sink(U.parallel([
             updateMousePosition,
+            drawPixelOnClick,
           ]))}
         </React.Fragment>
         <Canvas domRef={domRef}
                 className="editor__canvas"
+                style={scaledSize}
                 size={[width, height]}
                 scale={scale} />
         <Grid size={[width, height]}
+              style={scaledSize}
               scale={scale} />
       </div>
     </article>
@@ -62,4 +113,5 @@ export default function Editor ({ canvas, mouse }) {
  * @typedef {object} Props
  * @prop {any} canvas The current editor state slice
  * @prop {any} mouse
+ * @prop {any} palette
  */

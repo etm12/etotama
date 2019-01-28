@@ -1,0 +1,28 @@
+$c-button-padding: .3rem;
+
+.component--palette {
+  border: solid 1px #f00;
+
+  .palette__color-list {
+    list-style: none;
+    padding: 0;
+    display: inline-flex;
+  }
+
+  .palette__color {
+    &--selected,
+    &:hover,
+    &:active,
+    &:focus {
+      transform: translateY(-4px);
+    }
+  }
+
+  .palette__color--selected {}
+
+  .palette__color-control {
+    border-width: 2px;
+    border-style: solid;
+    padding: $c-button-padding ($c-button-padding * 2);
+  }
+}

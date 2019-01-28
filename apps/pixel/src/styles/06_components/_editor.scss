@@ -5,20 +5,25 @@
 }
 
 .editor {
-  position: relative;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
 }
 
 .editor__canvas {
-  border: dashed 1px #00f;
+  // border: dashed 1px #00f;
 }
 
 .canvas {
-  border: dashed 1px #0f0;
+  // border: dashed 1px #0f0;
   @include absolute-top-left;
 }
 
 .canvas__body {
-  border: dotted 1px #f00;
+  // border: dotted 1px #f00;
+  image-rendering: pixelated;
+  image-rendering: optimizeSpeed;
 }
 
 .grid {
@@ -27,7 +32,7 @@
 }
 
 .grid__body {
-  border: dashed 1px #00f;
+  // border: dashed 1px #00f;
 
   // SVG
   line {

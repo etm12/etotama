@@ -12,7 +12,7 @@ const initialState = {
     position: [0, 0],
   },
   palette: {
-    selected: null,
+    selected: '#f00',
     colors: [
       '#f00',
       '#ff0',
