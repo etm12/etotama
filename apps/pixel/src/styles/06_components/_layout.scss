@@ -1,5 +1,5 @@
 .layout {
-  border: solid 1px #f00;
+  // border: solid 1px #f00;
 }
 
 .layout {
@@ -12,9 +12,15 @@
 
   &.layout--header {
     grid-column-end: span 2;
+    background-color: $gray-300;
   }
 
   &.layout--editor {
     position: relative;
+    background-color: $gray-100;
+  }
+
+  &.layout--sidebar {
+    background-color: $gray-300;
   }
 }

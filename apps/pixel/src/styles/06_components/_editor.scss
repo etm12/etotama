@@ -9,6 +9,7 @@
   left: 50%;
   top: 50%;
   transform: translateX(-50%) translateY(-50%);
+  background-color: $white;
 }
 
 .editor__canvas {
@@ -36,7 +37,12 @@
 
   // SVG
   line {
-    stroke: #f00;
+    stroke: rgba(0, 0, 0, .3);
     stroke-width: .5px;
+
+    &:first-child,
+    &:last-child {
+      stroke-width: 2px;
+    }
   }
 }
