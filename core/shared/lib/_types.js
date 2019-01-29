@@ -16,4 +16,10 @@ Type.Uint8ClampedArray = NullaryType(
   R.is(Uint8ClampedArray),
 );
 
+Type.ImageData = NullaryType(
+  'ImageData',
+  'ImageData',
+  R.is(ImageData),
+);
+
 export { Type };

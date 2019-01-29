@@ -1,8 +1,21 @@
 // @ts-check
 /// <reference path="./index.d.ts" />
-import * as K from 'kefir';
-import * as R from 'ramda';
 import * as L from 'partial.lenses';
+import * as R from 'ramda';
+import * as K from 'kefir';
+
+//
+
+// @ts-ignore
+const isObservable = x => x instanceof K.Observable;
+
+/**
+ * @param {any} x
+ * @return {K.Property<any, any>}
+ */
+const toObservable = x => (isObservable(x) ? x : K.constant(x));
+
+//
 
 // #region String parsing
 export const camelTokens = R.match(/(^[a-z]+|[A-Z][a-z]+)/g);
@@ -39,14 +52,20 @@ export const obsObjectL = L.lens(
 // #endregion
 
 // #region Canvas
-export function _pixelScaledDimensions (scale, obj) {
-  return L.modify(L.values, R.multiply(scale), obj);
+/**
+ * @param {HTMLCanvasElement} el
+ * @return {(DOMRect | ClientRect)}
+ */
+export function getBoundingRect (el) {
+  return el.getBoundingClientRect();
 }
-
-export const pixelScaledDimensions = (scale, size) => K.combine(
-  [scale, size],
-  (m, x) => m * x,
-).log('pixelScaled');
+/**
+ * @param {HTMLCanvasElement} el
+ * @return {CanvasRenderingContext2D}
+ */
+export function getContext (el) {
+  return el.getContext('2d');
+};
 // #endregion
 
 export * from './image-data';
