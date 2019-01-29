@@ -15,7 +15,9 @@ const isObservable = x => x instanceof K.Observable;
  */
 const toObservable = x => (isObservable(x) ? x : K.constant(x));
 
-//
+// #region Functions
+export const takeAllArgs = R.unapply(R.identity);
+// #endregion
 
 // #region String parsing
 export const camelTokens = R.match(/(^[a-z]+|[A-Z][a-z]+)/g);

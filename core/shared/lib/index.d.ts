@@ -1,3 +1,5 @@
+export function takeAllArgs(...xs: any[]): any[];
+
 export function camelTokens(camelString: string): string[];
 export function kebabTokens(kebabString: string): string[];
 
