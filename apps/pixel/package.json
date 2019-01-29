@@ -1,7 +1,7 @@
 {
   "name": "@etotama/pixel",
   "version": "0.1.0",
-  "private": true,
+  "license": "MIT",
   "dependencies": {
     "@etotama/shared": "^1.0.0",
     "d3-color": "^1.2.3",
