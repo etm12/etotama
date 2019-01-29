@@ -27,7 +27,7 @@ export default function Editor ({ canvas, mouse, palette }) {
   const domContext = U.mapValue(S.getContext, domRef);
   const domOffset = U.mapValue(S.getBoundingRect, domRef);
   const { width, height, scale } = U.destructure(canvas);
-  const { colors, selected: selectedColor } = U.destructure(palette);
+  const { selected: selectedColor } = U.destructure(palette);
 
   const takeEventsFrom = takeEvents(domRef);
 
@@ -67,13 +67,8 @@ export default function Editor ({ canvas, mouse, palette }) {
     )),
     U.skipDuplicates((prev, next) => R.equals(prev.pos, next.pos)),
     U.on({
-      value: ({ pos, color: c, ctx }) => {
-        const imageData = new ImageData(
-          new Uint8ClampedArray(c),
-          1,
-        )
-
-        ctx.putImageData(imageData, pos[0], pos[1]);
+      value: ({ pos: [x, y], color: c, ctx }) => {
+        ctx.putImageData(new ImageData(S.clampedArray(c), 1), x, y);
       }
     })
   );

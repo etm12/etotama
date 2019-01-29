@@ -21,7 +21,7 @@ export default function App ({ state }) {
 
       <Layout.Sidebar>
         <C.Palette palette={M.paletteFrom(state)} />
-        <pre><code>{U.stringify(state, null, 2)}</code></pre>
+        <pre className="component--debug"><code>{U.stringify(state, null, 2)}</code></pre>
       </Layout.Sidebar>
     </main>
   );

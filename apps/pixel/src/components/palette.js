@@ -1,9 +1,6 @@
 import * as React from 'karet';
 import * as U from 'karet.util';
 import * as R from 'kefir.ramda';
-import { color } from 'd3-color';
-
-import * as M from './meta';
 
 /**
  * @param {Props} props

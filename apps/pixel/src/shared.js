@@ -1,5 +1,4 @@
 // @ts-check
-import * as I from 'infestines';
 import * as R from 'kefir.ramda';
 
 /**
@@ -12,24 +11,6 @@ export const getCanvasContext = function getCanvasContext (canvas) {
 
 export const imageDataFrom = function imageDataFrom (sx, sy, data) {
   return new ImageData(data, sx, sy);
-}
-
-//
-
-/**
- * @param {Array<any>} data
- * @return {Uint8ClampedArray}
- */
-export const makeClampedArrayFrom = function makeClampedArrayFrom (data) {
-  return new Uint8ClampedArray(data);
-}
-
-/**
- * @param {number} size
- * @return {Uint8ClampedArray}
- */
-export const makeClampedArrayOf = function makeClampedArrayOf (size) {
-  return new Uint8ClampedArray(size);
 }
 
 // Basic arithmetic
