@@ -1,3 +1,7 @@
+/**
+ * @module Pixel
+ * @namespace App
+ */
 import * as React from 'karet';
 import ReactDOM from 'react-dom';
 import './index.css';

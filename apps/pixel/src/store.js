@@ -1,4 +1,17 @@
+/**
+ * @module Store
+ * @namespace App.Pixel
+ */
 import * as U from 'karet.util';
+import * as L from 'partial.lenses';
+import palettes from './assets/palettes';
+
+const colors = L.get(
+  [L.split('\n'), L.array(L.inverse(L.dropPrefix('#')))],
+  palettes.get('endesga-32.hex'),
+);
+
+
 
 //
 
@@ -12,14 +25,8 @@ const initialState = {
     position: [0, 0],
   },
   palette: {
-    selected: '#f00',
-    colors: [
-      '#f00',
-      '#ff0',
-      '#0f0',
-      '#0ff',
-      "#00f",
-    ],
+    selected: '#c28569',
+    colors,
   },
   imageData: [],
 };

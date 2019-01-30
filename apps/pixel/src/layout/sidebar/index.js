@@ -1,3 +1,7 @@
+/**
+ * @module Sidebar
+ * @namespace Layout
+ */
 import * as React from 'karet';
 
 /**

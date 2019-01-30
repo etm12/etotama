@@ -1,3 +1,7 @@
+/**
+ * @module Editor
+ * @namespace Layout
+ */
 import * as React from 'karet';
 import * as L from 'kefir.partial.lenses';
 import * as U from 'karet.util';
@@ -26,6 +30,7 @@ export default function Editor ({ canvas, mouse, palette, imageData }) {
 
   const { width, height, scale } = U.destructure(canvas);
   const { selected: selectedColor } = U.destructure(palette);
+
   const { onMouseDown, onMouseMove } = getMouseEvents(domRef);
 
   const scaledSize = {

@@ -1,3 +1,7 @@
+/**
+ * @module Canvas
+ * @namespace Editor
+ */
 // @ts-check
 import * as React from 'karet';
 import * as U from 'karet.util';

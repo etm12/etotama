@@ -1,3 +1,7 @@
+/**
+ * @module _Reactive
+ * @namespace Editor
+ */
 // eslint-disable-next-line
 import * as K from 'kefir';
 import * as U from 'karet.util';
@@ -25,6 +29,12 @@ export function getMouseEvents (
     onMouseDown,
     onMouseMove,
   }
+};
+
+export function getKeyboardEvents (
+  eventSource,
+) {
+  return {};
 };
 
 /**

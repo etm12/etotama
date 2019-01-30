@@ -1,3 +1,7 @@
+/**
+ * @module Grid
+ * @namespace Editor
+ */
 import * as React from 'karet';
 import * as U from 'karet.util';
 import * as R from 'kefir.ramda';
