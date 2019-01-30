@@ -17,8 +17,6 @@ const _EffPool = K.pool();
 
 export const EffPool = U.toProperty(_EffPool);
 
-EffPool.log('effpool');
-
 export const addEff = obs => _EffPool.plug(obs);
 export const removeEff = obs => _EffPool.unplug(obs);
 

@@ -4,7 +4,6 @@
  */
 import * as React from 'karet';
 import * as U from 'karet.util';
-import * as L from 'kefir.partial.lenses';
 
 import * as Layout from './layout';
 import * as C from './components';
@@ -23,29 +22,12 @@ export default function App ({ state }) {
 
   //
 
-  EffPool.log('EffPool');
-
-  const effs = U.parallel([
-    U.fromEvents(document, 'keydown', Command.KeyDown),
-    U.fromEvents(document, 'keyup', Command.KeyUp),
-    U.thru(
-      U.interval(1000, 123),
-      U.takeFirst(10),
-    ),
-  ]);
-
-  const dispatchEffs = U.thru(
-    effs,
-    U.on({ value: pushEffect }),
-  );
-
-  const effsToMonitor = takeEffects(Command.KeyDown);
-
-  effsToMonitor.log('effs to monitor');
-
   return (
     <main className="app layout layout--root">
-      {U.sink(dispatchEffs)}
+      {U.sink(U.thru(
+        EffPool,
+        U.show,
+      ))}
 
       <Layout.Header />
 

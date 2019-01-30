@@ -1,7 +1,6 @@
 import * as React from 'karet';
 import * as U from 'karet.util';
 import * as R from 'kefir.ramda';
-import * as L from 'kefir.partial.lenses';
 import { color } from 'd3-color';
 
 /**
@@ -16,7 +15,6 @@ export default function Palette ({ palette }) {
         {U.thru(
           colors,
           U.mapValue(R.map(color)),
-          U.show,
           U.mapElems((color, i) =>
             <li key={i}
                 className={U.cns(
