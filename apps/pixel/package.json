@@ -6,6 +6,7 @@
     "@etotama/karet.util": "^1.0.0",
     "@etotama/shared": "^1.0.0",
     "d3-color": "^1.2.3",
+    "daggy": "^1.3.0",
     "infestines": "^0.4.11",
     "karet": "^4.0.1",
     "karet.util": "^0.19.1",
