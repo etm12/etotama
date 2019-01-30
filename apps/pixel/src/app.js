@@ -7,7 +7,7 @@ import * as U from 'karet.util';
 
 import * as Layout from './layout';
 import * as C from './components';
-import { pushEffect, takeEffects, EffPool, addEff } from './_effects';
+import { EffPool, addEff } from './_effects';
 import Command from './_commands';
 
 /**
