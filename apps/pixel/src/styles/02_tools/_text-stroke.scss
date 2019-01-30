@@ -1,0 +1,10 @@
+@mixin text-stroke ($stroke-width: 1px, $stroke-color: #000) {
+  $_neg: -1 * $stroke-width;
+  $_pos: 1 * $stroke-width;
+
+  text-shadow:
+    $_neg $_neg $stroke-color,
+    $_neg $_pos $stroke-color,
+    $_pos $_neg $stroke-color,
+    $_pos $_pos $stroke-color;
+}

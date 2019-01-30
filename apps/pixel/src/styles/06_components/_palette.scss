@@ -1,12 +1,13 @@
 $c-button-padding: .3rem;
 
 .component--palette {
-  border: solid 1px #f00;
+  // border: solid 1px #f00;
 
   .palette__color-list {
     list-style: none;
     padding: 0;
-    display: inline-flex;
+    display: flex;
+    flex-wrap: wrap;
   }
 
   .palette__color {
@@ -21,8 +22,11 @@ $c-button-padding: .3rem;
   .palette__color--selected {}
 
   .palette__color-control {
+    margin: 1px;
+    text-indent: -9999px;
     border-width: 2px;
     border-style: solid;
     padding: $c-button-padding ($c-button-padding * 2);
+    width: 1rem;
   }
 }

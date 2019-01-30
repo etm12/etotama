@@ -1,0 +1,8 @@
+$rem-base-size: 16px; // font-size of html element in pixels
+/// Remify
+/// Convert px to rem units
+///
+/// @param {Number} value - value in px to be converted to rem units.
+@function remify($value) {
+  @return $value / $rem-base-size + 0rem; // stylelint-disable-line length-zero-no-unit
+}

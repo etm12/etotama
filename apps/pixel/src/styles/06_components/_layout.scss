@@ -7,7 +7,12 @@
     display: grid;
     grid-template-rows: 3rem auto;
     grid-template-columns: auto 20rem;
-    height: 100vh;
+
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
   }
 
   &.layout--header {
@@ -22,5 +27,7 @@
 
   &.layout--sidebar {
     background-color: $gray-300;
+    padding: 0 1rem;
+    overflow-y: scroll;
   }
 }
