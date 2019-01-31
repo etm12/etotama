@@ -1,5 +1,12 @@
+$menubar-primary-color: $gray-700;
+$menubar-text-color: $menubar-primary-color;
+
+$menuitem-text-color: $menubar-text-color;
+$menuitem-hover-text-color: $blue;
+
 .#{$ui-prefix}--menubar {
-  border: solid 1px #f00;
+  // border: solid 1px #f00;
+  color: $gray-700;
   font-family: $font-family-monospace;
   font-size: $menubar-font-size;
   font-style: italic;
@@ -13,7 +20,14 @@
 }
 
 .menuitem {
-  border: solid 1px #f00;
+  // border: solid 1px #f00;
   margin-left: remify(4px);
   padding: .5rem 1rem;
+  border-top: solid 4px transparent;
+  border-bottom: solid 4px transparent;
+
+  &:hover {
+    color: $menuitem-hover-text-color;
+    border-bottom-color: $gray-700;
+  }
 }

@@ -1,10 +1,12 @@
+$header-item-spacing: 1.5rem;
+$header-font-family: $font-family-monospace;
+
 .#{$layout-prefix}--header {
-  border: solid 1px #f00;
   display: flex;
   align-items: center;
 
   .#{$ui-prefix}--menubar {
-    margin-left: 1.5rem;
+    margin-left: $header-item-spacing;
   }
 }
 
@@ -17,7 +19,7 @@
 }
 
 .header__brand__title {
-  font-family: $font-family-monospace;
+  font-family: $header-font-family;
   font-style: italic;
   padding-left: 100px;
   z-index: 1;
