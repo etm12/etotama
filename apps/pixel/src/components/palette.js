@@ -1,7 +1,7 @@
 import * as React from 'karet';
 import * as U from 'karet.util';
 import * as R from 'kefir.ramda';
-import { color } from 'd3-color';
+import { color as makeColor } from 'd3-color';
 
 /**
  * @param {Props} props
@@ -14,23 +14,27 @@ export default function Palette ({ palette }) {
       <ul className="palette__color-list">
         {U.thru(
           colors,
-          U.mapValue(R.map(color)),
-          U.mapElems((color, i) =>
-            <li key={i}
-                className={U.cns(
-                  'palette__color',
-                  U.when(R.equals(color, selected), 'palette__color--selected'),
-                )}>
-              <button onClick={U.actions(() => selected.set(color.get().toString()))}
-                      className="palette__color-control"
-                      style={{
-                        borderColor: color,
-                        backgroundColor: color,
-                        boxShadow: U.when(R.equals(color, selected), U.string`0 4px 0 ${color}`),
-                      }}>
-                {U.stringify(color)}
-              </button>
-            </li>)
+          U.mapElems((color, i) => {
+            const _color = color.get();
+            const rgb = makeColor(_color);
+            return (
+              <li key={i}
+                  className={U.cns(
+                    'palette__color',
+                    U.when(R.equals(color, selected), 'palette__color--selected'),
+                  )}>
+                <button onClick={() => selected.set(_color)}
+                        className="palette__color-control"
+                        style={{
+                          borderColor: rgb.darker(1),
+                          backgroundColor: color,
+                          boxShadow: U.when(R.equals(color, selected), U.string`0 4px 0 ${rgb.darker(1)}`),
+                        }}>
+                  {U.stringify(color)}
+                </button>
+              </li>
+            );
+          })
         )}
       </ul>
     </div>
