@@ -1,3 +1,13 @@
+.#{$layout-prefix}--header {
+  border: solid 1px #f00;
+  display: flex;
+  align-items: center;
+
+  .#{$ui-prefix}--menubar {
+    margin-left: 1.5rem;
+  }
+}
+
 .header__brand {
   margin: 0;
   height: 100%;

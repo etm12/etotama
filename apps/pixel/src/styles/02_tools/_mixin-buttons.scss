@@ -1,0 +1,15 @@
+@mixin button ($color: $blue, $color-inverse: $white) {
+  // padding: $button-padding;
+  background-color: $color-inverse;
+  height: $button-height;
+  border-width: $button-border-width;
+  border-style: $button-border-style;
+  border-color: $color;
+  color: $color;
+  cursor: pointer;
+
+  &:hover {
+    color: $color-inverse;
+    background-color: $color;
+  }
+}

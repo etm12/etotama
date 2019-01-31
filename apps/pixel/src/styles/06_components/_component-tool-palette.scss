@@ -1,0 +1,19 @@
+.component--tool-palette {
+  // border: solid 1px #f00;
+  padding: 0;
+}
+
+.tool-palette__list {
+  @include horizontal-ul;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: remify(4px);
+}
+
+.tool-palette__button,
+.tool-palette-button__target {
+  @include button;
+  display: block;
+  width: 100%;
+}

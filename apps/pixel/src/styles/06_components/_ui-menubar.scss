@@ -1,0 +1,19 @@
+.#{$ui-prefix}--menubar {
+  border: solid 1px #f00;
+  font-family: $font-family-monospace;
+  font-size: $menubar-font-size;
+  font-style: italic;
+  font-weight: 600;
+}
+
+.menubar__items {
+  @include horizontal-ul;
+  margin: 0;
+  display: inline-flex;
+}
+
+.menuitem {
+  border: solid 1px #f00;
+  margin-left: remify(4px);
+  padding: .5rem 1rem;
+}

@@ -1,0 +1,21 @@
+.sidebar-panel {
+  // border: dashed 1px #f00;
+  margin-top: 1rem;
+
+  & + & {
+    margin-top: 1rem;
+  }
+}
+
+.sidebar-panel__header {
+  font-family: $font-family-monospace;
+  font-style: italic;
+  font-weight: 700;
+  padding: .3rem 0;
+  border-bottom: solid remify(2px) $gray-500;
+}
+
+.sidebar-panel__body {
+  // border: solid 1px #00f;
+  padding: .3rem;
+}
