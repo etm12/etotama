@@ -9,5 +9,5 @@ ci-target: init target
 
 init:
 	npm ci ;\
-	node_modules/.bin/lerna bootstrap ;\
-	node_modules/.bin/lerna link
+	node_modules/.bin/lerna link ;\
+	node_modules/.bin/lerna bootstrap --hoist
