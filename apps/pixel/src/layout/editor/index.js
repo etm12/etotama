@@ -48,7 +48,7 @@ export default function Editor ({ canvas, mouse, palette, imageData }) {
     M.propListFor('pageX', 'pageY'),
     U.view(M.negateWithOffset(domOffsetValue)),
     M.scalePositionWith(scale),
-  )
+  );
 
   const clickedMousePixel = U.sampledBy(onMouseDown, mousePixelPosition);
 
@@ -107,26 +107,12 @@ export default function Editor ({ canvas, mouse, palette, imageData }) {
             drawPix,
           ]))}
         </React.Fragment>
-        <svg className="editor__guide"
-             width={scaledSize.width}
-             height="20">
-          <line x1="0" y1="50%"
-                x2="100%" y2="50%"
-                className="editor__guide--line" />
-          <g>
-            <rect x="43.75%" y="0" />
-            <text x="50%" y="50%"
-                  alignmentBaseline="middle"
-                  textAnchor="middle">
-              {U.string`${width} px`}
-            </text>
-          </g>
-        </svg>
         <Canvas domRef={domRef}
                 className="editor__canvas"
                 style={scaledSize}
                 size={[width, height]}
-                scale={scale} />
+                scale={scale}
+                mousePos={mousePixelPosition} />
         <Grid size={[width, height]}
               style={scaledSize}
               scale={scale} />
