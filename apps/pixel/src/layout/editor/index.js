@@ -13,6 +13,7 @@ import { getMouseEvents, initDomObservables } from './_reactive';
 import Canvas from './canvas';
 import Grid from './grid';
 import * as M from './_meta';
+import { COLOR_CHANNELS } from '../../constants';
 
 //
 
@@ -30,6 +31,8 @@ export default function Editor ({ canvas, mouse, palette, imageData }) {
 
   const { width, height, scale } = U.destructure(canvas);
   const { selected: selectedColor } = U.destructure(palette);
+
+  // imageData.log('imageData');
 
   const { onMouseDown, onMouseMove } = getMouseEvents(domRef);
 
@@ -55,38 +58,40 @@ export default function Editor ({ canvas, mouse, palette, imageData }) {
     color,
   ), selectedColor);
 
-  const uniquePixelContext = U.thru(
+  const onPixelClick = U.thru(
     clickedMousePixel,
-    U.flatMapLatest(pos => U.combine(
-      [pos, selectedAsColor, domContext],
-      (p, c, ctx) => ({ pos: p, color: c, ctx }),
-    )),
-    U.skipDuplicates((prev, next) => R.equals(prev.pos, next.pos)),
+    U.flatMapLatest(pos => U.combine([pos, selectedAsColor], (a, b) => [a, b])),
+    U.skipDuplicates((prev, next) => R.equals(prev[0], next[0])),
   );
 
-  const currentImageData = U.thru(
-    U.combine([domContext, width, height], S.takeAllArgs),
-    U.sampledBy(uniquePixelContext),
-    U.mapValue(([ctx, dx, dy]) => ctx.getImageData(0, 0, dx, dy)),
+  const clickedPixelIx = U.thru(
+    onPixelClick,
+    U.flatMapLatest(([pos]) => U.combine([pos, width], S.takeAllArgs)),
+    U.mapValue(([pos, w]) => ((pos[1] * w) + pos[0]) * COLOR_CHANNELS),
   );
 
   // Side-effects
 
-  const updateMousePosition = U.set(
-    U.view('position', mouse),
-    mousePixelPosition,
+  const updateMousePosition = U.set(U.view('position', mouse), mousePixelPosition);
+
+  const drawPix = U.thru(
+    clickedPixelIx,
+    U.mapValue(ix => [ix, ix + COLOR_CHANNELS]),
+    U.flatMapLatest(ixs => U.combine([ixs, selectedAsColor], S.takeAllArgs)),
+    U.on({ value: ([ixs, rgba]) => {
+      U.view(L.slice(ixs[0], ixs[1]), imageData).set(rgba);
+    } }),
   );
 
-  // FIXME: Cleanup required
-  const drawPixelOnClick = U.on({
-    value: ({ pos: [x, y], color: c, ctx }) => {
-      ctx.putImageData(new ImageData(S.clampedArray(c), 1), x, y);
-    }
-  }, uniquePixelContext);
-
-  const updateCurrentImageData = U.mapValue(
-    R.o(Array.from, R.prop('data')),
-    currentImageData,
+  const updateCanvasContext = U.thru(
+    U.template({ imageData, domContext, width, height }),
+    U.on({ value: o => {
+      o.domContext.putImageData(
+        new ImageData(new Uint8ClampedArray(o.imageData), o.width, o.height),
+        0,
+        0,
+      );
+    } }),
   );
 
   //
@@ -98,10 +103,25 @@ export default function Editor ({ canvas, mouse, palette, imageData }) {
         <React.Fragment>
           {U.sink(U.parallel([
             updateMousePosition,
-            drawPixelOnClick,
-            updateCurrentImageData,
+            updateCanvasContext,
+            drawPix,
           ]))}
         </React.Fragment>
+        <svg className="editor__guide"
+             width={scaledSize.width}
+             height="20">
+          <line x1="0" y1="50%"
+                x2="100%" y2="50%"
+                className="editor__guide--line" />
+          <g>
+            <rect x="43.75%" y="0" />
+            <text x="50%" y="50%"
+                  alignmentBaseline="middle"
+                  textAnchor="middle">
+              {U.string`${width} px`}
+            </text>
+          </g>
+        </svg>
         <Canvas domRef={domRef}
                 className="editor__canvas"
                 style={scaledSize}

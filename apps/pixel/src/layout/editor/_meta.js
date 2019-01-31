@@ -18,3 +18,16 @@ export const negateWithOffset = U.lift(ys => L.iso(
 export const scalePositionWith = scale => R.map(R.o(U.floor, S.divideBy(scale)));
 
 export const mousePositionFor = U.view(['mouse', 'position'])
+
+//
+
+const getWMXY = R.curry((width, scale, x, y) => ((y * width) + x) * scale);
+
+const sliceWMXY = R.curry(
+  (width, scale, x, y) => L.slice(
+    getWMXY(width, scale, x, y),
+    getWMXY(width, scale, x, y) + scale,
+  ),
+);
+
+export const viewWMXY = (w, m, x, y) => U.view(sliceWMXY(w, m, x, y));

@@ -7,11 +7,12 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './app';
 import * as serviceWorker from './serviceWorker';
-import store from './store';
+import store, { imageData } from './store';
 import './styles/index.scss';
 
 ReactDOM.render(
-  <App state={store} />,
+  <App state={store}
+       imageData={imageData} />,
   document.getElementById('root'),
 );
 

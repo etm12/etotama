@@ -11,6 +11,7 @@ const Command = taggedSum(
     KeyDown: ['event'],
     KeyUp: ['event'],
     TestCmd: ['foo', 'bar'],
+    DrawPixel: ['x', 'y'],
   },
 );
 
