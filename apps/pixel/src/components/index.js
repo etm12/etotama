@@ -1,2 +1,2 @@
-export { default as Palette } from './palette';
-export { default as ToolPalette } from './tool-palette';
+export { default as ColorStats } from './color-stats';
+export { default as Panel } from './panel';

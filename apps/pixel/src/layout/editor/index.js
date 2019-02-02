@@ -15,9 +15,10 @@ import Grid from './grid';
 import * as M from './_meta';
 import { COLOR_CHANNELS } from '../../constants';
 
-//
+const scaleOpacity = R.compose(L.modify(L.last, R.multiply(255)), R.values, color);
 
-//
+const domOffsetValueFrom = M.propListFor('left', 'top');
+const pageXYFrom = M.propListFor('pageX', 'pageY');
 
 /**
  * @param {Props} props
@@ -32,8 +33,6 @@ export default function Editor ({ canvas, mouse, palette, imageData }) {
   const { width, height, scale } = U.destructure(canvas);
   const { selected: selectedColor } = U.destructure(palette);
 
-  // imageData.log('imageData');
-
   const { onMouseDown, onMouseMove } = getMouseEvents(domRef);
 
   const scaledSize = {
@@ -41,32 +40,24 @@ export default function Editor ({ canvas, mouse, palette, imageData }) {
     height: R.multiply(scale, height),
   };
 
-  const domOffsetValue = M.propListFor('left', 'top')(domOffset);
+  const domOffsetValue = domOffsetValueFrom(domOffset);
 
   const mousePixelPosition = U.thru(
-    onMouseMove,
-    M.propListFor('pageX', 'pageY'),
+    pageXYFrom(onMouseMove),
     U.view(M.negateWithOffset(domOffsetValue)),
     M.scalePositionWith(scale),
   );
 
-  const clickedMousePixel = U.sampledBy(onMouseDown, mousePixelPosition);
-
-  const selectedAsColor = U.mapValue(R.compose(
-    L.modify(L.last, R.multiply(255)),
-    R.values,
-    color,
-  ), selectedColor);
+  const selectedAsColor = U.mapValue(scaleOpacity, selectedColor);
 
   const onPixelClick = U.thru(
-    clickedMousePixel,
-    U.flatMapLatest(pos => U.combine([pos, selectedAsColor], (a, b) => [a, b])),
+    U.sampledBy(onMouseDown, mousePixelPosition),
+    U.flatMapLatest(pos => U.combine([pos, selectedAsColor], S.takeAllArgs)),
     U.skipDuplicates((prev, next) => R.equals(prev[0], next[0])),
   );
 
   const clickedPixelIx = U.thru(
-    onPixelClick,
-    U.flatMapLatest(([pos]) => U.combine([pos, width], S.takeAllArgs)),
+    U.flatMapLatest(([pos]) => U.combine([pos, width], S.takeAllArgs), onPixelClick),
     U.mapValue(([pos, w]) => ((pos[1] * w) + pos[0]) * COLOR_CHANNELS),
   );
 
@@ -78,6 +69,7 @@ export default function Editor ({ canvas, mouse, palette, imageData }) {
     clickedPixelIx,
     U.mapValue(ix => [ix, ix + COLOR_CHANNELS]),
     U.flatMapLatest(ixs => U.combine([ixs, selectedAsColor], S.takeAllArgs)),
+    U.skipDuplicates(([ixs1], [ixs2]) => ixs1 === ixs2),
     U.on({ value: ([ixs, rgba]) => {
       U.view(L.slice(ixs[0], ixs[1]), imageData).set(rgba);
     } }),

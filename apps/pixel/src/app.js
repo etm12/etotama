@@ -5,54 +5,27 @@
 import * as React from 'karet';
 import * as U from 'karet.util';
 
-import * as Layout from './layout';
-import * as C from './components';
-import * as UI from './components/ui';
-import { addEff } from './_effects';
-import Command from './_commands';
-import menuItems from './_menu';
-import updateOnEff from './_update';
+import EditorContainer from './containers/editor';
+import HeaderContainer from './containers/header';
+import SidebarContainer from './containers/sidebar';
 
-/**
- * @param {Props} props
- */
-export default function App ({ state, imageData }) {
-  const { canvas, mouse, palette } = U.destructure(state);
+import { Store } from './context';
+import actions from './actions';
 
-  const keydown = U.fromEvents(document, 'keydown', Command.KeyDown);
+const AppImpl = ({ imageData }) =>
+  <main className="container--root app layout layout--root">
+    {U.sink(actions.log('AppImpl:actions'))}
+    <HeaderContainer />
+    <EditorContainer />
+    <SidebarContainer />
+  </main>;
 
-  //
+const AppContainer = () =>
+  <React.Fragment>
+    <Store.Consumer>
+      {({ imageData }) =>
+        <AppImpl imageData={imageData} />}
+    </Store.Consumer>
+  </React.Fragment>;
 
-  return (
-    <main className="app layout layout--root">
-      {U.sink(U.parallel([
-        addEff(keydown),
-        updateOnEff,
-      ]))}
-
-      <Layout.Header {...{ menuItems }} />
-
-      <Layout.Editor {...{ canvas, mouse, palette, imageData }} />
-
-      <Layout.Sidebar>
-        <UI.SidebarPanel title="Color palette">
-          <C.Palette {...{ palette }} />
-        </UI.SidebarPanel>
-        <UI.SidebarPanel title="Tools">
-          <C.ToolPalette />
-        </UI.SidebarPanel>
-        <UI.SidebarPanel title="Debug">
-          <pre className="component--debug"><code>{U.stringify(state, null, 2)}</code></pre>
-        </UI.SidebarPanel>
-      </Layout.Sidebar>
-    </main>
-  );
-};
-
-//
-
-/**
- * @typedef {object} Props
- * @prop {any} state
- * @prop {any} imageData
- */
+export default AppContainer;

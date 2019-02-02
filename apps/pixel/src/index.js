@@ -8,11 +8,14 @@ import './index.css';
 import App from './app';
 import * as serviceWorker from './serviceWorker';
 import store, { imageData } from './store';
+import { Store } from './context';
+
 import './styles/index.scss';
 
 ReactDOM.render(
-  <App state={store}
-       imageData={imageData} />,
+  <Store.Provider value={{ state: store, imageData }}>
+    <App />
+  </Store.Provider>,
   document.getElementById('root'),
 );
 

@@ -5,11 +5,13 @@
 import * as U from 'karet.util';
 import * as R from 'ramda';
 import * as L from 'partial.lenses';
+
 import palettes from './assets/palettes';
 import { COLOR_CHANNELS } from './constants';
+import * as M from './_meta';
 
 const colors = L.get(
-  [L.split('\n'), L.array(L.inverse(L.dropPrefix('#')))],
+  M.hexStringL,
   palettes.get('endesga-32.hex'),
 );
 
@@ -22,6 +24,10 @@ const initialState = {
     width: 24,
     height: 24,
     scale: 16,
+    offset: {
+      left: 0,
+      top: 0,
+    },
   },
   mouse: {
     position: [0, 0],
@@ -37,7 +43,7 @@ const initialState = {
 const store = U.atom(initialState);
 
 export default store;
-
+window.store = store;
 //
 
 U.thru(

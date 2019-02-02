@@ -24,10 +24,12 @@ export function getMouseEvents (
 
   const onMouseDown = takeEventsFrom('mousedown');
   const onMouseMove = takeEventsFrom('mousemove');
+  const onMouseOut = takeEventsFrom('mouseout');
 
   return {
     onMouseDown,
     onMouseMove,
+    onMouseOut,
   }
 };
 
