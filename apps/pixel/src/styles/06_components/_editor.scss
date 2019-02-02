@@ -52,29 +52,16 @@
   }
 }
 
-.editor__guide {
-  // border: solid 1px #f00;
-  position: absolute;
-  top: -25px;
-
-  g rect {
-    fill: $gray-600;
-    width: 12.5%;
-    height: 20px;
-  }
-
-  g text {
-    font-family: $font-family-monospace;
-    font-style: italic;
-    font-weight: 700;
-    font-size: remify(12px);
-    fill: $gray-300
-  }
-}
-
 .canvas {
-  // border: dashed 1px #0f0;
   @include absolute-top-left;
+
+  .editor__mouse-position {
+    opacity: 0;
+  }
+
+  &:hover .editor__mouse-position {
+    opacity: 1;
+  }
 }
 
 .canvas__body {

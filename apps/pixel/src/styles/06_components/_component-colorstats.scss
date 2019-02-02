@@ -1,0 +1,24 @@
+$c-colorstats-item-height: 2rem;
+
+.c-colorstats {
+  // border: solid 1px #f00;
+  display: grid;
+  grid-gap: 1px;
+  grid-template-columns: repeat(6, 1fr);
+  // height: 1rem;
+  overflow: hidden;
+
+  &--color {
+    height: $c-colorstats-item-height;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &--color-count {
+    color: $white;
+    font-size: remify(14px);
+    font-weight: bold;
+    @include text-stroke (1px, $stroke-color: #000);
+  }
+}

@@ -1,0 +1,49 @@
+$c-panel-corner-size: remify(6px);
+$c-panel-base-spacing: .5rem;
+$c-panel-padding: $c-panel-base-spacing;
+$c-panel-corner-color: $gray-700;
+
+@mixin no-border ($for...) {
+  @each $dir in $for { border-#{$dir}-width: 0; }
+}
+
+@mixin no-border-nw { @include no-border (right, bottom); }
+@mixin no-border-ne { @include no-border (left, bottom); }
+@mixin no-border-sw { @include no-border (right, top); }
+@mixin no-border-se { @include no-border (left, top); }
+
+.#{$prefix}-panel {
+  position: relative;
+  padding: $c-panel-padding;
+  margin: .2rem;
+
+  &__body {
+    padding: 0;
+  }
+
+  &__header {
+    font-family: $font-family-base;
+    font-style: italic;
+    font-size: remify(18px);
+    font-weight: 600;
+    padding-bottom: $c-panel-base-spacing;
+    margin-bottom: $c-panel-base-spacing;
+    border-bottom: solid 2px $c-panel-corner-color;
+  }
+
+  &__corner {
+    @include ignore-events;
+
+    width: $c-panel-corner-size;
+    height: $c-panel-corner-size;
+    border: solid 1px $c-panel-corner-color;
+    position: absolute;
+
+    &.corner {
+      &-nw { left: 0; top: 0; @include no-border-nw; }
+      &-ne { right: 0; top: 0; @include no-border-ne; }
+      &-sw { left: 0; bottom: 0; @include no-border-sw; }
+      &-se { right: 0; bottom: 0; @include no-border-se; }
+    }
+  }
+}

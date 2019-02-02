@@ -1,0 +1,13 @@
+@mixin info-label {
+  font-size: $info-font-size;
+  font-weight: $info-font-weight;
+  font-style: italic;
+  color: $info-text-color;
+  background-color: $info-background-color;
+  padding: $info-padding;
+  border-style: solid;
+  border-color: $info-border-color;
+  border-width: $info-border-width;
+
+  box-shadow: 0 ($info-border-width / 2) $info-border-width rgba(0, 0, 0, .2);
+}

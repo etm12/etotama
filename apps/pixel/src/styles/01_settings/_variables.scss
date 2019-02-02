@@ -1,5 +1,6 @@
 /// Prefixes
 
+$prefix: c;
 $layout-prefix: 'layout';
 $component-prefix: 'component';
 $ui-prefix: 'ui-component';
@@ -52,7 +53,7 @@ $application-background: $gray-100;
 
 /// Fonts
 
-$font-family-sans-serif: 'Inter UI', sans-serif;
+$font-family-sans-serif: 'IBM Plex Sans', 'Inter UI', sans-serif;
 $font-family-monospace: 'IBM Plex Mono', 'Hack', monospace;
 
 $font-family-base: $font-family-sans-serif;
@@ -63,6 +64,16 @@ $button-padding: .5rem 1rem;
 $button-border-width: 2px;
 $button-border-style: solid;
 $button-height: remify(30px);
+
+///
+
+$info-font-size: remify(12px);
+$info-font-weight: 700;
+$info-background-color: $gray-700;
+$info-text-color: $gray-300;
+$info-padding: .2rem .5rem;
+$info-border-color: $gray-300;
+$info-border-width: remify(2px);
 
 /// Components
 

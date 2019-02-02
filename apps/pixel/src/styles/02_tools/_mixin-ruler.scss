@@ -1,0 +1,54 @@
+$ruler-height: remify(10px) !default;
+$ruler-stroke-color: rgba($black, .5) !default;
+$ruler-stroke-width: 2px !default;
+
+@mixin tick-ruler (
+  $prefix: editor,
+  $height: $ruler-height,
+  $tick-width: $ruler-stroke-width,
+  $tick-color: $ruler-stroke-color
+) {
+  .#{$prefix}__ruler {
+    @include ignore-events;
+    z-index: 1;
+
+    height: $height;
+    position: relative;
+
+    .ruler-tick--g {
+      stroke-width: $tick-width;
+      stroke: $tick-color;
+
+      &--first,
+      &--last {
+        stroke-width: $tick-width * 2;
+      }
+    }
+
+    .ruler-tickline,
+    .ruler-tickline--wrap {
+      line {
+        stroke: #f00;
+      }
+
+      z-index: 2;
+
+      &--s {
+        transform: translateY(-1 * $ruler-height);
+      }
+
+      &--w,
+      &--e {
+        transform-origin: center center;
+      }
+
+      &--e {
+        transform: rotate(90deg);
+      }
+
+      &--w {
+        transform: translateX($ruler-height) rotate(90deg);
+      }
+    }
+  }
+}

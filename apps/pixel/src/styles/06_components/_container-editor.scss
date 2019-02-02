@@ -1,0 +1,70 @@
+$editor-background-color: rgba($black, .1);
+
+.container--editor {
+  position: relative;
+  padding: 2rem 1rem; // temp
+
+  .editor__info {
+    text-align: center;
+    margin: 0 auto;
+    background: $gray-700;
+  }
+
+  .editor__colors {
+    .colorlist {
+      @include horizontal-ul;
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      grid-gap: 1px;
+    }
+
+    .colorlist__item {
+      overflow: hidden;
+      height: 2rem;
+      cursor: pointer;
+
+      &.selected,
+      &:hover {
+        border: solid 4px #fff;
+      }
+    }
+  }
+
+  .editor__body {
+    position: relative;
+    background-color: $editor-background-color;
+  }
+
+  .editor__canvas {
+    position: absolute;
+    image-rendering: pixelated;
+    left: 0;
+    top: 0;
+  }
+
+  .guide {
+    position: absolute;
+    background-color: $gray-700;
+    color: $gray-300;
+    font-weight: 700;
+    font-size: remify(12px);
+    padding: .2rem .5rem;
+    border: solid 2px $gray-300;
+    transform-origin: center center;
+    margin: 0;
+
+    &--x {
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%) translateY(-130%);
+    }
+
+    &--y {
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%) translateX(100%) rotate(90deg);
+    }
+  }
+
+  @include tick-ruler;
+}

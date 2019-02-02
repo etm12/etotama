@@ -4,6 +4,7 @@ $header-font-family: $font-family-monospace;
 .#{$layout-prefix}--header {
   display: flex;
   align-items: center;
+  overflow: hidden;
 
   .#{$ui-prefix}--menubar {
     margin-left: $header-item-spacing;

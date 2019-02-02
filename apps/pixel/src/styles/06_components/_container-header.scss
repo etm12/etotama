@@ -1,0 +1,18 @@
+$menuitem-spacing: 1rem;
+
+.container--header {
+  border: solid 1px #f00;
+
+  .header__menu-bar {
+    margin-left: 1rem;
+  }
+
+  .header__menuitems {
+    @include horizontal-ul;
+  }
+
+  .header__menuitem {
+    margin-left: $menuitem-spacing / 2;
+    margin-right: $menuitem-spacing / 2;
+  }
+}
