@@ -20,8 +20,8 @@ lerna-clean:
 	$(LERNA) clean -y
 
 lerna-bootstrap:
-	$(LERNA) link ;\
-	$(LERNA) bootstrap --hoist
+	$(LERNA) bootstrap ;\
+	$(LERNA) link
 
 npm-ci:
 	npm ci
