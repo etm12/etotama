@@ -1,9 +1,9 @@
 {
   "name": "@etotama/pixel",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "license": "MIT",
   "dependencies": {
-    "@etotama/core.shared": "^0.1.0",
+    "@etotama/core.shared": "^0.2.0",
     "d3-color": "^1.2.3",
     "file-saver": "^2.0.0",
     "infestines": "^0.4.11",
