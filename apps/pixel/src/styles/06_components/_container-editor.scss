@@ -4,7 +4,7 @@ $editor-background-color: rgba($black, .1);
   position: relative;
   display: grid;
   grid-template-columns: 4fr 3fr;
-  grid-template-rows: repeat(3, auto);
+  grid-template-rows: repeat(4, auto);
   grid-column-end: span 2;
   // border: solid 1px #f00;
   width: auto;
@@ -13,7 +13,7 @@ $editor-background-color: rgba($black, .1);
 
   .editor__grid {
     &--body {
-      grid-row-end: span 3;
+      grid-row-end: span 4;
     }
 
     &--colors {

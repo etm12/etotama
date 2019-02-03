@@ -1,14 +1,18 @@
-$c-button-background-color: $gray-500;
-$c-button-border-color: $gray-500;
+$c-button-color: $blue;
+$c-button-background-color: $c-button-color;
+$c-button-border-color: $c-button-color;
 $c-button-border-color-inverse: $gray-300;
 $c-button-border-width: 2px;
 $c-button-text-color: $white;
 $c-button-font-size: remify(13px);
 $c-button-font-weight: 600;
-$c-button-color: $gray-500;
+$c-button-font-family: $font-family-base;
+$c-button-font-style: italic;
 
 .#{$prefix}-button {
   cursor: pointer;
+  font-family: $c-button-font-family;
+  border-radius: 4px;
   background-color: $c-button-background-color;
   box-shadow: 0 0 0 2px $c-button-border-color;
   border-width: $c-button-border-width;
@@ -23,6 +27,9 @@ $c-button-color: $gray-500;
   &:hover,
   &:active,
   &:focus {
-
+    box-shadow: none;
+    border-color: $c-button-background-color;
+    color: $c-button-background-color;
+    background-color: $c-button-text-color;
   }
 }

@@ -1,3 +1,4 @@
+$c-panel-font-family: $font-family-monospace;
 $c-panel-corner-size: remify(6px);
 $c-panel-base-spacing: .5rem;
 $c-panel-padding: $c-panel-base-spacing;
@@ -22,7 +23,8 @@ $c-panel-corner-color: $gray-700;
   }
 
   &__header {
-    font-family: $font-family-base;
+    letter-spacing: -0.5px;
+    font-family: $c-panel-font-family;
     font-style: italic;
     font-size: remify(18px);
     font-weight: 600;
