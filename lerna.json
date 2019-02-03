@@ -4,5 +4,10 @@
     "core/*",
     "libraries/*"
   ],
-  "version": "0.2.0"
+  "version": "0.2.0",
+  "ignoreChanges": [
+    "**/__fixtures__/**",
+    "**/__tests__/**",
+    "**/*.md"
+  ]
 }

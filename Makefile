@@ -2,7 +2,7 @@ export APP
 
 LERNA=node_modules/.bin/lerna
 
-.PHONY:	target target-all init ci-target lerna-clean lerna-bootstrap npm-ci tidy
+.PHONY:	target target-all init ci-target lerna-clean lerna-bootstrap npm-ci tidy version
 
 # Make a build of the given target app
 target:
@@ -31,3 +31,9 @@ ci-target: init target
 tidy: lerna-clean lerna-bootstrap
 
 init: npm-ci lerna-bootstrap
+
+version:
+	$(LERNA) version \
+		--conventional-commits \
+		--exact \
+		-m "chore(release): publish %s"
