@@ -2,7 +2,28 @@ $editor-background-color: rgba($black, .1);
 
 .container--editor {
   position: relative;
-  padding: 2rem 1rem; // temp
+  display: grid;
+  grid-template-columns: 4fr 3fr;
+  grid-template-rows: repeat(3, auto);
+  grid-column-end: span 2;
+  // border: solid 1px #f00;
+  width: auto;
+  margin: auto;
+  height: auto;
+
+  .editor__grid {
+    &--body {
+      grid-row-end: span 3;
+    }
+
+    &--colors {
+      grid-row-end: span 2;
+    }
+  }
+
+  .editor__aside {
+    border: solid 1px #f00;
+  }
 
   .editor__info {
     text-align: center;
@@ -33,6 +54,7 @@ $editor-background-color: rgba($black, .1);
   .editor__body {
     position: relative;
     background-color: $editor-background-color;
+    margin: 3rem;
   }
 
   .editor__canvas {
