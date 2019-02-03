@@ -6,6 +6,7 @@ import * as M from './meta';
 import { Store } from '../../context';
 import { COLOR_CHANNELS } from '../../constants';
 import { takeMouseEventsFrom } from './_events';
+import Panel from '../../components/panel';
 
 const computeIx = (x, y, w) => ((y * w) + x) * COLOR_CHANNELS;
 
@@ -81,43 +82,47 @@ const EditorImpl = ({ width, height, scale, imageData, palette }) => {
         drawOnPixelClick,
       ]))}
 
-      <article className="editor__body" style={canvasSize}>
-        <div className="guide guide--x component--info-label">
-          {U.string`${width}px`}
-        </div>
-        <div className="guide guide--y component--info-label">
-          {U.string`${height}px`}
-        </div>
-        <canvas
-          className="editor__canvas"
-          ref={U.refTo(dom)}
-          style={canvasSize}
-          width={width}
-          height={height}
-        />
-        <svg className="editor__ruler" style={canvasSize}>
-          <defs>
-            <line id="ruler-tick" className="ruler-tick" x1="0" x2="0" y1="0" y2="10" />
+      <Panel title="Canvas" className="editor__grid--body">
+        <article className="editor__body" style={canvasSize}>
+          <div className="guide guide--x component--info-label">
+            {U.string`${width}px`}
+          </div>
+          <div className="guide guide--y component--info-label">
+            {U.string`${height}px`}
+          </div>
+          <canvas
+            className="editor__canvas"
+            ref={U.refTo(dom)}
+            style={canvasSize}
+            width={width}
+            height={height}
+          />
+          <svg className="editor__ruler" style={canvasSize}>
+            <defs>
+              <line id="ruler-tick" className="ruler-tick" x1="0" x2="0" y1="0" y2="10" />
 
-            <g id="ruler-tickline" className="ruler-tickline">
-              <use href="#ruler-tick" className="ruler-tick--g ruler-tick--g--first" />
-              <use href="#ruler-tick" className="ruler-tick--g" x="50%" />
-              <use href="#ruler-tick" className="ruler-tick--g ruler-tick--g--last" x="100%" />
-            </g>
-          </defs>
+              <g id="ruler-tickline" className="ruler-tickline">
+                <use href="#ruler-tick" className="ruler-tick--g ruler-tick--g--first" />
+                <use href="#ruler-tick" className="ruler-tick--g" x="50%" />
+                <use href="#ruler-tick" className="ruler-tick--g ruler-tick--g--last" x="100%" />
+              </g>
+            </defs>
 
-          <use href="#ruler-tickline" className="ruler-tickline--n" />
-          <use href="#ruler-tickline" className="ruler-tickline--e" y="0%" x="0%" />
-          <use href="#ruler-tickline" className="ruler-tickline--w" y="100%" x="0%" />
-          <use href="#ruler-tickline" className="ruler-tickline--s" y="100%" />
-        </svg>
+            <use href="#ruler-tickline" className="ruler-tickline--n" />
+            <use href="#ruler-tickline" className="ruler-tickline--e" y="0%" x="0%" />
+            <use href="#ruler-tickline" className="ruler-tickline--w" y="100%" x="0%" />
+            <use href="#ruler-tickline" className="ruler-tickline--s" y="100%" />
+          </svg>
 
-        <section className="editor__info component--info-label">
-          {U.string`${width} × ${height}, scale: ${scale}`}&nbsp;
-          {U.string`[ ${U.view(0, pixelPosition)}, ${U.view(1, pixelPosition)} ]`}
-        </section>
+          <section className="editor__info component--info-label">
+            {U.string`${width} × ${height}, scale: ${scale}`}&nbsp;
+            {U.string`[ ${U.view(0, pixelPosition)}, ${U.view(1, pixelPosition)} ]`}
+          </section>
+        </article>
+      </Panel>
 
-        {/* Color palette */}
+      {/* Color palette */}
+      <Panel title="Color list" className="editor__grid--colors">
         <section className="editor__colors">
           <ul className="colorlist">
             {U.thru(
@@ -132,13 +137,28 @@ const EditorImpl = ({ width, height, scale, imageData, palette }) => {
             )}
           </ul>
         </section>
-      </article>
+      </Panel>
+
+      <Panel title="Buttons" className="editor__grid--buttons">
+        <button className="c-button c-button--primary">
+          Primary
+        </button>
+        <button className="c-button c-button--secondary">
+          Secondary
+        </button>
+      </Panel>
+
+      <Panel title="Stats" className="editor__grid--aside">
+        <aside className="editor__aside">
+          Aside
+        </aside>
+      </Panel>
     </section>
   );
 }
 
 const EditorContainer = () =>
-  <section className="container--editor">
+  <React.Fragment>
     <Store.Consumer>
       {({ state, imageData }) => {
         const { canvas, palette } = U.destructure(state);
@@ -155,6 +175,6 @@ const EditorContainer = () =>
         );
       }}
     </Store.Consumer>
-  </section>;
+  </React.Fragment>;
 
 export default EditorContainer;

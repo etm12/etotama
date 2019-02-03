@@ -17,7 +17,7 @@ const AppImpl = ({ imageData }) =>
     {U.sink(actions.log('AppImpl:actions'))}
     <HeaderContainer />
     <EditorContainer />
-    <SidebarContainer />
+    {/* <SidebarContainer /> */}
   </main>;
 
 const AppContainer = () =>

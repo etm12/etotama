@@ -11,8 +11,8 @@ const PanelCorners = () =>
     <div className={cornerClass('se')} />
   </React.Fragment>;
 
-const Panel = ({ children, title }) =>
-  <section className="c-panel">
+const Panel = ({ children, title, className }) =>
+  <section className={U.cns('c-panel', className)}>
     <PanelCorners />
     <header className="c-panel__header">
       {title}
