@@ -1,4 +1,5 @@
 import * as U from 'karet.util';
+// eslint-disable-next-line
 import * as K from 'kefir';
 
 export function createImageBlob (imageData, width) {

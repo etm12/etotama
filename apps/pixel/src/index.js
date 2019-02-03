@@ -9,12 +9,13 @@ import App from './app';
 import * as serviceWorker from './serviceWorker';
 import store, { imageData } from './store';
 import { Store } from './context';
+import actions from './actions';
 
 import './styles/index.scss';
 
 ReactDOM.render(
   <Store.Provider value={{ state: store, imageData }}>
-    <App />
+    <App actions={actions} />
   </Store.Provider>,
   document.getElementById('root'),
 );

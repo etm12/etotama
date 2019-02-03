@@ -29,6 +29,9 @@ const initialState = {
       top: 0,
     },
   },
+  brush: {
+    size: 2,
+  },
   mouse: {
     position: [0, 0],
   },
