@@ -1,5 +1,5 @@
 {
-  "name": "@etotama/shared",
+  "name": "@etotama/core.shared",
   "version": "0.1.0",
   "main": "lib/index.js",
   "license": "MIT",
