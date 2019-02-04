@@ -1,12 +1,16 @@
 import * as React from 'karet';
+import * as H from 'kefir.partial.lenses.history';
 import * as U from 'karet.util';
 import * as R from 'kefir.ramda';
 import * as L from 'kefir.partial.lenses';
+import { saveAs } from 'file-saver';
 import * as M from './meta';
 import { Store } from '../../context';
 import { COLOR_CHANNELS } from '../../constants';
 import { takeMouseEventsFrom } from './_events';
 import Panel from '../../components/panel';
+import { createImageBlob } from '../../_image';
+import actions from '../../actions';
 
 const computeIx = (x, y, w) => ((y * w) + x) * COLOR_CHANNELS;
 
@@ -14,6 +18,15 @@ const getIx = (x, y, w) => ({
   start: computeIx(x, y, w),
   end: computeIx(x, y, w) + COLOR_CHANNELS,
 })
+
+const saveImage = (imageData, width) => U.doPush(actions, () => U.thru(
+  U.template([imageData, width]),
+  U.takeFirst(1),
+  U.flatMapLatest(([i, w]) => createImageBlob(i, w)),
+  U.takeFirst(1),
+  U.consume( b => { saveAs(b, 'test.png') } ),
+  U.endWith(undefined),
+));
 
 const EditorImpl = ({ width, height, scale, imageData, palette }) => {
   const dom = U.variable();
@@ -52,19 +65,27 @@ const EditorImpl = ({ width, height, scale, imageData, palette }) => {
     )),
     U.skipDuplicates(([pos1], [pos2]) => R.equals(pos1, pos2)),
     U.consume(([pos, w, h, color]) => {
+      console.log('drawOnPixelClick:consume', { pos, w, h, color });
+      console.trace();
       const { start, end } = getIx(pos[0], pos[1], w);
       imageData.view(L.slice(start, end)).set([...color, 255]);
     }),
-  ).log('onpixelclick:draw');
+  );
 
   const drawImageData = U.thru(
     imageData,
     U.mapValue(R.constructN(1, Uint8ClampedArray)),
     U.flatMapLatest(id => U.combine(
       [id, domContext, width],
-      (data, ctx, w) => ({ data, ctx, w }),
+      (data, ctx, w) => {
+        console.log({ data, ctx, w });
+        return { data, ctx, w };
+      },
     )),
-    U.consume(({ data, ctx, w }) => ctx.putImageData(new ImageData(data, w), 0, 0)),
+    U.consume(({ data, ctx, w }) => {
+      console.log('U.consume:', { data, ctx, w });
+      // ctx.putImageData(new ImageData(data, w), 0, 0)
+    }),
   );
 
   const canvasSize = U.template({
@@ -139,7 +160,7 @@ const EditorImpl = ({ width, height, scale, imageData, palette }) => {
         </section>
       </Panel>
 
-      <Panel title="Buttons" className="editor__grid--buttons">
+      <Panel title="Buttons" className="editor__grid--buttons" show={false}>
         <button className="c-button c-button--primary">
           Primary
         </button>
@@ -148,7 +169,17 @@ const EditorImpl = ({ width, height, scale, imageData, palette }) => {
         </button>
       </Panel>
 
-      <Panel title="Stats" className="editor__grid--aside">
+      <Panel title="Image">
+        <button className="c-button c-button--primary"
+                action={U.actions(U.preventDefault, saveImage(imageData, width))}>
+          Save image
+        </button>
+        <button className="c-button c-button--primary">
+          Load image
+        </button>
+      </Panel>
+
+      <Panel title="Stats" className="editor__grid--aside" show={false}>
         <aside className="editor__aside">
           Aside
         </aside>
@@ -161,7 +192,7 @@ const EditorContainer = () =>
   <React.Fragment>
     <Store.Consumer>
       {({ state, imageData }) => {
-        const { canvas, palette } = U.destructure(state);
+        const { canvas, palette } = U.destructure(U.view(H.present, state));
         const { width, height, scale } = U.destructure(canvas);
 
         return (
@@ -170,7 +201,7 @@ const EditorContainer = () =>
             height,
             scale,
             palette,
-            imageData,
+            imageData: U.view(H.present, imageData),
           }} />
         );
       }}

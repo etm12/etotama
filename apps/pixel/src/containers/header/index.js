@@ -7,21 +7,6 @@ const HeaderImpl = () =>
       <div className="header__brand__logo" />
       <figcaption className="header__brand__title">pixel</figcaption>
     </figure>
-
-    <nav className="header__menu-bar">
-      <ul className="header__menuitems">
-        <li className="header__menuitem">
-          <button disabled>
-            Save image
-          </button>
-        </li>
-        <li className="header__menuitem">
-          <button disabled>
-            Load image
-          </button>
-        </li>
-      </ul>
-    </nav>
   </header>;
 
 const HeaderContainer = () =>

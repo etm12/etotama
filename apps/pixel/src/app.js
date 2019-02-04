@@ -16,13 +16,15 @@ const AppImpl = ({ imageData }) =>
   </main>;
 
 const AppContainer = ({ actions }) =>
-  <React.Fragment>
-    {U.sink(actions.log('AppImpl:actions'))}
+  <div>
+    <React.Fragment>
+      {U.sink(actions.log('AppImpl:actions'))}
 
-    <Store.Consumer>
-      {({ imageData }) =>
-        <AppImpl imageData={imageData} />}
-    </Store.Consumer>
-  </React.Fragment>;
+      <Store.Consumer>
+        {({ imageData }) =>
+          <AppImpl imageData={imageData} />}
+      </Store.Consumer>
+    </React.Fragment>
+  </div>;
 
 export default AppContainer;
