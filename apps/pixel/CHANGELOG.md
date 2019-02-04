@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/etm12/etotama/compare/v0.2.0...v0.3.0) (2019-02-04)
+
+
+### Features
+
+* **apps/pixel:** Add support for drawing by keeping mouse button pressed ([b3bd545](https://github.com/etm12/etotama/commit/b3bd545))
+* **apps/pixel:** Allow Panel component to be hidden ([a8f539d](https://github.com/etm12/etotama/commit/a8f539d))
+
+
+
+
+
 # 0.2.0 (2019-02-03)
 
 
