@@ -29,6 +29,7 @@ const EditorImpl = ({ width, height, scale, imageData, palette }) => {
   const {
     onMouseDown,
     onMouseMove,
+    onMouseDrag,
   } = takeMouseEventsFrom(dom);
 
   const actions = U.serializer(null);
@@ -45,7 +46,7 @@ const EditorImpl = ({ width, height, scale, imageData, palette }) => {
 
   const drawOnPixelClick = U.thru(
     pixelPosition,
-    U.sampledBy(onMouseDown),
+    U.sampledBy(U.parallel([onMouseDown, onMouseDrag])),
     U.flatMapLatest(pos => U.combine(
       [pos, width, height, colorValue],
       R.unapply(R.identity),
@@ -55,7 +56,7 @@ const EditorImpl = ({ width, height, scale, imageData, palette }) => {
       const { start, end } = getIx(pos[0], pos[1], w);
       imageData.view(L.slice(start, end)).set([...color, 255]);
     }),
-  ).log('onpixelclick:draw');
+  );
 
   const drawImageData = U.thru(
     imageData,

@@ -11,4 +11,12 @@ export const takeMouseEventsFrom = (source, fn = takeEvents(source)) => ({
   onMouseDown: fn('mousedown'),
   onMouseMove: fn('mousemove'),
   onMouseUp: fn('mouseup'),
+  onMouseDrag: U.thru(
+    fn('mousedown'),
+    U.flatMapLatest(() =>
+      U.takeUntilBy(
+        U.takeFirst(1, fn('mouseup')),
+        fn('mousemove'),
+      )),
+  ),
 });
