@@ -7,6 +7,7 @@ import { Store } from '../../context';
 import { COLOR_CHANNELS } from '../../constants';
 import { takeMouseEventsFrom } from './_events';
 import Panel from '../../components/panel';
+import { colorCounts } from './_colors';
 
 const computeIx = (x, y, w) => ((y * w) + x) * COLOR_CHANNELS;
 
@@ -20,6 +21,17 @@ const EditorImpl = ({ width, height, scale, imageData, palette }) => {
   const domOffset = M.Canvas.elOffset(dom);
   const domContext = M.Canvas.elContext(dom);
   const domSize = M.Canvas.scaledSize(width, height, scale);
+
+  const stats = U.template({
+    colorCount: R.length(colorCounts(imageData)),
+    lastUndo: U.toProperty(new Date()),
+  });
+
+  const visibleStats = U.template({
+    'Unique colors': U.view('colorCount', stats),
+    'Undo states': U.toProperty(0),
+    'Last undo': U.view(['lastUndo', L.reread(x => x.toISOString())], stats),
+  }).log('visible stats');
 
   const { selected, colors } = U.destructure(palette);
   const colorValue = U.view(M.Color.hexI, selected);
@@ -140,18 +152,29 @@ const EditorImpl = ({ width, height, scale, imageData, palette }) => {
         </section>
       </Panel>
 
-      <Panel title="Buttons" className="editor__grid--buttons">
+      <Panel title="File">
         <button className="c-button c-button--primary">
-          Primary
+          Save PNG
         </button>
-        <button className="c-button c-button--secondary">
-          Secondary
+        <button className="c-button c-button--primary">
+          Load PNG
         </button>
       </Panel>
 
-      <Panel title="Stats" className="editor__grid--aside">
+      <Panel title="Stats"
+             className="editor__grid--aside">
         <aside className="editor__aside">
-          Aside
+          <dl className="stats-list">
+            {U.thru(
+              visibleStats,
+              L.collect(L.entries),
+              L.modify(L.elems, ([k, v]) =>
+                <React.Fragment>
+                  <dt className="stats-list__key">{k}</dt>
+                  <dd className="stats-list__value">{v}</dd>
+                </React.Fragment>),
+            )}
+          </dl>
         </aside>
       </Panel>
     </section>
