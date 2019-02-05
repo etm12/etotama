@@ -13,8 +13,6 @@ import actions from './actions';
 
 import './styles/index.scss';
 
-console.log('process.env', process.env);
-
 ReactDOM.render(
   <Store.Provider value={{ state: store, imageData }}>
     <App actions={actions} />

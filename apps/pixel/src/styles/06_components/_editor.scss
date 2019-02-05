@@ -76,8 +76,6 @@
 }
 
 .grid__body {
-  // border: dashed 1px #00f;
-
   // SVG
   line {
     stroke: rgba(0, 0, 0, .3);
@@ -87,5 +85,34 @@
     &:last-child {
       stroke-width: 2px;
     }
+  }
+}
+
+.stats-list {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 10rem auto;
+  grid-gap: 1px;
+  font-size: remify(12px);
+
+  .stats-list__key,
+  .stats-list__value {
+    // border: solid 1px #f00;
+    display: block;
+    margin: 0;
+    border-bottom: solid 1px $gray-300;
+    @include pad-y(.5rem);
+
+    &:last-of-type {
+      border: none;
+    }
+  }
+
+  .stats-list__key {
+    // font-weight: $font-weight-semibold;
+  }
+
+  .stats-list__value {
+    font-weight: $font-weight-bold;
   }
 }
