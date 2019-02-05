@@ -7,7 +7,12 @@ exports.aliases = [];
 
 exports.desc = 'Target package to generate metadata for (CI environments)';
 
-exports.builder = yargs => yargs;
+exports.builder = yargs => yargs
+  .option('prefix-keys', {
+    alias: 'p',
+    type: 'string',
+    default: 'REACT_APP_ETM_APP_',
+  });
 
 exports.handler = argv => {
   const targetPkg = S.thru(
@@ -30,7 +35,8 @@ exports.handler = argv => {
   const result = S.thru(
     targetInfo,
     Object.entries,
-    S.map(([k, v]) => `${argv.prefixKeys}${k.toUpperCase()}=${v}`),
+    S.map(([k, v]) => !!v && `${argv.prefixKeys}${k.toUpperCase()}=${v}`),
+    S.filter(S.I),
     S.join('\n'),
     S.C(S.concat)('\n'),
   );
@@ -39,5 +45,7 @@ exports.handler = argv => {
 
   S.writeFile(targetFilePath)(result);
 
-  console.log('Generated file %s', targetFilePath);
+  console.log();
+  console.log('Generated file %s with the following values', targetFilePath);
+  console.log(result);
 }

@@ -24,6 +24,7 @@ const propC = C(prop);
 const exec_ = cmd => sh.exec(cmd, { silent: true });
 const map = fn => xs => xs.map(fn);
 const concat = x => y => x.concat(y);
+const filter = invoke1('filter');
 
 module.exports = {
   I,
@@ -48,4 +49,5 @@ module.exports = {
   exec_,
   map,
   concat,
+  filter,
 };
