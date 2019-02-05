@@ -8,8 +8,8 @@ import * as Ls from './lenses';
 //
 
 // @ts-ignore
-const isObservable = x => x instanceof K.Observable;
-const toObservable = x => (isObservable(x) ? x : K.constant(x));
+export const isObservable = x => x instanceof K.Observable;
+export const toObservable = x => (isObservable(x) ? x : K.constant(x));
 
 // #region Functions
 export const takeAllArgs = R.unapply(R.identity);

@@ -19,3 +19,5 @@ export const Obs = {
     L.modify(L.keys, kebabCamel),
   ),
 };
+
+export const hexString = [L.split('\n'), L.array(L.inverse(L.dropPrefix('#')))];
