@@ -23,7 +23,7 @@ const HeaderImpl = () =>
     {U.when(
       R.complement(R.isEmpty)(build),
       <aside className="header__version-info">
-        {build.name} {build.version}-{build.commit} {build.branch}
+        {U.stringify(process.env)}
       </aside>
     )}
   </header>;

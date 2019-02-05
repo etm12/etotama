@@ -8,6 +8,7 @@ import { COLOR_CHANNELS } from '../../constants';
 import { takeMouseEventsFrom } from './_events';
 import Panel from '../../components/panel';
 import { colorCounts } from './_colors';
+import actions from '../../actions';
 
 const computeIx = (x, y, w) => ((y * w) + x) * COLOR_CHANNELS;
 
@@ -44,9 +45,9 @@ const EditorImpl = ({ width, height, scale, imageData, palette }) => {
     onMouseDrag,
   } = takeMouseEventsFrom(dom);
 
-  const actions = U.serializer(null);
+  // const actions = U.serializer(null);
 
-  const subscribeActions = U.endWith(undefined, actions);
+  // const subscribeActions = U.endWith(undefined, actions);
 
   const pixelPosition = U.thru(
     U.combine(
@@ -85,12 +86,11 @@ const EditorImpl = ({ width, height, scale, imageData, palette }) => {
     height: U.view(1, domSize),
   });
 
-  // mouseMove.log('mouseMove');
+  const doAction = fn => U.doPush(actions, fn);
 
   return (
     <section className="container--editor">
       {U.sink(U.parallel([
-        subscribeActions,
         drawImageData,
         drawOnPixelClick,
       ]))}
@@ -141,7 +141,8 @@ const EditorImpl = ({ width, height, scale, imageData, palette }) => {
             {U.thru(
               colors,
               U.mapElems((it, i) =>
-                <li className={U.cns(
+                <li key={i}
+                    className={U.cns(
                       'colorlist__item',
                       U.when(R.equals(it, selected), 'selected'),
                     )}
@@ -153,10 +154,12 @@ const EditorImpl = ({ width, height, scale, imageData, palette }) => {
       </Panel>
 
       <Panel title="File">
-        <button className="c-button c-button--primary">
+        <button className="c-button c-button--primary"
+                onClick={doAction(() => 'top kek')}>
           Save PNG
         </button>
-        <button className="c-button c-button--primary">
+        <button className="c-button c-button--primary"
+                onClick={doAction(() => 'foo bar')}>
           Load PNG
         </button>
       </Panel>
@@ -169,7 +172,7 @@ const EditorImpl = ({ width, height, scale, imageData, palette }) => {
               visibleStats,
               L.collect(L.entries),
               L.modify(L.elems, ([k, v]) =>
-                <React.Fragment>
+                <React.Fragment key={k}>
                   <dt className="stats-list__key">{k}</dt>
                   <dd className="stats-list__value">{v}</dd>
                 </React.Fragment>),
