@@ -48,7 +48,7 @@ install-vscode-extensions: $(EXTS)
 .PHONY: target
 target:
 ifneq ($(strip $(APP)),)
-	scripts/get-version.js target apps/$(APP)
+	scripts/get-version.js ci-target apps/$(APP)
 	$(LERNA) run build --scope=@etotama/$(APP)
 else
 	@echo "No APP given"
