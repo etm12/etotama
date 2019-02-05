@@ -1,5 +1,9 @@
 
-# `etotama` monorepo
+<center>
+  <img src="https://raw.githubusercontent.com/etm12/etotama/master/assets/logo.png" alt="干支娘" />
+</center>
+
+---
 
 ## Contents
 
