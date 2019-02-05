@@ -1,0 +1,9 @@
+[build]
+  command = "make ci-target APP=pixel"
+  publish = "apps/pixel/build"
+
+[context.develop]
+  command = "make ci-target APP=pixel"
+
+[context.feature]
+  command = "make ci-target APP=pixel"
