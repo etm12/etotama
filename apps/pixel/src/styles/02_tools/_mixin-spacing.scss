@@ -1,0 +1,9 @@
+@mixin pad-x ($amount) {
+  padding-left: $amount;
+  padding-right: $amount;
+}
+
+@mixin pad-y ($amount) {
+  padding-top: $amount;
+  padding-bottom: $amount;
+}

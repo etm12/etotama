@@ -1,8 +1,6 @@
 $menuitem-spacing: 1rem;
 
 .container--header {
-  border: solid 1px #f00;
-
   .header__menu-bar {
     margin-left: 1rem;
   }
@@ -14,5 +12,12 @@ $menuitem-spacing: 1rem;
   .header__menuitem {
     margin-left: $menuitem-spacing / 2;
     margin-right: $menuitem-spacing / 2;
+  }
+
+  .header__version-info {
+    font-family: $font-family-base;
+    font-size: remify(12px);
+    padding-right: 1rem;
+    padding-left: 1rem;
   }
 }
