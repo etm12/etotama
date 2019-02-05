@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/etm12/etotama/compare/v0.4.0...v0.5.0) (2019-02-05)
+
+
+### Bug Fixes
+
+* **apps/pixel:** Fix layout issue with editor sidebar ([6871de6](https://github.com/etm12/etotama/commit/6871de6))
+
+
+### Features
+
+* **apps/pixel:** Add asic stats POC ([1f0100d](https://github.com/etm12/etotama/commit/1f0100d))
+* **apps/pixel:** Add build information to header ([e7a3b01](https://github.com/etm12/etotama/commit/e7a3b01))
+* **apps/pixel:** Add debug info ([cd7683a](https://github.com/etm12/etotama/commit/cd7683a))
+* **core/shared:** Add separate lenses, code cleanup ([63713d6](https://github.com/etm12/etotama/commit/63713d6))
+* **core/shared:** Clean up redundant functions ([c38ac43](https://github.com/etm12/etotama/commit/c38ac43))
+* **version:** Add option to output .env file to STDOUT instead of file ([ab6aecd](https://github.com/etm12/etotama/commit/ab6aecd))
+
+
+
+
+
 # [0.3.0](https://github.com/etm12/etotama/compare/v0.2.0...v0.3.0) (2019-02-04)
 
 
