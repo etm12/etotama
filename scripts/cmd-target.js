@@ -39,6 +39,11 @@ exports.builder = yargs => yargs
     alias: 'p',
     type: 'string',
     default: 'REACT_APP_ETM_APP_',
+  })
+  .option('stdout', {
+    alias: 'o',
+    type: 'boolean',
+    describe: 'Output to STDOUT instead of file'
   });
 
 exports.handler = argv => {
@@ -79,9 +84,14 @@ exports.handler = argv => {
     throw new Error('no result :(');
   }
 
-  thru(
-    argv.path,
-    join2C(targetFile),
-    writeFileC(result),
-  );
+  if (!argv.stdout) {
+    thru(
+      argv.path,
+      join2C(targetFile),
+      writeFileC(result),
+    );
+  }
+  else {
+    process.stdout.write(result + '\n');
+  }
 };
