@@ -76,8 +76,6 @@
 }
 
 .grid__body {
-  // border: dashed 1px #00f;
-
   // SVG
   line {
     stroke: rgba(0, 0, 0, .3);
@@ -91,10 +89,9 @@
 }
 
 .stats-list {
-  // border: solid 1px #f00;
   margin: 0;
   display: grid;
-  grid-template-columns: 3fr 1fr; // repeat(2, (3fr 1fr));
+  grid-template-columns: 10rem auto;
   grid-gap: 1px;
   font-size: remify(12px);
 
