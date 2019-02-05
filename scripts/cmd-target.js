@@ -12,11 +12,12 @@ const invoke0 = m => o => o[m]();
 const invoke1 = m => x => o => o[m](x);
 const toString = invoke0('toString');
 const trim = invoke0('trim');
-const join2 = x => y => join(x, y);
+const split = invoke1('split');
+const joinPath2 = x => y => join(x, y);
 const writeFile = t => x => writeFileSync(t, x);
 const writeFileC = C(writeFile);
 const prop = k => o => o && o[k];
-const join2C = C(join2);
+const join2C = C(joinPath2);
 const propC = C(prop);
 const exec_ = cmd => sh.exec(cmd, { silent: true });
 
@@ -52,11 +53,14 @@ exports.handler = argv => {
   const targetEnv = thru(argv.path, join2C('.env'));
   const fromPkg = propC(targetPkg);
 
+  const headCommit = thru(exec_('git rev-parse --short HEAD'), toString, trim);
+  const [curCommit, curBranch] = thru(exec_(`git name-rev ${headCommit}`), toString, trim, split(' '));
+
   const target = {
     name: prop('name')(targetPkg),
     version: fromPkg('version'),
-    branch: thru(exec_('git rev-parse --abbrev-ref HEAD'), toString, trim),
-    commit: thru(exec_('git rev-parse --short HEAD'), toString, trim),
+    branch: curBranch,
+    commit: curCommit,
   };
 
   let result;
