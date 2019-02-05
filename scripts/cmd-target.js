@@ -1,25 +1,5 @@
 const sh = require('shelljs');
-const { readFileSync, writeFileSync } = require('fs');
-const { join } = require('path');
-
-const I = x => x;
-const K = x => _ => x;
-const A = x => f => f(x);
-const C = f => y => x => f(x)(y);
-const thru = (x, ...fns) => fns.reduce((x, fn) => fn(x), x);
-const invokeIf = x => f => f && f(x);
-const invoke0 = m => o => o[m]();
-const invoke1 = m => x => o => o[m](x);
-const toString = invoke0('toString');
-const trim = invoke0('trim');
-const split = invoke1('split');
-const joinPath2 = x => y => join(x, y);
-const writeFile = t => x => writeFileSync(t, x);
-const writeFileC = C(writeFile);
-const prop = k => o => o && o[k];
-const join2C = C(joinPath2);
-const propC = C(prop);
-const exec_ = cmd => sh.exec(cmd, { silent: true });
+const S = require('./shared');
 
 //
 
@@ -54,15 +34,15 @@ exports.handler = argv => {
 
   const targetFile = argv.format === 'env' ? '.env' : 'env.json';
 
-  const targetPkg = thru(argv.path, join2C('package.json'), readFileSync, toString, JSON.parse);
-  const targetEnv = thru(argv.path, join2C('.env'));
-  const fromPkg = propC(targetPkg);
+  const targetPkg = S.thru(argv.path, S.joinPath2C('package.json'), S.readFile, S.toString, JSON.parse);
+  const targetEnv = S.thru(argv.path, S.joinPath2C('.env'));
+  const fromPkg = S.propC(targetPkg);
 
-  const headCommit = thru(exec_('git rev-parse --short HEAD'), toString, trim);
-  const [curCommit, curBranch] = thru(exec_(`git name-rev ${headCommit}`), toString, trim, split(' '));
+  const headCommit = S.thru(S.exec_('git rev-parse --short HEAD'), S.toString, S.trim);
+  const [curCommit, curBranch] = S.thru(S.exec_(`git name-rev ${headCommit}`), S.toString, S.trim, S.split(' '));
 
   const target = {
-    name: prop('name')(targetPkg),
+    name: fromPkg('name'),
     version: fromPkg('version'),
     branch: curBranch,
     commit: curCommit,
@@ -74,10 +54,13 @@ exports.handler = argv => {
     result = JSON.stringify(target, null, 2);
   }
   else {
-    const ps = Object.entries(target);
-    const psʼ = ps.map(([k, v]) => `${argv.prefixKeys}${k.toUpperCase()}=${v}`);
-
-    result = psʼ.join('\n');
+    result = S.thru(
+      target,
+      Object.entries,
+      S.map(([k, v]) => `${argv.prefixKeys}${k.toUpperCase()}=${v}`),
+      S.join('\n'),
+      S.C(S.concat)('\n'),
+    )
   }
 
   if (!result) {
@@ -85,11 +68,14 @@ exports.handler = argv => {
   }
 
   if (!argv.stdout) {
-    thru(
-      argv.path,
-      join2C(targetFile),
-      writeFileC(result),
+    const targetFilePath = S.joinPath2(argv.path)(targetFile);
+
+    S.thru(
+      targetFilePath,
+      S.writeFileC(result),
     );
+
+    console.log('Generated file %s', targetFilePath);
   }
   else {
     process.stdout.write(result + '\n');
