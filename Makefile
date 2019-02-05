@@ -3,32 +3,25 @@ export APP
 LERNA=node_modules/.bin/lerna
 VSCODE_DIR=.vscode
 
-# Make a build of the given target app
-.PHONY: target
-target:
-ifneq ($(strip $(APP)),)
-	$(LERNA) run build --scope=@etotama/$(APP)
-else
-	@echo "No APP given"
-	exit 1
-endif
+## Project
 
-.PHONY: target-all
-target-all:
-	$(LERNA) run build
+## Managing project
 
+# Project install (CI)
+.PHONY: npm-ci
+npm-ci:
+	npm ci
+
+# Project cleanup
 .PHONY: lerna-clean
 lerna-clean:
 	$(LERNA) clean -y
 
+# Project setup
 .PHONY: lerna-bootstrap
 lerna-bootstrap:
 	$(LERNA) bootstrap ;\
 	$(LERNA) link
-
-.PHONY: npm-ci
-npm-ci:
-	npm ci
 
 # Bump project version number
 .PHONY: version
@@ -38,6 +31,8 @@ version:
 		--exact \
 		-m "chore(release): publish %s"
 
+## Working on project
+
 # Initialize VS Code workspace by installing recommended extensions
 .PHONY: $(EXTS)
 EXTS = $(shell jq '.recommendations[]' $(VSCODE_DIR)/extensions.json)
@@ -46,6 +41,24 @@ EXTS = $(shell jq '.recommendations[]' $(VSCODE_DIR)/extensions.json)
 .PHONY: install-vscode-extensions $(EXTS)
 install-vscode-extensions: $(EXTS)
 	$(shell code --install-extension $<)
+
+## Derived "main level" targets
+
+# Make a build of the given target app
+.PHONY: target
+target:
+ifneq ($(strip $(APP)),)
+	scripts/get-version.js target apps/$(APP)
+	$(LERNA) run build --scope=@etotama/$(APP)
+else
+	@echo "No APP given"
+	exit 1
+endif
+
+# Build all targets
+.PHONY: target-all
+target-all:
+	$(LERNA) run build
 
 # Build on CI
 .PHONY: ci-target
