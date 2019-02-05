@@ -9,8 +9,9 @@ const envPrefix = 'REACT_APP_ETM_APP_';
 const build = L.get(L.pick({
   name: `${envPrefix}NAME`,
   version: `${envPrefix}VERSION`,
-  commit: `${envPrefix}COMMIT`,
+  commit: [`${envPrefix}COMMIT`, L.valueOr('')],
   branch: `${envPrefix}BRANCH`,
+  context: `${envPrefix}CONTEXT`,
 }), process.env);
 
 const HeaderImpl = () =>
@@ -23,7 +24,8 @@ const HeaderImpl = () =>
     {U.when(
       R.complement(R.isEmpty)(build),
       <aside className="header__version-info">
-        {U.stringify(process.env)}
+        <strong>{build.name} {build.version}</strong>
+        &nbsp;(<abbr title={build.context}>{build.branch}@{build.commit.slice(0, 8)}</abbr>)
       </aside>
     )}
   </header>;
