@@ -8,7 +8,7 @@ import * as U from 'karet.util';
 import EditorContainer from './containers/editor';
 import HeaderContainer from './containers/header';
 import { Store } from './context';
-import { Panel, PanelHeader, PanelBody } from './layout/panel';
+import { Panel, PanelHeader, PanelBody, PanelFooter } from './layout/panel';
 import Button from './components/button';
 import ButtonGrid from './components/button-grid';
 
@@ -17,14 +17,14 @@ const AppImpl = ({ imageData }) =>
     <HeaderContainer />
 
     <div className="layout__body">
-      <Panel size={10}>
+      <Panel size={12}>
         <PanelHeader>Palette</PanelHeader>
         <PanelBody>
           content
         </PanelBody>
       </Panel>
 
-      <Panel size={12}>
+      <Panel size={16}>
         <PanelHeader>Tools</PanelHeader>
         <PanelBody>
           <ButtonGrid cols={3}>
@@ -41,10 +41,15 @@ const AppImpl = ({ imageData }) =>
         </PanelBody>
       </Panel>
 
-      <Panel className="c-panel--editor">
+      <Panel
+        className="c-panel--editor"
+        direction="vertical">
         <PanelBody>
           <EditorContainer />
         </PanelBody>
+        <PanelFooter>
+          Footer stuff
+        </PanelFooter>
       </Panel>
     </div>
   </main>;
