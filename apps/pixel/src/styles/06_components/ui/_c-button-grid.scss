@@ -1,6 +1,9 @@
 .#{$prefix}-button-grid {
   // border: solid 1px #f00;
   display: grid;
+  border-radius: 3px;
+  overflow: hidden;
+  // border: solid 1px #f00;
 
   &.c-3-cols {
     grid-template-columns: repeat(3, 1fr);

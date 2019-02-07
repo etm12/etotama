@@ -1,35 +1,18 @@
-$c-button-color: $blue;
-$c-button-background-color: $c-button-color;
-$c-button-border-color: $c-button-color;
-$c-button-border-color-inverse: $gray-300;
-$c-button-border-width: 2px;
-$c-button-text-color: $white;
-$c-button-font-size: remify(13px);
-$c-button-font-weight: 600;
-$c-button-font-family: $font-family-base;
-$c-button-font-style: italic;
+$c-btn-background: $gray-500 !default;
+$c-btn-active-background: $gray-400 !default;
+$c-btn-text-color: $gray-700 !default;
 
 .#{$prefix}-button {
+  background-color: $c-btn-background;
+  color: $c-btn-text-color;
+  font-weight: $font-weight-bold;
+  border: none;
+  padding: .5rem;
   cursor: pointer;
-  font-family: $c-button-font-family;
-  border-radius: 4px;
-  background-color: $c-button-background-color;
-  box-shadow: 0 0 0 2px $c-button-border-color;
-  border-width: $c-button-border-width;
-  border-color: $c-button-text-color;
-  color: $c-button-text-color;
-  height: remify(30px);
-  padding: .2rem 1rem;
-  font-weight: $c-button-font-weight;
-  font-size: $c-button-font-size;
-  margin-right: 8px;
 
   &:hover,
   &:active,
   &:focus {
-    box-shadow: none;
-    border-color: $c-button-background-color;
-    color: $c-button-background-color;
-    background-color: $c-button-text-color;
+    background-color: $c-btn-active-background;
   }
 }

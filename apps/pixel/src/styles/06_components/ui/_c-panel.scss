@@ -1,8 +1,12 @@
 $c-panel-font-family: $font-family-monospace;
 $c-panel-corner-size: remify(6px);
-$c-panel-base-spacing: .5rem;
+$c-panel-base-spacing: .75rem;
 $c-panel-padding: $c-panel-base-spacing;
 $c-panel-corner-color: $gray-700;
+$c-panel-border-width: 2px;
+$c-panel-border-color: $gray-500;
+
+$c-panel-header-text-color: $gray-600 !default;
 
 @mixin no-border ($for...) {
   @each $dir in $for { border-#{$dir}-width: 0; }
@@ -14,22 +18,44 @@ $c-panel-corner-color: $gray-700;
 @mixin no-border-se { @include no-border (left, top); }
 
 .#{$prefix}-panel {
-  padding: $c-panel-base-spacing;
+  display: flex;
 
   &:not(:first-child) {
-    border-left: solid 2px #f00;
+    border-left: solid $c-panel-border-width $c-panel-border-color;
   }
 
   &--auto {
     flex: auto;
   }
 
-  &__header {
-    margin-bottom: $c-panel-base-spacing;
+  &--horizontal {
+    flex-direction: row;
   }
 
-  &--editor {
+  &--vertical {
+    flex-direction: column;
+  }
+
+  &__header,
+  &__body,
+  &__footer {
+    padding: $c-panel-base-spacing;
+  }
+
+  &__header {
+    margin-bottom: $c-panel-base-spacing;
+    color: $c-panel-header-text-color;
+    font-weight: $font-weight-bold;
+  }
+
+  &__footer {
+    margin-top: $c-panel-base-spacing;
+    border-top: solid $c-panel-border-width $c-panel-border-color;
+  }
+
+  &--editor .c-panel__body {
     display: flex;
+    flex: auto;
     align-items: center;
     justify-content: center;
   }
