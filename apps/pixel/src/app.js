@@ -8,11 +8,45 @@ import * as U from 'karet.util';
 import EditorContainer from './containers/editor';
 import HeaderContainer from './containers/header';
 import { Store } from './context';
+import { Panel, PanelHeader, PanelBody } from './layout/panel';
+import Button from './components/button';
+import ButtonGrid from './components/button-grid';
 
 const AppImpl = ({ imageData }) =>
   <main className="container--root app layout layout--root">
     <HeaderContainer />
-    <EditorContainer />
+
+    <div className="layout__body">
+      <Panel size={10}>
+        <PanelHeader>Palette</PanelHeader>
+        <PanelBody>
+          content
+        </PanelBody>
+      </Panel>
+
+      <Panel size={12}>
+        <PanelHeader>Tools</PanelHeader>
+        <PanelBody>
+          <ButtonGrid cols={3}>
+            <Button>
+              Tool 1
+            </Button>
+            <Button>
+              Tool 2
+            </Button>
+            <Button>
+              Tool 3
+            </Button>
+          </ButtonGrid>
+        </PanelBody>
+      </Panel>
+
+      <Panel className="c-panel--editor">
+        <PanelBody>
+          <EditorContainer />
+        </PanelBody>
+      </Panel>
+    </div>
   </main>;
 
 const AppContainer = ({ actions }) =>
