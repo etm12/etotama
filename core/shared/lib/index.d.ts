@@ -1,29 +1,97 @@
-import * as K from 'kefir';
+import { Property } from 'kefir';
 
-export function isObservable(x: any): boolean;
-export function toObservable<T>(x: T): K.Property<T, never>;
+declare let S: S.Static;
 
-export function takeAllArgs(...xs: any[]): any[];
+declare namespace S {
+  type Pair<T0, T1> = [T0, T1];
+  type Position = Pair<number, number>;
 
-type Ary2Fn<T0, T1, R> = (a: T0, b: T1) => R;
-type Ary3Fn<T0, T1, T2, R> = (a: T0, b: T1, c: T2) => R;
+  type Ary0Fn<R> = () => R;
+  type Ary1Fn<T1, R> = (t1: T1) => R;
+  type Ary2Fn<T1, T2, R> = (t1: T1, t2: T2) => R;
+  type Ary3Fn<T1, T2, T3, R> = (t1: T1, t2: T2, t3: T3) => R;
+  type Ary4Fn<T1, T2, T3, T4, R> = (t1: T1, t2: T2, t3: T3, t4: T4) => R;
 
-export function flip<T, U, R>(f: (x: T, y: U) => R, y: U, x: T): R;
-export function flip<T, U, R>(f: (x: T, y: U) => R): (y: U, x: T) => R;
-export function flip<T, U, R>(f: (x: T, y: U) => R): (y: U) => (x: T) => R;
+  interface CurriedGuardAry2<T1, T2, R extends T2> {
+    (t1: T1): (t2: T2) => t2 is R;
+    (t1: T1, t2: T2): t2 is R;
+  }
 
-export function apply<T, R>(f: Function, xs: [T]): R;
-export function apply<T, U, R>(f: Function, xs: [T, U]): R;
-export function apply<T, U, V, R>(f: Function, xs: [T, U, V]): R;
+  interface CurriedGuardAry3<T1, T2, T3, R extends T3> {
+    (t1: T1): CurriedGuardAry2<T2, T3, R>;
+    (t1: T1, t2: T2): (t3: T3) => t3 is R;
+    (t1: T1, t2: T2, t3: T3): t3 is R;
+  }
 
-export function invoke0<T, R>(m: string, f: Function): R;
-export function invoke1<T, R>(m: string, x: T, f: Function): R;
-export function invoke2<T, U, R>(m: string, x: T, y: U, f: Function): R;
-export function invoke3<T, U, V, R>(m: string, x: T, y: U, z: V, f: Function): R;
+  interface CurriedAry2<T1, T2, R> {
+    (t1: T1): (t2: T2) => R;
+    (t1: T1, t2: T2): R;
+  }
 
-export function camelTokens(camelString: string): string[];
-export function kebabTokens(kebabString: string): string[];
+  interface CurriedAry3<T1, T2, T3, R> {
+    (t1: T1): CurriedAry2<T2, R>;
+    (t1: T1, t2: T2): (t3: T3) => R;
+    (t1: T1, t2: T2, t3: T3): R;
+  }
 
-export function capitalize(word: string): string;
-export function camelKebab(kebabString: string): string;
-export function kebabCamel(camelString: string): string;
+  interface Static {
+    // Functions
+
+    takeAllArgs(...xs: any[]): any[];
+
+    flip<T1, T2, R>(fn: Ary2Fn<T1, T2, R>, t2: T2, t1: T1): R;
+    flip<T1, T2, R>(fn: Ary2Fn<T1, T2, R>, t2: T2): (t1: T1) => R;
+    flip<T1, T2, R>(fn: Ary2Fn<T1, T2, R>): (t2: T2) => (t1: T1) => R;
+
+    // Observables
+
+    isObservable(maybeObs: any): boolean;
+    toObservable<T>(maybeObs: T): Property<T>;
+
+    // Event
+
+    persist(e: Event): void;
+
+    // Positions
+
+    offsetPositionBy_(offset: Position, pos: Position): Position;
+    offsetPositionBy(offset: Position): (pos: Position) => Position;
+    offsetPositionBy(offset: Position, pos: Position): Position;
+
+    scalePositionBy_(scale: number, pos: Position): Position;
+    scalePositionBy(scale: number): (pos: Position) => Position;
+    scalePositionBy(scale: number, pos: Position): Position;
+
+    invoke0<R>(m: string, f: Function): R;
+
+    invoke1<T1, R>(m: string, x: T1, f: Ary1Fn<T1, R>): R;
+    invoke1<T1, R>(m: string, x: T1): (f: Ary1Fn<T1, R>) => R;
+    invoke1<T1, R>(m: string): CurriedAry2<T2, R>;
+
+    invoke2<T1, T2, R>(m: string, t1: T1, t2: T2, f: Ary2Fn<T1, T2, R>): R;
+    invoke2<T1, T2, R>(m: string, t1: T1, t2: T2): (f: Ary2Fn<T1, T2, R>) => R;
+    invoke2<T1, T2, R>(m: string, t1: T1): CurriedAry2<T2, R>;
+    invoke2<T1, T2, R>(m: string): CurriedAry3<T1, T2, R>;
+  }
+}
+
+export = S;
+export as namespace S;
+
+// export function invoke0<T, R>(m: string, f: Function): R;
+// export function invoke1<T, R>(m: string, x: T, f: Function): R;
+// export function invoke2<T, U, R>(m: string, x: T, y: U, f: Function): R;
+// export function invoke3<T, U, V, R>(m: string, x: T, y: U, z: V, f: Function): R;
+
+// // String manipulation
+
+// export function camelTokens(camelString: string): string[];
+// export function kebabTokens(kebabString: string): string[];
+
+// //
+
+// export function capitalize(word: string): string;
+// export function camelKebab(kebabString: string): string;
+// export function kebabCamel(camelString: string): string;
+
+

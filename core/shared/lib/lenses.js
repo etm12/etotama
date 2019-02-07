@@ -1,5 +1,6 @@
 import * as R from 'ramda';
 import * as L from 'partial.lenses';
+import { capitalize, camelTokens, kebabTokens } from './index';
 
 export const camelKebab = L.seq(
   [L.modifyOp(R.split('-'))],
