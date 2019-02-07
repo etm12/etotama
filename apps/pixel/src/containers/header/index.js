@@ -14,12 +14,32 @@ const build = L.get(L.pick({
   context: `${envPrefix}CONTEXT`,
 }), process.env);
 
-const HeaderImpl = () =>
+const EditFieldShow = ({ field }) =>
+  <div onClick={() => U.view('editing', field).set(true)}>{U.view('value', field)}</div>;
+
+const EditFieldEdit = ({ field }) =>
+  <U.Input
+    type="text"
+    value={U.view('value', field)}
+    onKeyDown={e => e.keyCode === 13 && U.view('editing', field).set(false)}
+  />
+
+const EditField = ({ field }) =>
+  <React.Fragment>
+    {U.unless(U.view('editing', field), <EditFieldShow field={field} />)}
+    {U.when(U.view('editing', field), <EditFieldEdit field={field} />)}
+  </React.Fragment>;
+
+const HeaderImpl = ({ info }) =>
   <header className="container--header layout layout--header header">
     <figure className="header__brand">
       <div className="header__brand__logo" />
       <figcaption className="header__brand__title">pixel</figcaption>
     </figure>
+
+    <div className="header__title">
+      <EditField field={U.view('name', info)} />
+    </div>
 
     {U.when(
       R.complement(R.isEmpty)(build),
@@ -34,7 +54,7 @@ const HeaderContainer = () =>
   <React.Fragment>
     <Store.Consumer>
       {({ state, imageData }) =>
-        <HeaderImpl />}
+        <HeaderImpl info={U.view('info', state)} />}
     </Store.Consumer>
   </React.Fragment>;
 

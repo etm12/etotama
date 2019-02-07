@@ -20,6 +20,12 @@ const colors = L.get(
 //
 
 const initialState = {
+  info: {
+    name: {
+      value: 'Untitled',
+      editing: false,
+    },
+  },
   canvas: {
     width: 24,
     height: 24,
