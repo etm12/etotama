@@ -15,20 +15,31 @@ const build = L.get(L.pick({
 }), process.env);
 
 const EditFieldShow = ({ field }) =>
-  <div onClick={() => U.view('editing', field).set(true)}>{U.view('value', field)}</div>;
+  <div
+    className="header__title--show"
+    onClick={() => U.view('editing', field).set(true)}
+    title="Click to edit">
+    {U.view('value', field)}
+  </div>;
 
-const EditFieldEdit = ({ field }) =>
-  <U.Input
-    type="text"
-    value={U.view('value', field)}
-    onKeyDown={e => e.keyCode === 13 && U.view('editing', field).set(false)}
-  />
+const EditFieldEdit = ({ field, setFlag = U.doSet( U.view('editing', field), false) }) =>
+  <div className="header__title--edit">
+    <U.Input
+      type="text"
+      value={U.view('value', field)}
+      onKeyDown={e => e.keyCode === 13 && setFlag()}
+    />
+    <button onClick={setFlag}>Ok</button>
+  </div>;
 
 const EditField = ({ field }) =>
-  <React.Fragment>
-    {U.unless(U.view('editing', field), <EditFieldShow field={field} />)}
-    {U.when(U.view('editing', field), <EditFieldEdit field={field} />)}
-  </React.Fragment>;
+  <div className="header__title">
+    {U.ifElse(
+      U.view('editing', field),
+      <EditFieldEdit field={field} />,
+      <EditFieldShow field={field} />,
+    )}
+  </div>;
 
 const HeaderImpl = ({ info }) =>
   <header className="container--header layout layout--header header">
