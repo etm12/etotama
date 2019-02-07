@@ -6,7 +6,7 @@
   &.layout--root {
     display: grid;
     grid-template-rows: 3rem auto;
-    grid-template-columns: auto 20rem;
+    // grid-template-columns: auto 20rem;
 
     position: absolute;
     left: 0;
@@ -15,8 +15,11 @@
     right: 0;
   }
 
+  .layout__body {
+    display: flex;
+  }
+
   &.layout--header {
-    grid-column-end: span 2;
     background-color: $gray-300;
   }
 

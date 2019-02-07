@@ -1,0 +1,8 @@
+.#{$prefix}-button-grid {
+  // border: solid 1px #f00;
+  display: grid;
+
+  &.c-3-cols {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
