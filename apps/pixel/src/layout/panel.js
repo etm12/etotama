@@ -15,9 +15,17 @@ export const PanelBody = ({ children }) => (
   <div className="c-panel__body">{children}</div>
 );
 
+export const PanelFooter = ({ children }) => (
+  <footer className={U.cns(
+    'c-panel__footer',
+  )}>
+    {children}
+  </footer>
+)
+
 //
 
-export const Panel = ({ children, main, size, className }) => {
+export const Panel = ({ children, main, size, className, direction = 'vertical' }) => {
   const style = {
     flexBasis: U.string`${size}rem`,
   };
@@ -29,6 +37,7 @@ export const Panel = ({ children, main, size, className }) => {
         U.when(main, 'c-panel--main'),
         U.when(size, 'c-panel--fixed'),
         U.unless(size, 'c-panel--auto'),
+        U.string`c-panel--${direction}`,
         className
       )}
       style={style}>
