@@ -6,9 +6,13 @@ export const Canvas = {
   scaledSize: U.liftRec((w, h, m) => [w * m, h * m]),
   elOffset: U.through(
     R.invoker(0, 'getBoundingClientRect'),
-    U.mapValue(o => [o.left, o.top]),
+    R.props(['left', 'top']),
   ),
   elContext: R.invoker(1, 'getContext')('2d'),
+};
+
+export const Event = {
+  pagePosition: R.props(['pageX', 'pageY']),
 };
 
 export const Color = {

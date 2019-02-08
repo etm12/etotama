@@ -3,12 +3,12 @@ import * as U from 'karet.util';
 import * as R from 'kefir.ramda';
 import * as L from 'kefir.partial.lenses';
 import * as M from './meta';
+import * as S from '@etotama/core.shared';
 import { Store } from '../../context';
 import { COLOR_CHANNELS } from '../../constants';
 import { takeMouseEventsFrom } from './_events';
-import Panel from '../../components/panel';
-import { colorCounts } from './_colors';
 import actions from '../../actions';
+import readFile from './impl/read-file';
 
 const computeIx = (x, y, w) => ((y * w) + x) * COLOR_CHANNELS;
 
@@ -17,27 +17,26 @@ const getIx = (x, y, w) => ({
   end: computeIx(x, y, w) + COLOR_CHANNELS,
 })
 
-const EditorImpl = ({ width, height, scale, imageData, palette }) => {
+const EditorImpl = ({ width, height, scale, imageData, palette, mousePosition }) => {
   const dom = U.variable();
   const domOffset = M.Canvas.elOffset(dom);
   const domContext = M.Canvas.elContext(dom);
   const domSize = M.Canvas.scaledSize(width, height, scale);
 
-  const stats = U.template({
-    colorCount: R.length(colorCounts(imageData)),
-    lastUndo: U.toProperty(new Date()),
-  });
+  const mouseEv = U.bus();
 
-  const visibleStats = U.template({
-    'Unique colors': U.view('colorCount', stats),
-    'Undo states': U.toProperty(0),
-    'Last undo': U.view(['lastUndo', L.reread(x => x.toISOString())], stats),
-  }).log('visible stats');
+  const reportMouse = U.through(
+    R.props(['pageX', 'pageY']),
+    U.doPush(mouseEv),
+    S.call0,
+  );
 
-  const { selected, colors } = U.destructure(palette);
+  const { selected } = U.destructure(palette);
   const colorValue = U.view(M.Color.hexI, selected);
 
   const takeXYFor = R.props(['pageX', 'pageY']);
+  const fstFor = R.prop(0);
+  const sndFor = R.prop(1);
 
   const {
     onMouseDown,
@@ -45,14 +44,16 @@ const EditorImpl = ({ width, height, scale, imageData, palette }) => {
     onMouseDrag,
   } = takeMouseEventsFrom(dom);
 
-  // const actions = U.serializer(null);
-
-  // const subscribeActions = U.endWith(undefined, actions);
+  const offsetPosition = U.combine(
+    [domOffset, takeXYFor(onMouseMove)],
+    (xs, ys) => [Math.trunc(ys[0] - xs[0]), Math.trunc(ys[1] - xs[1])],
+  );
 
   const pixelPosition = U.thru(
     U.combine(
       [takeXYFor(onMouseMove), domOffset, scale],
-      ([x, y], [l, t], c) => [Math.floor((x - l) / c), Math.floor((y - t) / c)],
+      ([x, y], [l, t], c) =>
+        [Math.trunc((x - l) / c), Math.trunc((y - t) / c)],
     ),
     U.skipDuplicates(R.equals),
   );
@@ -66,7 +67,10 @@ const EditorImpl = ({ width, height, scale, imageData, palette }) => {
     )),
     U.skipDuplicates(([pos1], [pos2]) => R.equals(pos1, pos2)),
     U.consume(([pos, w, h, color]) => {
+      // Get the start and end range of a pixel
       const { start, end } = getIx(pos[0], pos[1], w);
+
+      // Set said pixel to the given color
       imageData.view(L.slice(start, end)).set([...color, 255]);
     }),
   );
@@ -88,98 +92,71 @@ const EditorImpl = ({ width, height, scale, imageData, palette }) => {
 
   const doAction = fn => U.doPush(actions, fn);
 
+  const loadImage = doAction(U.through(
+    U.view(['target', 'files', L.first]),
+    U.flatMapLatest(readFile),
+    U.consume(file => {
+      console.log('consume:', file);
+    }),
+  ));
+
+  const updatePixelPosition = U.thru(
+    pixelPosition,
+    U.consume(pos => mousePosition.set(pos)),
+  );
+
   return (
     <section className="container--editor">
-      {U.sink(U.parallel([
-        drawImageData,
-        drawOnPixelClick,
-      ]))}
+      <React.Fragment>
+        {U.sink(U.parallel([
+          drawImageData,
+          drawOnPixelClick,
+          loadImage,
+          actions,
+          updatePixelPosition,
+        ]))}
+      </React.Fragment>
 
-      <Panel title="Canvas" className="editor__grid--body">
-        <article className="editor__body" style={canvasSize}>
-          <div className="guide guide--x component--info-label">
-            {U.string`${width}px`}
-          </div>
-          <div className="guide guide--y component--info-label">
-            {U.string`${height}px`}
-          </div>
-          <canvas
-            className="editor__canvas"
-            ref={U.refTo(dom)}
-            style={canvasSize}
-            width={width}
-            height={height}
-          />
-          <svg className="editor__ruler" style={canvasSize}>
-            <defs>
-              <line id="ruler-tick" className="ruler-tick" x1="0" x2="0" y1="0" y2="10" />
+      <article className="editor__body" style={canvasSize}>
+        <React.Fragment>
+          <div className="editor__mouse-guide--x"
+              style={{ transform: U.string`translateX(${fstFor(offsetPosition)}px)` }} />
+          <div className="editor__mouse-guide--y"
+              style={{ transform: U.string`translateY(${sndFor(offsetPosition)}px)` }} />
+        </React.Fragment>
 
-              <g id="ruler-tickline" className="ruler-tickline">
-                <use href="#ruler-tick" className="ruler-tick--g ruler-tick--g--first" />
-                <use href="#ruler-tick" className="ruler-tick--g" x="50%" />
-                <use href="#ruler-tick" className="ruler-tick--g ruler-tick--g--last" x="100%" />
-              </g>
-            </defs>
+        <div className="guide guide--x component--info-label">
+          {U.string`${width}px`}
+        </div>
+        <div className="guide guide--y component--info-label">
+          {U.string`${height}px`}
+        </div>
+        <canvas
+          className="editor__canvas"
+          ref={U.refTo(dom)}
+          style={canvasSize}
+          width={width}
+          height={height}
+          onMouseDown={reportMouse}
+          onMouseMove={reportMouse}
+        />
+        <svg className="editor__ruler" style={canvasSize}>
+          <defs>
+            <line id="ruler-tick" className="ruler-tick" x1="0" x2="0" y1="0" y2="10" />
 
-            <use href="#ruler-tickline" className="ruler-tickline--n" />
-            <use href="#ruler-tickline" className="ruler-tickline--e" y="0%" x="0%" />
-            <use href="#ruler-tickline" className="ruler-tickline--w" y="100%" x="0%" />
-            <use href="#ruler-tickline" className="ruler-tickline--s" y="100%" />
-          </svg>
+            <g id="ruler-tickline" className="ruler-tickline">
+              <use href="#ruler-tick" className="ruler-tick--g ruler-tick--g--first" />
+              <use href="#ruler-tick" className="ruler-tick--g" x="50%" />
+              <use href="#ruler-tick" className="ruler-tick--g ruler-tick--g--last" x="100%" />
+            </g>
+          </defs>
 
-          <section className="editor__info component--info-label">
-            {U.string`${width} × ${height}, scale: ${scale}`}&nbsp;
-            {U.string`[ ${U.view(0, pixelPosition)}, ${U.view(1, pixelPosition)} ]`}
-          </section>
-        </article>
-      </Panel>
-
-      {/* Color palette */}
-      <Panel title="Color list" className="editor__grid--colors">
-        <section className="editor__colors">
-          <ul className="colorlist">
-            {U.thru(
-              colors,
-              U.mapElems((it, i) =>
-                <li key={i}
-                    className={U.cns(
-                      'colorlist__item',
-                      U.when(R.equals(it, selected), 'selected'),
-                    )}
-                    onClick={() => selected.set(it.get())}
-                    style={{ backgroundColor: it }} />),
-            )}
-          </ul>
-        </section>
-      </Panel>
-
-      <Panel title="File">
-        <button className="c-button c-button--primary"
-                onClick={doAction(() => 'top kek')}>
-          Save PNG
-        </button>
-        <button className="c-button c-button--primary"
-                onClick={doAction(() => 'foo bar')}>
-          Load PNG
-        </button>
-      </Panel>
-
-      <Panel title="Stats"
-             className="editor__grid--aside">
-        <aside className="editor__aside">
-          <dl className="stats-list">
-            {U.thru(
-              visibleStats,
-              L.collect(L.entries),
-              L.modify(L.elems, ([k, v]) =>
-                <React.Fragment key={k}>
-                  <dt className="stats-list__key">{k}</dt>
-                  <dd className="stats-list__value">{v}</dd>
-                </React.Fragment>),
-            )}
-          </dl>
-        </aside>
-      </Panel>
+          <use href="#ruler-tickline" className="ruler-tickline--n" />
+          <use href="#ruler-tickline" className="ruler-tickline--e" y="0%" x="0%" />
+          <use href="#ruler-tickline" className="ruler-tickline--w" y="100%" x="0%" />
+          <use href="#ruler-tickline" className="ruler-tickline--s" y="100%" />
+        </svg>
+      </article>
     </section>
   );
 }
@@ -188,8 +165,9 @@ const EditorContainer = () =>
   <React.Fragment>
     <Store.Consumer>
       {({ state, imageData }) => {
-        const { canvas, palette } = U.destructure(state);
+        const { canvas, palette, mouse } = U.destructure(state);
         const { width, height, scale } = U.destructure(canvas);
+        const { position } = U.destructure(mouse);
 
         return (
           <EditorImpl {...{
@@ -198,6 +176,7 @@ const EditorContainer = () =>
             scale,
             palette,
             imageData,
+            mousePosition: position,
           }} />
         );
       }}

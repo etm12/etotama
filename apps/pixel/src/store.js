@@ -7,7 +7,7 @@ import * as R from 'ramda';
 import * as L from 'partial.lenses';
 
 import palettes from './assets/palettes';
-import { COLOR_CHANNELS } from './constants';
+import { COLOR_CHANNELS, PanelType } from './constants';
 import * as M from './_meta';
 
 const colors = L.get(
@@ -20,6 +20,12 @@ const colors = L.get(
 //
 
 const initialState = {
+  info: {
+    name: {
+      value: 'Untitled',
+      editing: false,
+    },
+  },
   canvas: {
     width: 24,
     height: 24,
@@ -29,6 +35,23 @@ const initialState = {
       top: 0,
     },
   },
+  panels: [
+    {
+      type: PanelType.PANEL,
+      props: {},
+      children: [
+        {
+          type: PanelType.PANEL,
+          header: 'Tools & Functions',
+          children: [
+            {
+              type: PanelType.PALETTE,
+            },
+          ],
+        },
+      ],
+    },
+  ],
   brush: {
     size: 2,
   },

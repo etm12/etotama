@@ -1,0 +1,9 @@
+@mixin no-border ($for...) {
+  @each $dir in $for { border-#{$dir}-width: 0; }
+}
+
+@mixin no-border-nw { @include no-border (right, bottom); }
+@mixin no-border-ne { @include no-border (left, bottom); }
+@mixin no-border-sw { @include no-border (right, top); }
+@mixin no-border-se { @include no-border (left, top); }
+
