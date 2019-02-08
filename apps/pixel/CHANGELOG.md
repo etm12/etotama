@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0](https://github.com/etm12/etotama/compare/v0.5.0...v0.6.0) (2019-02-08)
+
+
+### Features
+
+* **apps/pixel:** Add Button, ButtonGrid component ([d0a1208](https://github.com/etm12/etotama/commit/d0a1208))
+* **apps/pixel:** Add editable title to header ([85eeffd](https://github.com/etm12/etotama/commit/85eeffd))
+* **apps/pixel:** Add Google web fonts ([07f3536](https://github.com/etm12/etotama/commit/07f3536))
+* **apps/pixel:** Add Layout Panel element ([279c0a3](https://github.com/etm12/etotama/commit/279c0a3))
+* **apps/pixel:** Add new UI components ([ff4e648](https://github.com/etm12/etotama/commit/ff4e648))
+* **apps/pixel:** Add panel configuration to store (WIP) ([8bb3452](https://github.com/etm12/etotama/commit/8bb3452))
+* **apps/pixel:** Add PanelFooter and panel direction implementations ([1b9f384](https://github.com/etm12/etotama/commit/1b9f384))
+* **apps/pixel:** Add PanelFooter component ([f0203b3](https://github.com/etm12/etotama/commit/f0203b3))
+* **apps/pixel:** Add renewed UI with mouse position tracking ([1b2eb39](https://github.com/etm12/etotama/commit/1b2eb39))
+* **apps/pixel:** Add styles for new components ([c64a87d](https://github.com/etm12/etotama/commit/c64a87d))
+* **apps/pixel:** Add styles for new UI components ([525c119](https://github.com/etm12/etotama/commit/525c119))
+* **apps/pixel:** Implement initial support for image loading, layout ([83987fb](https://github.com/etm12/etotama/commit/83987fb))
+* **apps/pixel:** Improve structure of editable title ([91f047c](https://github.com/etm12/etotama/commit/91f047c))
+* **apps/pixel:** Update Panel component styles ([4688bba](https://github.com/etm12/etotama/commit/4688bba))
+
+
+
+
+
 # [0.5.0](https://github.com/etm12/etotama/compare/v0.4.0...v0.5.0) (2019-02-05)
 
 
