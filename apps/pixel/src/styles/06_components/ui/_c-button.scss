@@ -2,17 +2,34 @@ $c-btn-background: $gray-500 !default;
 $c-btn-active-background: $gray-400 !default;
 $c-btn-text-color: $gray-700 !default;
 
-.#{$prefix}-button {
+$_button-class: #{$prefix}-button;
+$_custom-button-class: #{$_button-class}--custom;
+$_active-button-class: #{$_button-class}--active;
+
+.#{$_button-class} {
   background-color: $c-btn-background;
   color: $c-btn-text-color;
   font-weight: $font-weight-bold;
   border: none;
-  padding: .5rem;
+  padding: $spacing-normal;
   cursor: pointer;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: .5;
+  }
 
   &:hover,
   &:active,
   &:focus {
-    background-color: $c-btn-active-background;
+    &:not(:disabled) {
+      background-color: $c-btn-active-background;
+    }
+  }
+
+  &.#{$_custom-button-class} {
+    &.#{$_active-button-class} {
+      border: solid 2px rgba(0, 0, 0, .3);
+    }
   }
 }
