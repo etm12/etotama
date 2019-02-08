@@ -17,7 +17,7 @@ const getIx = (x, y, w) => ({
   end: computeIx(x, y, w) + COLOR_CHANNELS,
 })
 
-const EditorImpl = ({ width, height, scale, imageData, palette }) => {
+const EditorImpl = ({ width, height, scale, imageData, palette, mousePosition }) => {
   const dom = U.variable();
   const domOffset = M.Canvas.elOffset(dom);
   const domContext = M.Canvas.elContext(dom);
@@ -35,12 +35,19 @@ const EditorImpl = ({ width, height, scale, imageData, palette }) => {
   const colorValue = U.view(M.Color.hexI, selected);
 
   const takeXYFor = R.props(['pageX', 'pageY']);
+  const fstFor = R.prop(0);
+  const sndFor = R.prop(1);
 
   const {
     onMouseDown,
     onMouseMove,
     onMouseDrag,
   } = takeMouseEventsFrom(dom);
+
+  const offsetPosition = U.combine(
+    [domOffset, takeXYFor(onMouseMove)],
+    (xs, ys) => [Math.trunc(ys[0] - xs[0]), Math.trunc(ys[1] - xs[1])],
+  );
 
   const pixelPosition = U.thru(
     U.combine(
@@ -60,7 +67,10 @@ const EditorImpl = ({ width, height, scale, imageData, palette }) => {
     )),
     U.skipDuplicates(([pos1], [pos2]) => R.equals(pos1, pos2)),
     U.consume(([pos, w, h, color]) => {
+      // Get the start and end range of a pixel
       const { start, end } = getIx(pos[0], pos[1], w);
+
+      // Set said pixel to the given color
       imageData.view(L.slice(start, end)).set([...color, 255]);
     }),
   );
@@ -83,26 +93,38 @@ const EditorImpl = ({ width, height, scale, imageData, palette }) => {
   const doAction = fn => U.doPush(actions, fn);
 
   const loadImage = doAction(U.through(
-    U.show,
     U.view(['target', 'files', L.first]),
-    U.show,
     U.flatMapLatest(readFile),
-    U.show,
     U.consume(file => {
       console.log('consume:', file);
-    })
+    }),
   ));
+
+  const updatePixelPosition = U.thru(
+    pixelPosition,
+    U.consume(pos => mousePosition.set(pos)),
+  );
 
   return (
     <section className="container--editor">
-      {U.sink(U.parallel([
-        drawImageData,
-        drawOnPixelClick,
-        loadImage,
-        actions,
-      ]))}
+      <React.Fragment>
+        {U.sink(U.parallel([
+          drawImageData,
+          drawOnPixelClick,
+          loadImage,
+          actions,
+          updatePixelPosition,
+        ]))}
+      </React.Fragment>
 
       <article className="editor__body" style={canvasSize}>
+        <React.Fragment>
+          <div className="editor__mouse-guide--x"
+              style={{ transform: U.string`translateX(${fstFor(offsetPosition)}px)` }} />
+          <div className="editor__mouse-guide--y"
+              style={{ transform: U.string`translateY(${sndFor(offsetPosition)}px)` }} />
+        </React.Fragment>
+
         <div className="guide guide--x component--info-label">
           {U.string`${width}px`}
         </div>
@@ -134,11 +156,6 @@ const EditorImpl = ({ width, height, scale, imageData, palette }) => {
           <use href="#ruler-tickline" className="ruler-tickline--w" y="100%" x="0%" />
           <use href="#ruler-tickline" className="ruler-tickline--s" y="100%" />
         </svg>
-
-        <section className="editor__info component--info-label">
-          {U.string`${width} × ${height}, scale: ${scale}`}&nbsp;
-          {U.string`[ ${U.view(0, pixelPosition)}, ${U.view(1, pixelPosition)} ]`}
-        </section>
       </article>
     </section>
   );
@@ -148,8 +165,9 @@ const EditorContainer = () =>
   <React.Fragment>
     <Store.Consumer>
       {({ state, imageData }) => {
-        const { canvas, palette } = U.destructure(state);
+        const { canvas, palette, mouse } = U.destructure(state);
         const { width, height, scale } = U.destructure(canvas);
+        const { position } = U.destructure(mouse);
 
         return (
           <EditorImpl {...{
@@ -158,6 +176,7 @@ const EditorContainer = () =>
             scale,
             palette,
             imageData,
+            mousePosition: position,
           }} />
         );
       }}

@@ -1,5 +1,6 @@
 import * as React from 'karet';
 import * as U from 'karet.util';
+import * as R from 'kefir.ramda';
 
 //
 
@@ -25,21 +26,36 @@ export const PanelFooter = ({ children }) => (
 
 //
 
-export const Panel = ({ children, main, size, className, direction = 'vertical' }) => {
+export const Panel = props => {
+  const {
+    children,
+    main,
+    size,
+    stretch,
+    className,
+    center,
+    name,
+    component,
+    direction = 'vertical',
+  } = props;
+
   const style = {
     flexBasis: U.string`${size}rem`,
   };
 
+  const classNames = [
+    'c-panel',
+    U.when(main, 'c-panel--main'),
+    U.when(size, 'c-panel--fixed'),
+    U.when(stretch, 'c-panel--stretch'),
+    U.string`c-panel--${direction}`,
+    U.when(center, 'c-panel--center'),
+    className,
+  ];
+
   return (
     <section
-      className={U.cns(
-        'c-panel',
-        U.when(main, 'c-panel--main'),
-        U.when(size, 'c-panel--fixed'),
-        U.unless(size, 'c-panel--auto'),
-        U.string`c-panel--${direction}`,
-        className
-      )}
+      className={U.cns(classNames)}
       style={style}>
       {children}
     </section>

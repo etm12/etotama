@@ -52,13 +52,15 @@ const HeaderImpl = ({ info }) =>
       <EditField field={U.view('name', info)} />
     </div>
 
-    {U.when(
-      R.complement(R.isEmpty)(build),
-      <aside className="header__version-info">
-        <strong>{build.name} {build.version}</strong>
-        &nbsp;(<abbr title={build.context}>{build.branch}@{build.commit.slice(0, 8)}</abbr>)
-      </aside>
-    )}
+    <React.Fragment>
+      {U.when(
+        R.complement(R.isEmpty)(build),
+        <aside className="header__version-info">
+          <strong>{build.name} {build.version}</strong>
+          &nbsp;(<abbr title={build.context}>{build.branch}@{build.commit.slice(0, 8)}</abbr>)
+        </aside>
+      )}
+    </React.Fragment>
   </header>;
 
 const HeaderContainer = () =>
