@@ -3,6 +3,7 @@
 import * as L from 'partial.lenses';
 import * as R from 'ramda';
 import * as K from 'kefir';
+import * as C from 'd3-color';
 import * as Ls from './lenses';
 
 //
@@ -62,3 +63,11 @@ export const offsetPositionBy = R.curry(offsetPositionBy_)
 //. scalePositionBy :: Int -> Position -> Position
 export const scalePositionBy_ = (r, [x, y]) => [Math.trunc(x / r), Math.trunc(y / r)];
 export const scalePositionBy = R.curry(scalePositionBy_);
+
+// #region Colors
+const isColor = x => (x instanceof C.color);
+export const toColor = (x => (isColor(x) ? x : C.color(x)));
+
+export const toHex = R.invoker(0, 'hex');
+export const darken = (amount, color) => color.darker(amount);
+// #endregion

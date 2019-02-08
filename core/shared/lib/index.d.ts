@@ -77,21 +77,3 @@ declare namespace S {
 
 export = S;
 export as namespace S;
-
-// export function invoke0<T, R>(m: string, f: Function): R;
-// export function invoke1<T, R>(m: string, x: T, f: Function): R;
-// export function invoke2<T, U, R>(m: string, x: T, y: U, f: Function): R;
-// export function invoke3<T, U, V, R>(m: string, x: T, y: U, z: V, f: Function): R;
-
-// // String manipulation
-
-// export function camelTokens(camelString: string): string[];
-// export function kebabTokens(kebabString: string): string[];
-
-// //
-
-// export function capitalize(word: string): string;
-// export function camelKebab(kebabString: string): string;
-// export function kebabCamel(camelString: string): string;
-
-
