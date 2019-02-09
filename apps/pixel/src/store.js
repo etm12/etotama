@@ -66,23 +66,21 @@ const initialState = {
 
 //
 
-const store = U.atom(initialState);
+export const state = U.atom(initialState);
 
-export default store;
-window.store = store;
 //
 
 U.thru(
-  store,
+  state,
   U.debounce(500),
-).log('store');
+).log('state');
 
 // Image data
 
 export const imageData = U.atom();
 
 const imageDataShouldChange = U.thru(
-  store,
+  state,
   U.view(['canvas', L.props('width', 'height')]),
   U.skipDuplicates(R.equals),
   U.mapValue(({ width, height }) => (width * height) * COLOR_CHANNELS),
@@ -94,3 +92,13 @@ imageDataShouldChange
     console.info('Image size has changed, creating new image data.');
     imageData.set(arr);
   });
+
+//
+
+/**
+ * Temp use only
+ * @deprecated
+ */
+export const canvas = U.variable();
+
+canvas.log('canvas (REMOVE ME)');

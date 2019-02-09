@@ -7,15 +7,19 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './app';
 import * as serviceWorker from './serviceWorker';
-import store, { imageData } from './store';
+import { state, imageData, canvas } from './store';
 import { Store } from './context';
 import actions from './actions';
+import { handle as handler } from './effects';
 
 import './styles/index.scss';
 
 ReactDOM.render(
-  <Store.Provider value={{ state: store, imageData }}>
-    <App actions={actions} />
+  <Store.Provider value={{ state, imageData, canvas }}>
+    <App
+      actions={actions}
+      effectHandler={handler}
+    />
   </Store.Provider>,
   document.getElementById('root'),
 );

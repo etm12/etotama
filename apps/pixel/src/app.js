@@ -6,7 +6,9 @@ import * as React from 'karet';
 import * as U from 'karet.util';
 import * as R from 'kefir.ramda';
 import * as L from 'kefir.partial.lenses';
+import * as S from '@etotama/core.shared';
 
+import { pushEff, effect, createEff, Effect } from './effects';
 import * as M from './_meta';
 import EditorContainer from './containers/editor';
 import HeaderContainer from './containers/header';
@@ -16,8 +18,9 @@ import Button from './components/button';
 import ButtonGrid from './components/button-grid';
 import KeyValue from './components/key-value';
 import ToolGrid from './components/ui/tool-grid';
+import Divider from './components/divider';
 
-const AppImpl = ({ imageData, state, palette }) =>
+const AppImpl = ({ imageData, state, palette, canvas }) =>
   <main className="container--root app layout layout--root">
     <HeaderContainer />
 
@@ -27,13 +30,14 @@ const AppImpl = ({ imageData, state, palette }) =>
           <Panel>
             <PanelHeader>Tools</PanelHeader>
             <PanelBody>
-              <ToolGrid />
+              <ToolGrid canvas={canvas} />
             </PanelBody>
           </Panel>
 
           <Panel>
             <PanelHeader>Palette</PanelHeader>
             <PanelBody>
+              <Divider type="thin" />
               <ButtonGrid cols={8} gap="hairline">
                 {U.thru(
                   palette,
@@ -71,18 +75,31 @@ const AppImpl = ({ imageData, state, palette }) =>
     </div>
   </main>;
 
-const AppContainer = ({ actions }) =>
-  <React.Fragment>
-    {U.sink(actions.log('AppImpl:actions'))}
+const AppContainer = ({ actions, effectHandler }) => {
+  const onResize = U.thru(
+    U.fromEvents(window, 'resize', a => a),
+    U.consume(x => effect.set(createEff(Effect.WINDOW_RESIZE, x))),
+  );
 
-    <Store.Consumer>
-      {({ state, imageData }) =>
-        <AppImpl
-          imageData={imageData}
-          state={state}
-          palette={M.colorPaletteIn(state)}
-        />}
-    </Store.Consumer>
-  </React.Fragment>;
+  return (
+    <React.Fragment>
+      {U.sink(U.parallel([
+        actions.log('AppImpl:actions'),
+        effectHandler,
+        onResize,
+      ]))}
+
+      <Store.Consumer>
+        {({ state, imageData, canvas }) =>
+          <AppImpl
+            imageData={imageData}
+            state={state}
+            palette={M.colorPaletteIn(state)}
+            canvas={canvas}
+          />}
+      </Store.Consumer>
+    </React.Fragment>
+  );
+};
 
 export default AppContainer;
