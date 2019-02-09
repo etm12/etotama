@@ -49,6 +49,14 @@ $cyan:    #17a2b8 !default;
 
 // Derived colors
 
+$colors: () !default;
+$colors: map-merge(
+  (
+    'divider': rgba(0, 0, 0, .2),
+  ),
+  $colors,
+);
+
 $application-background: $gray-100;
 
 //
@@ -73,6 +81,17 @@ $font-size-tiny: $font-size-base * .75;
 $font-weight-semibold: 500;
 $font-weight-bold: 700;
 
+/// Spacing
+
+$spacing-base: 1rem;
+$spacing-normal: $spacing-base * .5;
+$spacing-small: $spacing-base * .33;
+
+$grid-gap-none: 0;
+$grid-gap-hairline: 1px;
+$grid-gap-thin: 2px;
+$grid-gap-normal: 4px;
+
 /// Base components
 
 $button-padding: .5rem 1rem;
@@ -91,10 +110,6 @@ $info-border-color: $gray-300;
 $info-border-width: remify(2px);
 
 /// Components
-
-$spacing-base: 1rem;
-$spacing-normal: $spacing-base * .5;
-$spacing-small: $spacing-base * .33;
 
 $c-panel-background-color: $gray-800;
 
