@@ -81,6 +81,21 @@ $font-size-tiny: $font-size-base * .75;
 $font-weight-semibold: 500;
 $font-weight-bold: 700;
 
+// Sizes
+
+$line-widths: (
+  hairline: 1px,
+  thin: 2px,
+  normal: 4px,
+  thick: 8px,
+);
+
+$font-size: (
+  tiny: $font-size-base * .75,
+  small: $font-size-base * .875,
+  normal: $font-size-base,
+);
+
 /// Spacing
 
 $spacing-base: 1rem;
@@ -88,7 +103,7 @@ $spacing-normal: $spacing-base * .5;
 $spacing-small: $spacing-base * .33;
 
 $grid-gap-none: 0;
-$grid-gap-hairline: 1px;
+$grid-gap-hairline: line-width(hairline);
 $grid-gap-thin: 2px;
 $grid-gap-normal: 4px;
 

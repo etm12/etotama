@@ -1,0 +1,3 @@
+@function line-width($width) {
+  @return map-get($line-widths, $width);
+}

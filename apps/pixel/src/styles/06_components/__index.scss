@@ -1,19 +1,22 @@
+@import 'layout/_index';
 @import 'layout';
-@import 'editor';
-@import 'palette';
-@import 'debug';
-@import 'header';
-@import 'sidebar-panel';
-@import 'svg';
+@import 'canvas';
 
-@import 'container-editor';
-@import 'container-header';
+// @import 'editor';
+// @import 'palette';
+// @import 'debug';
+// @import 'header';
+// @import 'sidebar-panel';
+// @import 'svg';
 
-@import 'ui-menubar';
-@import 'ui-svg-measure';
+// @import 'container-editor';
+// @import 'container-header';
 
-@import 'component-tool-palette';
-@import 'component-info';
-@import 'component-colorstats';
+// @import 'ui-menubar';
+// @import 'ui-svg-measure';
+
+// @import 'component-tool-palette';
+// @import 'component-info';
+// @import 'component-colorstats';
 
 @import 'ui/_index';

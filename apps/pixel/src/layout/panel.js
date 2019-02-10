@@ -1,6 +1,5 @@
 import * as React from 'karet';
 import * as U from 'karet.util';
-import * as R from 'kefir.ramda';
 
 //
 
@@ -34,7 +33,9 @@ export const Panel = props => {
     stretch,
     className,
     center,
+    // eslint-disable-next-line
     name,
+    // eslint-disable-next-line
     component,
     direction = 'vertical',
   } = props;

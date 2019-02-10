@@ -27,6 +27,8 @@ const initialState = {
     },
   },
   canvas: {
+    size: [24, 24],
+    mouse: [0, 0],
     width: 24,
     height: 24,
     scale: 16,
@@ -54,9 +56,6 @@ const initialState = {
   ],
   brush: {
     size: 2,
-  },
-  mouse: {
-    position: [0, 0],
   },
   palette: {
     selected: '#c28569',

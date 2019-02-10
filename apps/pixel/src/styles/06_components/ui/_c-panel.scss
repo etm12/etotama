@@ -1,75 +1,79 @@
-$c-panel-font-family: $font-family-monospace;
-$c-panel-corner-size: remify(6px);
-$c-panel-base-spacing: .75rem;
-$c-panel-padding: $c-panel-base-spacing;
-$c-panel-corner-color: $gray-700;
-$c-panel-border-width: 2px;
-$c-panel-border-color: $gray-500;
+@mixin make-panel {
+  $c-panel-font-family: $font-family-monospace;
+  $c-panel-corner-size: remify(6px);
+  $c-panel-base-spacing: .75rem;
+  $c-panel-padding: $c-panel-base-spacing;
+  $c-panel-corner-color: $gray-700;
+  $c-panel-border-width: 2px;
+  $c-panel-border-color: $gray-500;
 
-$c-panel-header-text-color: $gray-600 !default;
+  $c-panel-header-text-color: $gray-600 !default;
 
-$panel-class: #{$prefix}-panel;
-$panel-header-class: #{$panel-class}__header;
-$panel-body-class: #{$panel-class}__body;
-$panel-footer-class: #{$panel-class}__footer;
+  $_class: #{$prefix}-panel;
+  $_class-header: #{$_class}__header;
+  $_class-body: #{$_class}__body;
+  $_class-footer: #{$_class}__footer;
 
-.#{$panel-class} {
-  display: flex;
-}
+  .#{$_class} {
+    display: flex;
+  }
 
-.#{$panel-header-class},
-.#{$panel-body-class},
-.#{$panel-footer-class} {
-  padding: $c-panel-base-spacing;
-}
+  .#{$_class-header},
+  .#{$_class-body},
+  .#{$_class-footer} {
+    padding: $c-panel-base-spacing;
+  }
 
-.#{$panel-body-class} {
-  flex: auto;
-}
-
-.#{$panel-header-class} {
-  margin-bottom: $c-panel-base-spacing;
-  color: $c-panel-header-text-color;
-  font-weight: $font-weight-bold;
-}
-
-.#{$panel-footer-class} {
-  margin-top: $c-panel-base-spacing;
-  border-top: solid $c-panel-border-width $c-panel-border-color;
-}
-
-// Modifiers
-
-.#{$panel-class}--stretch {
-  flex: auto;
-
-  > :not(.#{$panel-class}--fixed) {
+  .#{$_class-body} {
     flex: auto;
   }
-}
 
-.#{$panel-class}--vertical {
-  flex-direction: column;
+  .#{$_class-header} {
+    margin-bottom: $c-panel-base-spacing;
+    color: $c-panel-header-text-color;
+    font-weight: $font-weight-bold;
+  }
 
-  > .#{$panel-class} {
-    &:not(:first-child) {
-      border-top: solid $c-panel-border-width $c-panel-border-color;
+  .#{$_class-footer} {
+    margin-top: $c-panel-base-spacing;
+    border-top: solid $c-panel-border-width $c-panel-border-color;
+  }
+
+  // Modifiers
+
+  .#{$_class}--stretch {
+    flex: auto;
+
+    > :not(.#{$_class}--fixed) {
+      flex: auto;
     }
+  }
+
+  .#{$_class}--vertical {
+    flex-direction: column;
+
+    > .#{$_class} {
+      &:not(:first-child) {
+        border-top: solid $c-panel-border-width $c-panel-border-color;
+      }
+    }
+  }
+
+  .#{$_class}--horizontal {
+    flex-direction: row;
+
+    > .#{$_class} {
+      &:not(:first-child) {
+        border-left: solid $c-panel-border-width $c-panel-border-color;
+      }
+    }
+  }
+
+  .#{$_class}--center > .#{$_class-body} {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 
-.#{$panel-class}--horizontal {
-  flex-direction: row;
-
-  > .#{$panel-class} {
-    &:not(:first-child) {
-      border-left: solid $c-panel-border-width $c-panel-border-color;
-    }
-  }
-}
-
-.#{$panel-class}--center > .#{$panel-body-class} {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+@include make-panel();

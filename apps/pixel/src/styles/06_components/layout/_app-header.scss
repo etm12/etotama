@@ -1,0 +1,12 @@
+@mixin _make-app-header {
+  $_class: #{$prefix}-app-header;
+  $_structure: 10rem auto 10rem;
+
+  .#{$_class} {
+    border: solid 1px #f00;
+    display: grid;
+    grid-template-columns: $_structure;
+  }
+}
+
+@include _make-app-header();

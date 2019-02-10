@@ -17,6 +17,8 @@ import './styles/index.scss';
 ReactDOM.render(
   <Store.Provider value={{ state, imageData, canvas }}>
     <App
+      state={state}
+      imageData={imageData}
       actions={actions}
       effectHandler={handler}
     />
