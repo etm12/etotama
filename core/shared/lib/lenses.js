@@ -1,3 +1,4 @@
+/// <reference path="./lenses.d.ts" />
 import * as R from 'ramda';
 import * as L from 'partial.lenses';
 import { color } from 'd3-color';
@@ -31,4 +32,11 @@ export const toPct = L.reread(x => `${x}%`);
 export const toPctU = [L.reread(R.multiply(100)), toPct];
 export const toRem = L.reread(x => `${x}rem`);
 export const toColor = L.reread(color);
+
+export const toCssTransform = k => L.reread(y => `${k}(${y})`);
+
+const cssTranslateX = toCssTransform('translateX');
+const cssTranslateY = toCssTransform('translateY');
+export const translateX = [toPx, cssTranslateX];
+export const translateY = [toPx, cssTranslateY];
 
