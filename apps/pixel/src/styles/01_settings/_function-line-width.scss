@@ -1,3 +1,11 @@
 @function line-width($width) {
   @return map-get($line-widths, $width);
 }
+
+@function font-size($size) {
+  @return map-get($font-sizes, $size);
+}
+
+@function space($size) {
+  @return map-get($spacing-sizes, $size);
+}

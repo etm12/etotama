@@ -1,0 +1,26 @@
+@mixin annotate($text, $font-size: font-size(tiny), $align: nw) {
+  $_alignment: (
+    nw: (left, top),
+    ne: (right, top),
+    sw: (left, bottom),
+    se: (right, bottom),
+  );
+
+  $_aligns: map-get($_alignment, $align);
+  $_align-x: nth($_aligns, 1);
+  $_align-y: nth($_aligns, 2);
+
+  position: relative;
+
+  &::before {
+    position: absolute;
+    #{$_align-x}: 0;
+    #{$_align-y}: 0;
+
+    content: '#{$text}';
+    background-color: rgba(#fff, .5);
+    border: solid 1px rgba(#f00, .5);
+    padding: space(tiny);
+    font-size: $font-size;
+  }
+}
