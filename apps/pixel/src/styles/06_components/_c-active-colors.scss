@@ -1,0 +1,42 @@
+@mixin _make-active-colors {
+  $_class: #{$prefix}-active-colors;
+  $_body-class: #{$_class}__body;
+  $_fg-class: #{$_class}__foreground;
+  $_bg-class: #{$_class}__background;
+
+  .#{$_class} {
+    padding: space(small);
+  }
+
+  .#{$_body-class} {
+    position: relative;
+    height: 4rem;
+  }
+
+  .#{$_fg-class},
+  .#{$_bg-class} {
+    position: absolute;
+    border: dashed 1px #f00;
+    background-color: #fff;
+  }
+
+  .#{$_fg-class} {
+    left: 0;
+    top: 0;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 2;
+  }
+
+  .#{$_bg-class} {
+    position: absolute;
+    left: 1rem;
+    top: 1rem;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+    background-color: #000;
+  }
+}
+
+@include _make-active-colors();
