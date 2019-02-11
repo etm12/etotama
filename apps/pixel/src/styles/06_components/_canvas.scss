@@ -1,40 +1,6 @@
 @mixin _make-canvas {
   $_class: #{$prefix}-canvas;
 
-  $_guide-line-width: 1px;
-  $_offset-guide-color: #f00;
-  $_offset-guide-opacity: .2;
-
-  $_guides: (
-    page: (
-      color: rgba(255, 0, 0, .3),
-      x: (0, 1rem),
-      y: (1rem, 0),
-    ),
-    screen: (
-      color: rgba(0, 255, 0, .3),
-      x: (0, 3rem),
-      y: (3rem, 0),
-    ),
-    client: (
-      color: rgba(0, 0, 255, .3),
-      x: (0, 5rem),
-      y: (5rem, 0),
-    ),
-    offset: (
-      position: relative,
-      z-index: 10,
-      color: $_offset-guide-color,
-      x: (0, 7rem),
-      y: (7rem, 0),
-    ),
-    pixel: (
-      color: rgba(255, 128, 0, .6),
-      x: (0, 9rem),
-      y: (7.5rem, 0),
-    ),
-  );
-
   .#{$_class} {
     // border: solid 1px #f00;
     position: relative;
@@ -65,57 +31,7 @@
         &.horizontal { left: 0; width: 100%; margin-top: -1px; height: 3px; }
         &.vertical { top: 0; height: 100%; width: 3px; margin-left: -1px; position: absolute; }
       }
-
-      &.prefix {
-        @each $key, $props in $_guides {
-          &-#{$key} {
-            pointer-events: none;
-            background-color: map-get($props, color);
-
-            @if map-has-key($props, position) {
-              position: map-get($props, position);
-            }
-
-            @if map-has-key($props, z-index) {
-              z-index: map-get($props, z-index);
-            }
-
-            &.horizontal {
-              &::before {
-                content: '#{$key}Y';
-                top: nth(map-get($props, x), 1);
-                left: nth(map-get($props, x), 2);
-              }
-            }
-
-            &.vertical {
-              &::before {
-                content: '#{$key}X';
-                top: nth(map-get($props, y), 1);
-                left: nth(map-get($props, y), 2);
-              }
-            }
-          }
-        }
-      }
-
-      &::before {
-        position: absolute;
-        font-size: 12px;
-        padding: .33rem;
-        background-color: #fff;
-        border: solid 1px #f00;
-      }
-
-      &.horizontal {
-        width: 100%;
-        height: $_guide-line-width;
-      }
-
-      &.vertical {
-        height: 100%;
-        width: $_guide-line-width;
-      }
+      @include _make-dev-guides();
     }
   }
 }

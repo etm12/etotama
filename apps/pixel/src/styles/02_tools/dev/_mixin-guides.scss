@@ -1,0 +1,52 @@
+@mixin _make-dev-guides {
+  &.prefix {
+    @each $key, $props in $_guides {
+      &-#{$key} {
+        pointer-events: none;
+        background-color: map-get($props, color);
+
+        @if map-has-key($props, position) {
+          position: map-get($props, position);
+        }
+
+        @if map-has-key($props, z-index) {
+          z-index: map-get($props, z-index);
+        }
+
+        &.horizontal {
+          &::before {
+            content: '#{$key}Y';
+            top: nth(map-get($props, x), 1);
+            left: nth(map-get($props, x), 2);
+          }
+        }
+
+        &.vertical {
+          &::before {
+            content: '#{$key}X';
+            top: nth(map-get($props, y), 1);
+            left: nth(map-get($props, y), 2);
+          }
+        }
+      }
+    }
+  }
+
+  &::before {
+    position: absolute;
+    font-size: 12px;
+    padding: .33rem;
+    background-color: #fff;
+    border: solid 1px #f00;
+  }
+
+  &.horizontal {
+    width: 100%;
+    height: $_guide-line-width;
+  }
+
+  &.vertical {
+    height: 100%;
+    width: $_guide-line-width;
+  }
+}
