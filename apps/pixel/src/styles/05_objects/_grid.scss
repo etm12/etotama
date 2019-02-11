@@ -1,8 +1,20 @@
 @mixin _make-o-grid {
   $_class: #{$prefix}-grid;
 
+  $_grid-gap: (
+    none: 0,
+    hairline: 1px,
+    small: 2px,
+  );
+
   .#{$_class} {
     display: grid;
+
+    @each $key, $value in $_grid-gap {
+      &.gap-#{$key} {
+        grid-gap: $value;
+      }
+    }
   }
 }
 
