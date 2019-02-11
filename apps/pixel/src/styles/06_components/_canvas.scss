@@ -1,13 +1,16 @@
 @mixin _make-canvas {
   $_class: #{$prefix}-canvas;
 
+  .#{$debug-root} .#{$_class} {
+    @include annotate('canvas');
+  }
+
   .#{$_class} {
     // border: solid 1px #f00;
     position: relative;
     margin: 0;
     padding: 0;
     border: solid 1px #f00;
-    @include annotate(canvas);
 
     &__body {
       border: dashed 1px #f00;

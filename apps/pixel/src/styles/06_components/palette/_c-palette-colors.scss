@@ -4,6 +4,9 @@
 
   .#{$_class} {
     border: solid 1px #f00;
+  }
+
+  .#{$debug-root} .#{$_class} {
     @include annotate(palette);
   }
 

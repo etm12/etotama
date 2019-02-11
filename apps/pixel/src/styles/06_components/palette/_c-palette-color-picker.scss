@@ -9,7 +9,10 @@
 
   .#{$_class} {
     padding: space(small);
-    @include annotate('fg-bg picker')
+  }
+
+  .#{$debug-root} .#{$_class} {
+    @include annotate('fg-bg picker');
   }
 
   .#{$_body-class} {
