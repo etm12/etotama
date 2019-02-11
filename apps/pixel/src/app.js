@@ -5,10 +5,13 @@
 import * as React from 'karet';
 import * as U from 'karet.util';
 import * as R from 'kefir.ramda';
+import * as L from 'kefir.partial.lenses';
 import * as S from '@etotama/core.shared';
 
 import { Panel } from './layout/panel';
-import { Canvas } from './containers/editor/meta';
+import { Canvas, Color } from './containers/editor/meta';
+import { pushEvent, events, withBoundContext, onMouseDown } from './mouse';
+import PaletteCurrent from './components/palette-current';
 
 //
 
@@ -40,27 +43,52 @@ const Guide = ({ prefix, position }) => {
 
 //
 
-const AppContainer = ({ state, imageData }) => {
+const AppContainer = ({ state, imageData, globalEvents }) => {
   const { size, scale } = U.destructure(U.view('canvas', state));
   const width = U.view(0, size);
   const height = U.view(1, size);
   const dom = U.variable();
   const offset = Canvas.elOffset(dom);
+  const context = Canvas.elContext(dom);
 
-  const mouseEvBus = U.bus();
-  const pushEvent = U.actions(S.persist, U.through(U.doPush(mouseEvBus), S.call0));
+  const { offsetDelta, pixel } = withBoundContext({ offset, scale });
 
-  const events = U.toProperty(mouseEvBus);
-  const mousePos = R.props(['pageX', 'pageY'], events);
-  const offsetPos = U.thru(
-    R.zip(mousePos, offset),
-    U.mapValue(([[x1, x2], [y1, y2]]) => [x1 - x2, y1 - y2]),
+  const viewPosition = U.thru(
+    U.template({ pixel, width, height }),
+    U.sampledBy(onMouseDown),
+    U.mapValue(x => S.getIx(x.pixel[0], x.pixel[1], x.width)),
+  );
+
+  const drawPixel = U.thru(
+    viewPosition,
+    U.flatMapLatest(ix => U.template({
+      ix,
+      event: onMouseDown,
+      color: U.view(['palette', L.pick({
+        ix: ['active', 0],
+        colors: 'colors',
+      }), L.reread(({ ix, colors }) => colors[ix])], state),
+    })),
+    U.skipDuplicates((prev, next) => R.equals(prev.event, next.event)),
+    U.consume(({ ix, color }) =>
+      U.view(L.slice(ix.start, ix.end), imageData)
+       .set([...L.get(Color.hexI, color), 255])),
+  );
+
+  const drawImageData = U.thru(
+    U.template([Canvas.imageDataAsUint(imageData), context, width, height]),
+    U.consume(([data, ctx, w, h]) =>
+      ctx.putImageData(new ImageData(data, w, h), 0, 0)),
   );
 
   return (
     <main className="root layout layout--root">
+      {U.sink(U.parallel([
+        drawImageData,
+        drawPixel,
+      ]))}
       <section className="c-app-header">
-        <header className="c-app-header__brand">asd</header>
+        <header className="c-app-header__brand">[logo]</header>
 
         <div className="c-app-header__body">
           {U.view(['info', 'name', 'value'], state)}
@@ -70,8 +98,9 @@ const AppContainer = ({ state, imageData }) => {
       </section>
 
       <Panel direction="horizontal">
-        <Panel size={15}>
-          <h2>g</h2>
+        <Panel size={5}>
+          [sidebar]
+          <PaletteCurrent palette={U.view('palette', state)} onSwitchCurrentColors={globalEvents.onSwitchCurrentColors} />
         </Panel>
         <Panel>
           <div className="c-canvas">
@@ -80,14 +109,13 @@ const AppContainer = ({ state, imageData }) => {
               style={{
                 width: U.view(0, offset),
                 height: U.view(1, offset),
-              }}
-            >
+              }}>
               Canvas offset: {U.stringify(offset)}
             </div>
             <Guide prefix="page" position={R.props(['pageX', 'pageY'], events)} />
             <Guide prefix="screen" position={R.props(['screenX', 'screenY'], events)} />
             <Guide prefix="client" position={R.props(['clientX', 'clientY'], events)} />
-            <Guide prefix="offset" position={offsetPos}/>
+            <Guide prefix="offset" position={offsetDelta}/>
 
             <canvas
               ref={U.refTo(dom)}
