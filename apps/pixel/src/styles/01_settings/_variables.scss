@@ -87,6 +87,32 @@ $font-weight-bold: 700;
 
 // Sizes
 
+$z-index-coeff: 1;
+
+/**
+ * Based on Material Design Elevation Guidelines.
+ * See: https://material.io/design/environment/elevation.html#default-elevations
+ */
+$z-indexes: (
+  dialog: elevate(24),
+  modal-bottom-sheet: elevate(16),
+  modal-side-sheet: elevate(16),
+  nav-drawer: elevate(16),
+  fab: elevate(12),
+  bottom-sheet: elevate(8),
+  side-sheet: elevate(8),
+  bottom-nav-bar: elevate(8),
+  bottom-app-bar: elevate(8),
+  menu: elevate(8),
+  sub-menu: elevate(8),
+  card-picked: elevate(8),
+  button-pressed: elevate(8),
+  fab-snack: elevate(6),
+  top-bar-scrolled: elevate(4),
+  top-bar-rest: elevate(4),
+  base: elevate(0),
+);
+
 $line-widths: (
   hairline: 1px,
   thin: 2px,
