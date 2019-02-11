@@ -13,34 +13,7 @@ import { Canvas, Color } from './containers/editor/meta';
 import { pushEvent, events, withBoundContext, onMouseDown } from './mouse';
 import PaletteCurrent from './components/palette-current';
 import PaletteColorPicker from './components/palette-color-picker';
-
-//
-
-const Guide = ({ prefix, position }) => {
-  const translateX = U.view([0, S.lenses.translateX], position);
-  const translateY = U.view([1, S.lenses.translateY], position);
-
-  return (
-    <React.Fragment>
-      <div
-        className={U.cns(
-          'c-canvas__guides',
-          'horizontal',
-          U.string`prefix-${prefix}`,
-        )}
-        style={{ transform: translateY }}
-      />
-      <div
-        className={U.cns(
-          'c-canvas__guides',
-          'vertical',
-          U.string`prefix-${prefix}`,
-        )}
-        style={{ transform: translateX }}
-      />
-    </React.Fragment>
-  );
-}
+import { Guide, OffsetGuide } from './components/dev/guide';
 
 //
 
@@ -63,32 +36,42 @@ const AppContainer = ({ state, imageData, globalEvents }) => {
 
   const drawPixel = U.thru(
     viewPosition,
-    U.flatMapLatest(ix => U.template({
-      ix,
-      event: onMouseDown,
-      color: U.view(['palette', L.pick({
-        ix: ['active', 0],
-        colors: 'colors',
-      }), L.reread(({ ix, colors }) => colors[ix])], state),
-    })),
+    U.flatMapLatest(ix =>
+      U.template({
+        ix,
+        event: onMouseDown,
+        color: U.view(
+          [
+            'palette',
+            L.pick({
+              ix: ['active', 0],
+              colors: 'colors',
+            }),
+            L.reread(({ ix, colors }) => colors[ix]),
+          ],
+          state,
+        ),
+      }),
+    ),
     U.skipDuplicates((prev, next) => R.equals(prev.event, next.event)),
     U.consume(({ ix, color }) =>
-      U.view(L.slice(ix.start, ix.end), imageData)
-       .set([...L.get(Color.hexI, color), 255])),
+      U.view(L.slice(ix.start, ix.end), imageData).set([
+        ...L.get(Color.hexI, color),
+        255,
+      ]),
+    ),
   );
 
   const drawImageData = U.thru(
     U.template([Canvas.imageDataAsUint(imageData), context, width, height]),
     U.consume(([data, ctx, w, h]) =>
-      ctx.putImageData(new ImageData(data, w, h), 0, 0)),
+      ctx.putImageData(new ImageData(data, w, h), 0, 0),
+    ),
   );
 
   return (
     <main className="root layout layout--root">
-      {U.sink(U.parallel([
-        drawImageData,
-        drawPixel,
-      ]))}
+      {U.sink(U.parallel([drawImageData, drawPixel]))}
       <section className="c-app-header">
         <header className="c-app-header__brand">[logo]</header>
 
@@ -96,42 +79,48 @@ const AppContainer = ({ state, imageData, globalEvents }) => {
           {U.view(['info', 'name', 'value'], state)}
         </div>
 
-        <aside></aside>
+        <aside />
       </section>
 
       <Panel direction="horizontal">
         <Panel size={5}>
           [sidebar]
-          <PaletteCurrent palette={palette} onSwitchCurrentColors={globalEvents.onSwitchCurrentColors} />
+          <PaletteCurrent
+            palette={palette}
+            onSwitchCurrentColors={globalEvents.onSwitchCurrentColors}
+          />
           <PaletteColorPicker palette={palette} />
         </Panel>
         <Panel>
           <div className="c-canvas">
-            <div
-              className="c-canvas__offset-guide"
-              style={{
-                width: U.view(0, offset),
-                height: U.view(1, offset),
-              }}>
-              Canvas offset: {U.stringify(offset)}
-            </div>
-            <Guide prefix="page" position={R.props(['pageX', 'pageY'], events)} />
-            <Guide prefix="screen" position={R.props(['screenX', 'screenY'], events)} />
-            <Guide prefix="client" position={R.props(['clientX', 'clientY'], events)} />
-            <Guide prefix="offset" position={offsetDelta}/>
+            <OffsetGuide offset={offset} />
+            <Guide
+              prefix="page"
+              position={R.props(['pageX', 'pageY'], events)}
+            />
+            <Guide
+              prefix="screen"
+              position={R.props(['screenX', 'screenY'], events)}
+            />
+            <Guide
+              prefix="client"
+              position={R.props(['clientX', 'clientY'], events)}
+            />
+            <Guide prefix="offset" position={offsetDelta} />
 
             <canvas
               ref={U.refTo(dom)}
               className="c-canvas__body"
               width={width}
               height={height}
+              onContextMenu={U.actions(U.preventDefault)}
               onMouseDown={pushEvent}
               onMouseMove={pushEvent}
               onMouseUp={pushEvent}
               style={{
                 width: R.multiply(scale, width),
-                height: R.multiply(scale, height)
-,              }}
+                height: R.multiply(scale, height),
+              }}
             />
           </div>
         </Panel>
