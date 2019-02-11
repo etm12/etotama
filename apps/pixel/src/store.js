@@ -8,10 +8,10 @@ import * as L from 'partial.lenses';
 
 import palettes from './assets/palettes';
 import { COLOR_CHANNELS, PanelType } from './constants';
-import * as M from './_meta';
+import * as S from '@etotama/core.shared';
 
 const colors = L.get(
-  M.hexStringL,
+  S.lenses.hexString,
   palettes.get('endesga-32.hex'),
 );
 
@@ -20,6 +20,9 @@ const colors = L.get(
 //
 
 const initialState = {
+  debug: {
+    annotate: true,
+  },
   info: {
     name: {
       value: 'Untitled',
