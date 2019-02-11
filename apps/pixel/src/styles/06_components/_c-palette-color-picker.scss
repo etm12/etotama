@@ -1,0 +1,15 @@
+@mixin _make-palette-color-picker {
+  $_class: #{$prefix}-palette-color-picker;
+  $_btn-class: #{$_class}__button;
+
+  .#{$_class} {
+    border: solid 1px #f00;
+  }
+
+  .#{$_btn-class} {
+    border: none;
+    height: 1.3rem;
+  }
+}
+
+@include _make-palette-color-picker();
