@@ -8,9 +8,11 @@ import * as R from 'kefir.ramda';
 import * as L from 'kefir.partial.lenses';
 import * as S from '@etotama/core.shared';
 
-import { Panel } from './layout/panel';
-import { Canvas, Color } from './containers/editor/meta';
+import { withBoundCanvas, fromBoundContext } from './canvas';
 import { pushEvent, events, withBoundContext, onMouseDown } from './mouse';
+import { Panel, PanelHeader, PanelBody } from './layout/panel';
+import Divider from './components/divider';
+import { Canvas, Color } from './containers/editor/meta';
 import PaletteColorPicker from './components/palette-color-picker';
 import PaletteColors from './components/palette-colors';
 import { Guide, OffsetGuide } from './components/dev/guide';
@@ -18,7 +20,7 @@ import { Guide, OffsetGuide } from './components/dev/guide';
 //
 
 const AppContainer = ({ state, imageData, globalEvents }) => {
-  const { canvas, palette } = U.destructure(state);
+  const { canvas, palette, debug } = U.destructure(state);
   const { size, scale } = U.destructure(canvas);
   const width = U.view(0, size);
   const height = U.view(1, size);
@@ -31,10 +33,9 @@ const AppContainer = ({ state, imageData, globalEvents }) => {
   const pixelPos = U.thru(
     U.template({ pixel, offset, scale }),
     U.mapValue(x => [
-        ((x.pixel[0] * x.scale) + (x.scale / 2) + x.offset[0]),
-        ((x.pixel[1] * x.scale) + (x.scale / 2) + x.offset[1]),
-      ]
-    ),
+      ((x.pixel[0] * x.scale) + (x.scale / 2) + x.offset[0]),
+      ((x.pixel[1] * x.scale) + (x.scale / 2) + x.offset[1]),
+    ]),
   );
 
   /**
@@ -45,6 +46,8 @@ const AppContainer = ({ state, imageData, globalEvents }) => {
     U.sampledBy(onMouseDown),
     U.mapValue(x => S.getIx(x.pixel[0], x.pixel[1], x.width)),
   );
+
+
 
   const drawPixel = U.thru(
     viewPosition,
@@ -82,7 +85,12 @@ const AppContainer = ({ state, imageData, globalEvents }) => {
   );
 
   return (
-    <main className="root layout layout--root">
+    <main className={U.cns(
+      'root',
+      'layout',
+      'layout--root',
+      U.when(U.view('annotate', debug), 'debug--annotate'),
+    )}>
       {U.sink(U.parallel([drawImageData, drawPixel]))}
       <section className="c-app-header">
         <header className="c-app-header__brand">[logo]</header>
@@ -96,33 +104,50 @@ const AppContainer = ({ state, imageData, globalEvents }) => {
 
       <Panel direction="horizontal">
         <Panel size={5}>
-          [sidebar]
           <PaletteColorPicker
             palette={palette}
             onSwitchCurrentColors={globalEvents.onSwitchCurrentColors}
           />
           <PaletteColors palette={palette} />
+          <Divider />
+
+          <Panel textSize="tiny">
+            <PanelHeader>Dev</PanelHeader>
+            <PanelBody>
+              <label>
+                <U.Input
+                  id="annotate-toggle"
+                  type="checkbox"
+                  checked={U.view('annotate', debug)}
+                />
+                Annotate
+              </label>
+            </PanelBody>
+          </Panel>
         </Panel>
         <Panel>
           <div className="c-canvas">
-            <OffsetGuide offset={offset} />
-            <Guide
-              prefix="page"
-              position={R.props(['pageX', 'pageY'], events)}
-            />
-            <Guide
-              prefix="screen"
-              position={R.props(['screenX', 'screenY'], events)}
-            />
-            <Guide
-              prefix="client"
-              position={R.props(['clientX', 'clientY'], events)}
-            />
-            <Guide
-              prefix="pixel"
-              position={pixelPos}
-            />
-            <Guide prefix="offset" position={offsetDelta} />
+            {U.when(U.view('annotate', debug),
+            <React.Fragment>
+              <OffsetGuide offset={offset} />
+              <Guide
+                prefix="page"
+                position={R.props(['pageX', 'pageY'], events)}
+              />
+              <Guide
+                prefix="screen"
+                position={R.props(['screenX', 'screenY'], events)}
+              />
+              <Guide
+                prefix="client"
+                position={R.props(['clientX', 'clientY'], events)}
+              />
+              <Guide
+                prefix="pixel"
+                position={pixelPos}
+              />
+              <Guide prefix="offset" position={offsetDelta} />
+            </React.Fragment>)}
 
             <canvas
               ref={U.refTo(dom)}

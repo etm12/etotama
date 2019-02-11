@@ -33,6 +33,7 @@ export const Panel = props => {
     stretch,
     className,
     center,
+    textSize,
     // eslint-disable-next-line
     name,
     // eslint-disable-next-line
@@ -49,6 +50,7 @@ export const Panel = props => {
     U.when(main, 'c-panel--main'),
     U.when(size, 'c-panel--fixed'),
     U.when(stretch, 'c-panel--stretch'),
+    U.when(textSize, U.string`c-panel--text-${textSize}`),
     U.string`c-panel--${direction}`,
     U.when(center, 'c-panel--center'),
     className,
