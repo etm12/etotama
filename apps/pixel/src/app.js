@@ -11,8 +11,8 @@ import * as S from '@etotama/core.shared';
 import { Panel } from './layout/panel';
 import { Canvas, Color } from './containers/editor/meta';
 import { pushEvent, events, withBoundContext, onMouseDown } from './mouse';
-import PaletteCurrent from './components/palette-current';
 import PaletteColorPicker from './components/palette-color-picker';
+import PaletteColors from './components/palette-colors';
 import { Guide, OffsetGuide } from './components/dev/guide';
 
 //
@@ -97,11 +97,11 @@ const AppContainer = ({ state, imageData, globalEvents }) => {
       <Panel direction="horizontal">
         <Panel size={5}>
           [sidebar]
-          <PaletteCurrent
+          <PaletteColorPicker
             palette={palette}
             onSwitchCurrentColors={globalEvents.onSwitchCurrentColors}
           />
-          <PaletteColorPicker palette={palette} />
+          <PaletteColors palette={palette} />
         </Panel>
         <Panel>
           <div className="c-canvas">
