@@ -6,6 +6,7 @@ import * as R from 'ramda';
 import * as K from 'kefir';
 import * as C from 'd3-color';
 import * as Ls from './lenses';
+import { COLOR_CHANNELS } from './constants';
 
 //
 
@@ -55,6 +56,13 @@ export const obsObjectL = L.iso(
 // #region Canvas
 export const getBoundingRect = invoke0('getBoundingClientRect');
 export const getContext = invoke1('getContext', '2d');
+
+export const computeIx = (x, y, w) => ((y * w) + x) * COLOR_CHANNELS;
+export const getIx = (x, y, w) => ({
+  start: computeIx(x, y, w),
+  end: computeIx(x, y, w) + COLOR_CHANNELS,
+});
+
 // #endregion
 
 /**

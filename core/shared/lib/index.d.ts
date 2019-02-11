@@ -75,6 +75,9 @@ declare namespace S {
     invoke2<T1, T2, R>(m: string, t1: T1): CurriedAry2<T2, R>;
     invoke2<T1, T2, R>(m: string): CurriedAry3<T1, T2, R>;
 
+    computeIx(x: number, y: number, w: number): number;
+    getIx(x: number, y: number, w: number): { start: number, end: number };
+
     lenses: typeof lenses;
   }
 }
