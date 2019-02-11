@@ -9,3 +9,7 @@ export const PanelType = {
   PANEL: 'panel',
   PALETTE: 'panel.palette',
 };
+
+export const KeyCode = {
+  KeyX: 'SwitchCurrentColors',
+};
