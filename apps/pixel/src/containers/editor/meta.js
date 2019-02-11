@@ -9,6 +9,7 @@ export const Canvas = {
     R.props(['left', 'top']),
   ),
   elContext: R.invoker(1, 'getContext')('2d'),
+  imageDataAsUint: U.view(L.reread(R.constructN(1, Uint8ClampedArray))),
 };
 
 export const Event = {
