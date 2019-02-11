@@ -1,6 +1,9 @@
-.o-grid {
-  display: grid;
+@mixin _make-o-grid {
+  $_class: #{$prefix}-grid;
+
+  .#{$_class} {
+    display: grid;
+  }
 }
-.o-grid {
-  display: grid;
-}
+
+@include _make-o-grid();
