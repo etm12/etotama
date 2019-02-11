@@ -1,4 +1,4 @@
-@mixin annotate($text, $font-size: font-size(tiny), $align: nw) {
+@mixin annotate($text, $font-size: font-size(tiny), $align: nw, $z-index: get-elevation(dialog)) {
   $_alignment: (
     nw: (left, top),
     ne: (right, top),
@@ -15,6 +15,7 @@
   &::before {
     pointer-events: none;
     position: absolute;
+    z-index: $z-index;
     #{$_align-x}: 0;
     #{$_align-y}: 0;
 
