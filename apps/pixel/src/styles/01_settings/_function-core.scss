@@ -2,10 +2,10 @@
   @return $x * $coeff;
 }
 
-@function get-elevation($type) {
+@function get-elevation($type, $coeff: 1) {
   @if not map-has-key($z-indexes, $type) {
     @warn 'No elevation/z-index found for the type in `#{$type}`.';
   }
 
-  @return map-get($z-indexes, $type);
+  @return map-get($z-indexes, $type) * $coeff;
 }
