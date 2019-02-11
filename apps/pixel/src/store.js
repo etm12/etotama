@@ -58,6 +58,7 @@ const initialState = {
     size: 2,
   },
   palette: {
+    active: [10, 16],
     selected: '#c28569',
     colors,
   },
