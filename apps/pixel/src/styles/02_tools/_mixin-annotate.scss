@@ -13,6 +13,7 @@
   position: relative;
 
   &::before {
+    pointer-events: none;
     position: absolute;
     #{$_align-x}: 0;
     #{$_align-y}: 0;
