@@ -12,6 +12,7 @@ import { Panel } from './layout/panel';
 import { Canvas, Color } from './containers/editor/meta';
 import { pushEvent, events, withBoundContext, onMouseDown } from './mouse';
 import PaletteCurrent from './components/palette-current';
+import PaletteColorPicker from './components/palette-color-picker';
 
 //
 
@@ -44,7 +45,8 @@ const Guide = ({ prefix, position }) => {
 //
 
 const AppContainer = ({ state, imageData, globalEvents }) => {
-  const { size, scale } = U.destructure(U.view('canvas', state));
+  const { canvas, palette } = U.destructure(state);
+  const { size, scale } = U.destructure(canvas);
   const width = U.view(0, size);
   const height = U.view(1, size);
   const dom = U.variable();
@@ -100,7 +102,8 @@ const AppContainer = ({ state, imageData, globalEvents }) => {
       <Panel direction="horizontal">
         <Panel size={5}>
           [sidebar]
-          <PaletteCurrent palette={U.view('palette', state)} onSwitchCurrentColors={globalEvents.onSwitchCurrentColors} />
+          <PaletteCurrent palette={palette} onSwitchCurrentColors={globalEvents.onSwitchCurrentColors} />
+          <PaletteColorPicker palette={palette} />
         </Panel>
         <Panel>
           <div className="c-canvas">
