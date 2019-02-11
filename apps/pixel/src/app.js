@@ -28,6 +28,18 @@ const AppContainer = ({ state, imageData, globalEvents }) => {
 
   const { offsetDelta, pixel } = withBoundContext({ offset, scale });
 
+  const pixelPos = U.thru(
+    U.template({ pixel, offset, scale }),
+    U.mapValue(x => [
+        ((x.pixel[0] * x.scale) + (x.scale / 2) + x.offset[0]),
+        ((x.pixel[1] * x.scale) + (x.scale / 2) + x.offset[1]),
+      ]
+    ),
+  );
+
+  /**
+   * Get the start and end index for the given position
+   */
   const viewPosition = U.thru(
     U.template({ pixel, width, height }),
     U.sampledBy(onMouseDown),
@@ -105,6 +117,10 @@ const AppContainer = ({ state, imageData, globalEvents }) => {
             <Guide
               prefix="client"
               position={R.props(['clientX', 'clientY'], events)}
+            />
+            <Guide
+              prefix="pixel"
+              position={pixelPos}
             />
             <Guide prefix="offset" position={offsetDelta} />
 
