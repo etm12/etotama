@@ -1,4 +1,4 @@
-@mixin _make-active-colors {
+@mixin _make-palette-color-picker {
   $_class: #{$prefix}-active-colors;
   $_body-class: #{$_class}__body;
   $_fg-class: #{$_class}__foreground;
@@ -43,4 +43,4 @@
   }
 }
 
-@include _make-active-colors();
+@include _make-palette-color-picker();

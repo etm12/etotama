@@ -1,4 +1,4 @@
-@mixin _make-palette-color-picker {
+@mixin _make-palette-colors {
   $_class: #{$prefix}-palette-color-picker;
   $_btn-class: #{$_class}__button;
 
@@ -13,4 +13,4 @@
   }
 }
 
-@include _make-palette-color-picker();
+@include _make-palette-colors();

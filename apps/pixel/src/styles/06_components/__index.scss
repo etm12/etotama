@@ -1,24 +1,6 @@
 @import 'layout/_index';
+@import 'ui/_index';
+@import 'palette/_index';
+
 @import 'layout';
 @import 'canvas';
-@import 'c-active-colors';
-@import 'c-palette-color-picker';
-
-// @import 'editor';
-// @import 'palette';
-// @import 'debug';
-// @import 'header';
-// @import 'sidebar-panel';
-// @import 'svg';
-
-// @import 'container-editor';
-// @import 'container-header';
-
-// @import 'ui-menubar';
-// @import 'ui-svg-measure';
-
-// @import 'component-tool-palette';
-// @import 'component-info';
-// @import 'component-colorstats';
-
-@import 'ui/_index';
