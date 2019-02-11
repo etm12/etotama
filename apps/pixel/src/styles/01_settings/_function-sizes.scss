@@ -1,11 +1,23 @@
 @function line-width($width) {
+  @if not map-has-key($line-widths, $width) {
+    @warn 'Could not find line width of `#{$width}` from available line widths.';
+  }
+
   @return map-get($line-widths, $width);
 }
 
 @function font-size($size) {
+  @if not map-has-key($font-sizes, $size) {
+    @warn 'Could not find font size of `#{$size}` from available font sizes.';
+  }
+
   @return map-get($font-sizes, $size);
 }
 
 @function space($size) {
+  @if not map-has-key($spacing-sizes, $size) {
+    @warn 'Could not find size of `#{$size} from available spacing sizes.`';
+  }
+
   @return map-get($spacing-sizes, $size);
 }
