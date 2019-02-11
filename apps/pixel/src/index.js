@@ -11,6 +11,7 @@ import { state, imageData, canvas } from './store';
 import { Store } from './context';
 import actions from './actions';
 import { handle as handler } from './effects';
+import * as GlobalEvent from './global-events';
 
 import './styles/index.scss';
 
@@ -21,6 +22,7 @@ ReactDOM.render(
       imageData={imageData}
       actions={actions}
       effectHandler={handler}
+      globalEvents={GlobalEvent}
     />
   </Store.Provider>,
   document.getElementById('root'),
