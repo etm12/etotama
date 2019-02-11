@@ -51,7 +51,7 @@ ifneq ($(strip $(APP)),)
 	@scripts/get-version.js ci-target apps/$(APP)
 	@echo "Used generated env file" ;\
 	$(shell cat apps/$(APP)/.env)
-	$(LERNA) run build --scope=@etotama/$(APP)
+	$(LERNA) run build --scope=@etotama/app.$(APP)
 else
 	@echo "No APP given"
 	exit 1
