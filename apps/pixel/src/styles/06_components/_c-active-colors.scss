@@ -4,8 +4,12 @@
   $_fg-class: #{$_class}__foreground;
   $_bg-class: #{$_class}__background;
 
+  $_fg-z: get-elevation(base) + 2;
+  $_bg-z: get-elevation(base);
+
   .#{$_class} {
     padding: space(small);
+    @include annotate('fg-bg picker')
   }
 
   .#{$_body-class} {
@@ -25,7 +29,7 @@
     top: 0;
     right: 1rem;
     bottom: 1rem;
-    z-index: 2;
+    z-index: $_fg-z;
   }
 
   .#{$_bg-class} {
@@ -34,7 +38,7 @@
     top: 1rem;
     bottom: 0;
     right: 0;
-    z-index: 1;
+    z-index: $_bg-z;
     background-color: #000;
   }
 }

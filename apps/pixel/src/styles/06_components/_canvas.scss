@@ -66,6 +66,7 @@
           &-#{$key} {
             pointer-events: none;
             background-color: map-get($props, color);
+
             @if map-has-key($props, position) {
               position: map-get($props, position);
             }
@@ -76,14 +77,15 @@
 
             &.horizontal {
               &::before {
-                content: '#{$key}X';
+                content: '#{$key}Y';
                 top: nth(map-get($props, x), 1);
                 left: nth(map-get($props, x), 2);
               }
             }
+
             &.vertical {
               &::before {
-                content: '#{$key}Y';
+                content: '#{$key}X';
                 top: nth(map-get($props, y), 1);
                 left: nth(map-get($props, y), 2);
               }

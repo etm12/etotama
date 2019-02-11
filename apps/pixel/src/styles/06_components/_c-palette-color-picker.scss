@@ -4,6 +4,7 @@
 
   .#{$_class} {
     border: solid 1px #f00;
+    @include annotate(palette);
   }
 
   .#{$_btn-class} {
