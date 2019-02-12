@@ -2,6 +2,7 @@
  * @module Store
  * @namespace Pixel
  */
+import * as H from 'kefir.partial.lenses.history';
 import * as U from 'karet.util';
 import * as R from 'ramda';
 import * as L from 'partial.lenses';
@@ -15,13 +16,11 @@ const colors = L.get(
   palettes.get('endesga-32.hex'),
 );
 
-
-
 //
 
 const initialState = {
   debug: {
-    annotate: true,
+    annotate: false,
   },
   info: {
     name: {
@@ -80,7 +79,7 @@ U.thru(
 
 // Image data
 
-export const imageData = U.atom();
+export const imageData = U.atom(H.init({}, R.map(R.divide(R.__, 256), R.range(0, (24 * 24) * 4))));
 
 const imageDataShouldChange = U.thru(
   state,
@@ -93,15 +92,5 @@ const imageDataShouldChange = U.thru(
 imageDataShouldChange
   .onValue(arr => {
     console.info('Image size has changed, creating new image data.');
-    imageData.set(arr);
+    imageData.view(H.present).set(arr);
   });
-
-//
-
-/**
- * Temp use only
- * @deprecated
- */
-export const canvas = U.variable();
-
-canvas.log('canvas (REMOVE ME)');
