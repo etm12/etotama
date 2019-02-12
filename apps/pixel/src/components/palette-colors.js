@@ -9,7 +9,7 @@ const Color = ({ value, onClick, onRightClick }) =>
     onContextMenu={U.actions(U.preventDefault, onRightClick)}
   />;
 
-const PaletteColorPicker = ({ palette, active = U.view('active', palette), test = active.log('active') }) =>
+const PaletteColorPicker = ({ palette, active = U.view('active', palette) }) =>
   <div className="c-palette-color-picker">
     <div className="c-grid gap-hairline"
       style={{ gridTemplateColumns: 'repeat(4, 1fr)' }}>
