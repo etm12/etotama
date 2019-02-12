@@ -7,14 +7,14 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './app';
 import * as serviceWorker from './serviceWorker';
-import { state, imageData, canvas } from './store';
+import { state, imageData } from './store';
 import { Store } from './context';
 import * as GlobalEvent from './global-events';
 
 import './styles/index.scss';
 
 ReactDOM.render(
-  <Store.Provider value={{ state, imageData, canvas }}>
+  <Store.Provider value={{ state, imageData }}>
     <App
       state={state}
       imageData={imageData}
