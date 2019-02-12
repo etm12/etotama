@@ -1,0 +1,28 @@
+{
+  "name": "@etotama/core.drawing-canvas",
+  "version": "0.1.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel lib/ -d dist/",
+    "watch": "npm run build -- -w"
+  },
+  "keywords": [],
+  "author": "Stefan Rimaila <stefan@rimaila.fi> (https://stuf.github.io)",
+  "license": "MIT",
+  "dependencies": {
+    "@etotama/core.proptypes": "^0.1.0",
+    "karet": "^4.1.0",
+    "karet.util": "^0.19.1",
+    "kefir": "^3.8.6",
+    "kefir.partial.lenses": "^14.17.0",
+    "kefir.ramda": "^0.26.0",
+    "react": "^16.8.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/preset-react": "^7.0.0"
+  }
+}
