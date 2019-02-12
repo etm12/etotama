@@ -11,7 +11,7 @@ import { state, imageData } from './store';
 import { Store } from './context';
 import * as GlobalEvent from './global-events';
 
-import './styles/index.scss';
+import '@etotama/core.styles';
 
 ReactDOM.render(
   <Store.Provider value={{ state, imageData }}>
