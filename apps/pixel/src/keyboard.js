@@ -10,3 +10,4 @@ const takeEvent = type => U.thru(
 
 /** @type {K.Property<KeyboardEvent, any>} */
 export const onKeyDown = takeEvent('keydown');
+export const onKeyUp = takeEvent('keyup');
