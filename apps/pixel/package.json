@@ -2,6 +2,7 @@
   "name": "@etotama/app.pixel",
   "version": "0.6.0",
   "license": "MIT",
+  "homepage": "https://etm12.moe",
   "dependencies": {
     "@etotama/core.shared": "0.6.0",
     "@etotama/core.styles": "^0.1.0",
