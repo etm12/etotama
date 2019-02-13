@@ -47,8 +47,9 @@ export const Panel = props => {
 
   const classNames = [
     'c-panel',
+    className,
     U.when(main, 'c-panel--main'),
-    U.when(size, 'c-panel--fixed'),
+    U.ifElse(size, 'c-panel--fixed', 'c-panel--auto'),
     U.when(stretch, 'c-panel--stretch'),
     U.when(textSize, U.string`c-panel--text-${textSize}`),
     U.string`c-panel--${direction}`,
