@@ -3,11 +3,11 @@
 }
 
 .layout {
-  &.layout--root {
-    display: grid;
-    grid-template-rows: 3rem auto;
-    // grid-template-columns: auto 20rem;
+  .layout--full-size {
+    height: 100vh;
+  }
 
+  &.layout--root {
     position: absolute;
     left: 0;
     top: 0;

@@ -1,0 +1,26 @@
+@mixin _make-app-header {
+  $_class: #{$prefix}-app-header;
+
+  .#{$_class} {
+    // border: solid 1px #f00;
+  }
+
+  .#{$_class}__brand {
+    position: relative;
+    overflow: hidden;
+  }
+
+  // .#{$_class}__body {
+  //   border: dashed 1px #00f;
+  // }
+
+  .#{$_class}__logo {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-55%) translateY(-50%) scale(.2) rotate(15deg);
+  }
+}
+
+@include _make-app-header();
+

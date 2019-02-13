@@ -17,13 +17,13 @@
 
   .#{$_body-class} {
     position: relative;
-    height: 4rem;
+    height: 3.75rem;
   }
 
   .#{$_fg-class},
   .#{$_bg-class} {
     position: absolute;
-    border: dashed 1px #f00;
+    border: solid .25rem rgba(0, 0, 0, .3);
     background-color: #fff;
   }
 

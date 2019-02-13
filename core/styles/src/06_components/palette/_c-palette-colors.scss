@@ -3,7 +3,8 @@
   $_btn-class: #{$_class}__button;
 
   .#{$_class} {
-    border: solid 1px #f00;
+    // border: solid 1px #f00;
+    // margin: .25rem;
   }
 
   .#{$debug-root} .#{$_class} {
@@ -12,7 +13,8 @@
 
   .#{$_btn-class} {
     border: none;
-    height: 1.3rem;
+    height: 1.2rem;
+    cursor: pointer;
   }
 }
 

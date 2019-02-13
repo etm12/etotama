@@ -6,14 +6,13 @@
   }
 
   .#{$_class} {
-    // border: solid 1px #f00;
     position: relative;
     margin: 0;
     padding: 0;
-    border: solid 1px #f00;
 
     &__body {
-      border: dashed 1px #f00;
+      margin: 1rem;
+      background-color: rgba(0, 255, 255, .1);
     }
 
     &__offset-guide {

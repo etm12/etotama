@@ -1,0 +1,13 @@
+@mixin _make-status-indicator {
+  $_class: #{$prefix}-status-indicator;
+
+  .#{$_class} {
+    font-weight: 400;
+  }
+
+  .#{$_class}--active {
+    text-decoration: underline;
+  }
+}
+
+@include _make-status-indicator();

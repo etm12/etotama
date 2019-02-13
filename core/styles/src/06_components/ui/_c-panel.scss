@@ -18,10 +18,13 @@
 
   .#{$_class} {
     display: flex;
-    font-size: $_font-size;
 
     &--text-tiny {
       font-size: font-size(tiny);
+    }
+
+    &--text-small {
+      font-size: font-size(small);
     }
   }
 
@@ -47,6 +50,10 @@
   }
 
   // Modifiers
+
+  .#{$_class}--auto {
+    flex: auto;
+  }
 
   .#{$_class}--stretch {
     flex: auto;
