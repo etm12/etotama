@@ -10,6 +10,10 @@
   button {
     border: solid 1px $_btn-border;
     padding: space(small);
+
+    &:disabled {
+      cursor: not-allowed;
+    }
   }
 }
 
