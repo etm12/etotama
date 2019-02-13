@@ -21,6 +21,48 @@ export const onMouseDown = takeEvent('mousedown');
 /** @type {MouseEvent$} */
 export const onMouseMove = takeEvent('mousemove');
 
+/** @type {MouseEvent$} */
+export const onMouseUp = takeEvent('mouseup');
+
+const takeEvents = source => type => U.thru(
+  source,
+  U.flatMapLatest(src => U.fromEvents(src, type, a => a)),
+  U.toProperty,
+);
+
+const observeEvent = (type, source) => takeEvents(source)(type);
+
+/**
+ * @return {Object.<string,MouseEvent$>}
+ */
+export const mouseEventsFrom = source => ({
+  onMouseDown: observeEvent('mousedown', source),
+  onMouseMove: observeEvent('mousemove', source),
+  onMouseUp: observeEvent('mouseup', source),
+  onMouseDrag: U.thru(
+    observeEvent('mousedown', source),
+    U.flatMapLatest(() => U.thru(
+      observeEvent('mousemove', source),
+      U.takeUntilBy(
+        U.takeFirst(1, observeEvent('mouseup', source)),
+      )
+    ))
+  ),
+});
+
+//
+
+/** @type {MouseEvent$} */
+export const onMouseDrag = U.thru(
+  onMouseDown,
+  U.flatMapLatest(() => U.takeUntilBy(
+    U.takeFirst(1, onMouseUp),
+    onMouseUp
+  )),
+);
+
+export const onMouseDraw = U.parallel([onMouseDown, onMouseDrag]);
+
 //
 
 /**
@@ -50,17 +92,20 @@ const getPixelPosition = (position, scale) => U.thru(
 /**
  *
  * @param {object} props
+ * @prop {any} props.dom
  * @prop {Coord$} props.offset
  * @prop {Number$} props.scale
- * @return {{ offsetDelta: Coord$, pixel: Coord$ }}
+ * @return {{ events: Object.<string, MouseEvent$>, offsetDelta: Coord$, pixel: Coord$ }}
  */
-export const withBoundContext = ({ offset, scale }) => {
-  const event = R.props(['pageX', 'pageY'], events)
+export const withBoundContext = ({ dom, offset, scale }) => {
+  const events = mouseEventsFrom(dom);
+  const event = R.props(['pageX', 'pageY'], events.onMouseMove)
 
   const offsetDelta = getPositionDelta(event, offset);
   const pixel = getPixelPosition(offsetDelta, scale);
 
   return {
+    events,
     offsetDelta,
     pixel,
   };
