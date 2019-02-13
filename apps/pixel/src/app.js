@@ -9,15 +9,17 @@ import * as R from 'kefir.ramda';
 import * as L from 'kefir.partial.lenses';
 import * as S from '@etotama/core.shared';
 
-import { pushEvent, events, withBoundContext, onMouseDown } from './mouse';
+import { pushEvent, withBoundContext } from './mouse';
 import { saveImageDataU } from './canvas';
+import Grid from './layout/grid';
 import { Panel, PanelHeader, PanelBody } from './layout/panel';
-import Divider from './components/divider';
+import { StatusBar, StatusLabel, StatusIndicator } from './components/status-bar';
 import { Canvas, Color } from './containers/editor/meta';
+import { Guide, OffsetGuide } from './components/dev/guide';
 import PaletteColorPicker from './components/palette-color-picker';
 import PaletteColors from './components/palette-colors';
-import { Guide, OffsetGuide } from './components/dev/guide';
 import TimeControlButton from './components/time-control-button';
+import logo from './assets/logo.svg';
 
 //
 
@@ -30,7 +32,12 @@ const AppContainer = ({ state, imageData, globalEvents }) => {
   const offset = Canvas.elOffset(dom);
   const context = Canvas.elContext(dom);
 
-  const { offsetDelta, pixel } = withBoundContext({ offset, scale });
+  const { flags } = globalEvents;
+  const { events, offsetDelta, pixel } = withBoundContext({ dom, offset, scale });
+
+  const fgColor = Color.fgColorIn(palette);
+
+  const shouldDraw = U.parallel([events.onMouseDown, events.onMouseDrag]);
 
   const pixelPos = U.thru(
     U.template({ pixel, offset, scale }),
@@ -45,45 +52,29 @@ const AppContainer = ({ state, imageData, globalEvents }) => {
    */
   const viewPosition = U.thru(
     U.template({ pixel, width, height }),
-    U.sampledBy(onMouseDown),
+    U.sampledBy(shouldDraw),
     U.mapValue(x => S.getIx(x.pixel[0], x.pixel[1], x.width)),
   );
-
-
 
   const drawPixel = U.thru(
     viewPosition,
     U.flatMapLatest(ix =>
       U.template({
         ix,
-        event: onMouseDown,
-        color: U.view(
-          [
-            'palette',
-            L.pick({
-              ix: ['active', 0],
-              colors: 'colors',
-            }),
-            L.reread(({ ix, colors }) => colors[ix]),
-          ],
-          state,
-        ),
+        event: shouldDraw,
+        color: fgColor,
       }),
     ),
-    U.skipDuplicates((prev, next) => R.equals(prev.event, next.event)),
-    U.consume(({ ix, color }) =>
-      U.view([H.present, L.slice(ix.start, ix.end)], imageData).set([
-        ...L.get(Color.hexI, color),
-        255,
-      ]),
-    ),
+    // U.skipDuplicates((prev, next) => R.equals(prev.event, next.event)),
+    U.consume(({ ix, color }) => {
+      U.view([H.present, L.slice(ix.start, ix.end)], imageData)
+       .set([...L.get(Color.hexI, color), 255]);
+    }),
   );
 
-  const imageDataUint = U.thru(
-    imageData,
-    U.view(H.present),
-    Canvas.imageDataAsUint,
-  );
+  const imageDataUint = Canvas.imageDataAsUint(U.view(H.present, imageData));
+  const imageDataIndex = U.view(H.index, imageData);
+
 
   const drawImageData = U.thru(
     U.template([imageDataUint, context, width, height]),
@@ -93,8 +84,6 @@ const AppContainer = ({ state, imageData, globalEvents }) => {
   );
 
   //
-
-  const timeIndex = U.view(H.index, imageData);
 
   const doUndoEffect = U.thru(
     globalEvents.onDoUndo,
@@ -119,123 +108,164 @@ const AppContainer = ({ state, imageData, globalEvents }) => {
         drawPixel,
         doUndoEffect,
       ]))}
-      <section className="c-app-header">
-        <header className="c-app-header__brand">[logo]</header>
+      <Panel className="layout--full-size">
+        <Grid
+          height={3}
+          columns={[10, 'auto', 10]}
+          className="c-app-header"
+        >
+          <div className="c-app-header__brand">
+            <img
+              className="c-app-header__logo"
+              src={logo}
+              alt="pixel logo"
+            />
+          </div>
+          <div className="c-app-header__body">Top kek</div>
+          <div className="c-app-header__meta">Bar</div>
+        </Grid>
 
-        <div className="c-app-header__body">
-          {U.view(['info', 'name', 'value'], state)}
-        </div>
+        <Panel direction="horizontal">
+          <Panel size={5}>
+            <Panel textSize="tiny">
+              <PanelHeader>Color</PanelHeader>
 
-        <aside />
-      </section>
-
-      <Panel direction="horizontal">
-        <Panel size={5}>
-          <PaletteColorPicker
-            palette={palette}
-            onSwitchCurrentColors={globalEvents.onSwitchCurrentColors}
-          />
-          <PaletteColors palette={palette} />
-          <Divider />
-
-          <Panel textSize="tiny">
-            <PanelHeader>Dev</PanelHeader>
-            <PanelBody>
-              <label>
-                <U.Input
-                  id="annotate-toggle"
-                  type="checkbox"
-                  checked={U.view('annotate', debug)}
+              <PanelBody>
+                <PaletteColorPicker
+                  palette={palette}
+                  onSwitchCurrentColors={globalEvents.onSwitchCurrentColors}
                 />
-                Annotate
-              </label>
-            </PanelBody>
+
+                <PaletteColors palette={palette} />
+              </PanelBody>
+            </Panel>
+
+            <Panel
+              textSize="tiny"
+              size={6}
+            >
+              <PanelHeader>Dev</PanelHeader>
+              <PanelBody>
+                <label>
+                  <U.Input
+                    id="annotate-toggle"
+                    type="checkbox"
+                    checked={U.view('annotate', debug)}
+                  />
+                  Annotate
+                </label>
+              </PanelBody>
+            </Panel>
+          </Panel>
+
+          <Panel>
+            <Panel>
+              <div className="c-canvas">
+                {U.when(U.view('annotate', debug),
+                <React.Fragment>
+                  <OffsetGuide offset={offset} />
+                  <Guide
+                    prefix="page"
+                    position={R.props(['pageX', 'pageY'], events)}
+                  />
+                  <Guide
+                    prefix="screen"
+                    position={R.props(['screenX', 'screenY'], events)}
+                  />
+                  <Guide
+                    prefix="client"
+                    position={R.props(['clientX', 'clientY'], events)}
+                  />
+                  <Guide
+                    prefix="pixel"
+                    position={pixelPos}
+                  />
+                  <Guide prefix="offset" position={offsetDelta} />
+                </React.Fragment>)}
+
+                <canvas
+                  ref={U.refTo(dom)}
+                  className="c-canvas__body"
+                  width={width}
+                  height={height}
+                  onContextMenu={U.actions(U.preventDefault)}
+                  onMouseDown={pushEvent}
+                  onMouseMove={pushEvent}
+                  onMouseUp={pushEvent}
+                  style={{
+                    width: R.multiply(scale, width),
+                    height: R.multiply(scale, height),
+                  }}
+                />
+              </div>
+            </Panel>
+
+            <Panel
+              size={6}
+              direction="horizontal"
+              textSize="tiny"
+            >
+              <Panel>
+                <PanelHeader>Save/load image</PanelHeader>
+                <PanelBody>
+                  <button onClick={U.actions(
+                    S.persist,
+                    saveImageDataU({
+                      name: U.view(['name', 'value'], info),
+                      imageData: imageDataUint,
+                      width,
+                      height,
+                    }),
+                  )}>
+                    Save image
+                  </button>
+                  <button disabled>
+                    Load image
+                  </button>
+                </PanelBody>
+              </Panel>
+
+              <Panel>
+                <PanelHeader>Undo history</PanelHeader>
+                <PanelBody>
+                  <div>
+                    <TimeControlButton count={U.view(H.undoIndex, imageData)}>
+                      Undo
+                    </TimeControlButton>
+                    <TimeControlButton count={U.view(H.redoIndex, imageData)}>
+                      Redo
+                    </TimeControlButton>
+                  </div>
+
+                  <div>
+                    <label>
+                      <input
+                        type="range"
+                        min={0}
+                        max={H.indexMax(imageData)}
+                        value={imageDataIndex}
+                        onChange={U.getProps({ valueAsNumber: imageDataIndex })}
+                      />
+                    </label>
+                  </div>
+                </PanelBody>
+              </Panel>
+            </Panel>
           </Panel>
         </Panel>
 
-        <Panel>
-          <Panel>
-            <div className="c-canvas">
-              {U.when(U.view('annotate', debug),
-              <React.Fragment>
-                <OffsetGuide offset={offset} />
-                <Guide
-                  prefix="page"
-                  position={R.props(['pageX', 'pageY'], events)}
-                />
-                <Guide
-                  prefix="screen"
-                  position={R.props(['screenX', 'screenY'], events)}
-                />
-                <Guide
-                  prefix="client"
-                  position={R.props(['clientX', 'clientY'], events)}
-                />
-                <Guide
-                  prefix="pixel"
-                  position={pixelPos}
-                />
-                <Guide prefix="offset" position={offsetDelta} />
-              </React.Fragment>)}
-
-              <canvas
-                ref={U.refTo(dom)}
-                className="c-canvas__body"
-                width={width}
-                height={height}
-                onContextMenu={U.actions(U.preventDefault)}
-                onMouseDown={pushEvent}
-                onMouseMove={pushEvent}
-                onMouseUp={pushEvent}
-                style={{
-                  width: R.multiply(scale, width),
-                  height: R.multiply(scale, height),
-                }}
-              />
-            </div>
-          </Panel>
-          <Panel>
-            <PanelHeader>Save/load image</PanelHeader>
-            <PanelBody>
-              <button onClick={U.actions(
-                S.persist,
-                saveImageDataU({ name: U.view(['name', 'value'], info), imageData: imageDataUint, width, height }),
-              )}>
-                Save image
-              </button>
-              <button>
-                Load image
-              </button>
-            </PanelBody>
-          </Panel>
-          <Panel>
-            <PanelHeader>Undo history</PanelHeader>
-            <PanelBody>
-              <div>
-                {U.view(H.index, imageData)}
-              </div>
-
-              <div>
-                <TimeControlButton count={U.view(H.undoIndex, imageData)}>
-                  Undo
-                </TimeControlButton>
-                <TimeControlButton count={U.view(H.redoIndex, imageData)}>
-                  Redo
-                </TimeControlButton>
-              </div>
-
-              <div>
-                <label>
-                  <input
-                    type="range"
-                    min={0}
-                    max={H.indexMax(imageData)}
-                    value={timeIndex}
-                    onChange={U.getProps({ valueAsNumber: timeIndex })}
-                  />
-                </label>
-              </div>
-            </PanelBody>
+        <Panel
+          size={2}
+          direction="horizontal"
+          textSize="small"
+        >
+          <Panel
+            direction="horizontal"
+            className="c-status-bar"
+          >
+            <StatusIndicator active={flags.isControl} label="Ctrl ⌃" />
+            <StatusIndicator active={flags.isOption} label="Alt ⌥" />
+            <StatusIndicator active={flags.isMeta} label="Meta ⌘" />
           </Panel>
         </Panel>
       </Panel>

@@ -22,6 +22,11 @@ const initialState = {
   debug: {
     annotate: false,
   },
+  input: {
+    metaPressed: false,
+    ctrlPressed: false,
+    altPressed: false,
+  },
   info: {
     name: {
       value: 'Untitled',
@@ -70,6 +75,8 @@ const initialState = {
 
 export const state = U.atom(initialState);
 
+window.state = state;
+
 //
 
 U.thru(
@@ -79,7 +86,14 @@ U.thru(
 
 // Image data
 
-export const imageData = U.atom(H.init({}, R.map(R.divide(R.__, 256), R.range(0, (24 * 24) * 4))));
+export const imageData = U.atom(
+  H.init(
+    { replacePeriod: 200 },
+    R.map(R.divide(R.__, 256), R.range(0, (24 * 24) * 4)),
+  ),
+);
+
+imageData.log('imageData');
 
 const imageDataShouldChange = U.thru(
   state,
