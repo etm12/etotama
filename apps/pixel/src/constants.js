@@ -13,3 +13,7 @@ export const PanelType = {
 export const KeyCode = {
   KeyX: 'SwitchCurrentColors',
 };
+
+export const Application = {
+  HEADER_SIZE: 3,
+};
