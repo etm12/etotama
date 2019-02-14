@@ -7,6 +7,8 @@ import * as S from '@etotama/core.shared';
 import { Canvas, Color } from './meta';
 import { mouseEventsFrom } from '../../mouse';
 
+// Functions for use in implementation
+
 const fstNotNil = R.pipe(R.head, R.complement(R.isNil));
 const ratioAsInt = R.pipe(R.apply(R.divide), U.trunc);
 
@@ -25,8 +27,6 @@ const getPixelPosition = (position, scale) => U.thru(
   U.skipDuplicates(R.equals),
 );
 
-//
-
 const eventPosition = (offset, scale, event) => U.thru(
   getEventPosition(event),
   U.flatMapLatest(p => getPositionDelta(p, offset)),
@@ -43,6 +43,9 @@ const indexForPosition = (ev, width) => U.thru(
 
 //
 
+/**
+ * @param {CanvasIndexProps} props
+ */
 const CanvasIndex = ({ dom, width, height, scale, imageData, fgColor }) => {
   const offset = Canvas.elOffset(dom);
   const context = Canvas.elContext(dom);
@@ -59,6 +62,7 @@ const CanvasIndex = ({ dom, width, height, scale, imageData, fgColor }) => {
     U.sampledBy(events.onMouseDrag),
     U.skipDuplicates(R.equals),
     U.flatMapLatest(ix => U.template([ix, U.takeFirst(1, fgColor)])),
+    // TODO: Add better support for other opacities than 255.
     U.consume(([ix, color]) =>
       imageData.view([H.present, L.slice(ix.start, ix.end)]).set([...L.get(Color.hexI, color), 255]))
   );
@@ -67,7 +71,7 @@ const CanvasIndex = ({ dom, width, height, scale, imageData, fgColor }) => {
     U.template([imageDataUint, context, width, height]),
     U.consume(([data, ctx, w, h]) =>
       ctx.putImageData(new ImageData(data, w, h), 0, 0)),
-  )
+  );
 
   return (
     <div className="c-canvas">
@@ -99,4 +103,6 @@ export default CanvasIndex;
  * @prop {Number$} width - canvas image width
  * @prop {Number$} height - canvas image height
  * @prop {Number$} scale - canvas image zoom factor
+ * @prop {any} imageData -
+ * @prop {any} fgColor -
  */

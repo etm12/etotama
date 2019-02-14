@@ -1,6 +1,7 @@
 // eslint-disable-next-line
 import * as K from 'kefir';
 import * as U from 'karet.util';
+import * as R from 'kefir.ramda';
 import * as L from 'kefir.partial.lenses';
 import * as S from '@etotama/core.shared';
 import { Canvas } from './containers/canvas/meta';
@@ -8,8 +9,22 @@ import { saveAs } from 'file-saver';
 
 //
 
+const mkElem = type => document.createElement(type);
+
+const mkCanvas = () => mkElem('canvas');
+const mkInput = () => mkElem('input');
+const mkFileInput = () => {
+  const el = mkInput();
+  el.type = 'file';
+
+  return el;
+}
+
+const mkImage = R.constructN(0, Image);
+const mkFileReader = R.constructN(0, FileReader);
+
 export const saveImageData = ({ name, imageData, width, height }) => e => {
-  const canvas = document.createElement('canvas');
+  const canvas = mkCanvas();
   Object.assign(canvas, { width, height });
 
   const data = new ImageData(imageData, width);
@@ -26,9 +41,11 @@ export const saveImageDataU = U.liftRec(saveImageData);
 
 export const getSelectedFile = L.get(['target', 'files', L.first]);
 
-export const loadImageData = ({ file }) => {
-  const input = document.createElement('input');
-  input.type = 'file';
+export const loadImageData = () => {
+  const input = mkFileInput();
+  const canvas = mkCanvas();
+  const image = mkImage();
+  const reader = mkFileReader();
 
   input.addEventListener('change', e => {
     console.log('input', e, e.target.files);
@@ -37,10 +54,7 @@ export const loadImageData = ({ file }) => {
 
   input.click();
 
-  const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d');
-  const image = new Image();
-  const reader = new FileReader();
 
   const result = U.variable();
 
@@ -59,7 +73,7 @@ export const loadImageData = ({ file }) => {
     result.set(imageData);
   })
 
-  return result.take(1).log();
+  return result.take(1);
 }
 
 export const loadImageDataU = U.liftRec(loadImageData);

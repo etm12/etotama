@@ -49,10 +49,6 @@ const AppContainer = ({ state, imageData, globalEvents }) => {
     ]),
   );
 
-  const imageDataIndex = U.view(H.index, imageData);
-  const imageDataUint = Canvas.imageDataAsUint(U.view(H.present, imageData));
-
-
   //
 
   const doUndoEffect = U.thru(
@@ -138,7 +134,7 @@ const AppContainer = ({ state, imageData, globalEvents }) => {
                     S.persist,
                     saveImageDataU({
                       name: U.view(['name', 'value'], info),
-                      imageData: imageDataUint,
+                      imageData: Canvas.imageDataAsUint(U.view(H.present, imageData)),
                       width,
                       height,
                     }),
@@ -169,8 +165,8 @@ const AppContainer = ({ state, imageData, globalEvents }) => {
                         type="range"
                         min={0}
                         max={H.indexMax(imageData)}
-                        value={imageDataIndex}
-                        onChange={U.getProps({ valueAsNumber: imageDataIndex })}
+                        value={U.view(H.index, imageData)}
+                        onChange={U.getProps({ valueAsNumber: U.view(H.index, imageData) })}
                       />
                     </label>
                   </div>
