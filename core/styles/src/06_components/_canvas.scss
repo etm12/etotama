@@ -28,6 +28,7 @@
       position: fixed;
       left: 0;
       top: 0;
+      z-index: 10;
 
       &.prefix-offset {
         &.horizontal { left: 0; width: 100%; margin-top: -1px; height: 3px; }
