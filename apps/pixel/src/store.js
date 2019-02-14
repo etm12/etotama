@@ -8,7 +8,7 @@ import * as R from 'ramda';
 import * as L from 'partial.lenses';
 
 import palettes from './assets/palettes';
-import { COLOR_CHANNELS, PanelType } from './constants';
+import { COLOR_CHANNELS } from './constants';
 import * as S from '@etotama/core.shared';
 
 const colors = L.get(
@@ -20,7 +20,7 @@ const colors = L.get(
 
 const initialState = {
   debug: {
-    annotate: false,
+    annotate: true,
   },
   input: {
     metaPressed: false,
@@ -35,7 +35,6 @@ const initialState = {
   },
   canvas: {
     size: [24, 24],
-    mouse: [0, 0],
     width: 24,
     height: 24,
     scale: 16,
@@ -43,26 +42,6 @@ const initialState = {
       left: 0,
       top: 0,
     },
-  },
-  panels: [
-    {
-      type: PanelType.PANEL,
-      props: {},
-      children: [
-        {
-          type: PanelType.PANEL,
-          header: 'Tools & Functions',
-          children: [
-            {
-              type: PanelType.PALETTE,
-            },
-          ],
-        },
-      ],
-    },
-  ],
-  brush: {
-    size: 2,
   },
   palette: {
     active: [10, 16],
@@ -74,8 +53,6 @@ const initialState = {
 //
 
 export const state = U.atom(initialState);
-
-window.state = state;
 
 //
 
@@ -92,8 +69,6 @@ export const imageData = U.atom(
     R.map(R.divide(R.__, 256), R.range(0, (24 * 24) * 4)),
   ),
 );
-
-imageData.log('imageData');
 
 const imageDataShouldChange = U.thru(
   state,
