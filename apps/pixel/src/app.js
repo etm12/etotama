@@ -1,6 +1,11 @@
 /**
  * @module Pixel
  * @namespace App
+ *
+ * Main application root, which instantiates the rest of the application
+ * and its behavior. Any global bindings should _not_ be done here, but instead be
+ * bound and passed as observables from the application entry point as props and/or context
+ * instead.
  */
 import * as React from 'karet';
 import * as H from 'kefir.partial.lenses.history';
@@ -9,16 +14,17 @@ import * as R from 'kefir.ramda';
 import * as L from 'kefir.partial.lenses';
 import * as S from '@etotama/core.shared';
 
-import { pushEvent, withBoundContext } from './mouse';
+import { withBoundContext } from './mouse';
 import { saveImageDataU } from './canvas';
 import { Panel, PanelHeader, PanelBody } from './layout/panel';
 import { StatusIndicator } from './components/status-bar';
-import { Canvas, Color } from './containers/editor/meta';
-import { Guide, OffsetGuide } from './components/dev/guide';
+import { Canvas, Color } from './containers/canvas/meta';
+import { Guide } from './components/dev/guide';
 import PaletteColorPicker from './components/palette-color-picker';
 import PaletteColors from './components/palette-colors';
 import TimeControlButton from './components/time-control-button';
 import AppHeader from './components/app-header';
+import CanvasIndex from './containers/canvas';
 
 //
 
@@ -29,14 +35,11 @@ const AppContainer = ({ state, imageData, globalEvents }) => {
   const height = U.view(1, size);
   const dom = U.variable();
   const offset = Canvas.elOffset(dom);
-  const context = Canvas.elContext(dom);
 
   const { flags } = globalEvents;
-  const { events, offsetDelta, pixel } = withBoundContext({ dom, offset, scale });
+  const { pixel } = withBoundContext({ dom, offset, scale });
 
   const fgColor = Color.fgColorIn(palette);
-
-  const shouldDraw = U.parallel([events.onMouseDown, events.onMouseDrag]);
 
   const pixelPos = U.thru(
     U.template({ pixel, offset, scale }),
@@ -46,42 +49,9 @@ const AppContainer = ({ state, imageData, globalEvents }) => {
     ]),
   );
 
-  /**
-   * Get the start and end index for the given position
-   */
-  const viewPosition = U.thru(
-    U.template({ pixel, width, height }),
-    U.sampledBy(shouldDraw),
-    U.mapValue(x => S.getIx(x.pixel[0], x.pixel[1], x.width)),
-  );
-
-  const drawPixel = U.thru(
-    viewPosition,
-    U.flatMapLatest(ix =>
-      U.template({
-        ixL: L.slice(ix.start, ix.end),
-        event: shouldDraw,
-        color: fgColor,
-      }),
-    ),
-    // TODO: Fixme
-    // U.skipDuplicates((prev, next) => R.equals(prev.event, next.event)),
-    U.consume(({ ixL, color }) => {
-      U.view([H.present, ixL], imageData)
-       .set([...L.get(Color.hexI, color), 255]);
-    }),
-  );
-
-  const imageDataUint = Canvas.imageDataAsUint(U.view(H.present, imageData));
   const imageDataIndex = U.view(H.index, imageData);
+  const imageDataUint = Canvas.imageDataAsUint(U.view(H.present, imageData));
 
-
-  const drawImageData = U.thru(
-    U.template([imageDataUint, context, width, height]),
-    U.consume(([data, ctx, w, h]) =>
-      ctx.putImageData(new ImageData(data, w, h), 0, 0),
-    ),
-  );
 
   //
 
@@ -104,8 +74,6 @@ const AppContainer = ({ state, imageData, globalEvents }) => {
       U.when(U.view('annotate', debug), 'debug--annotate'),
     )}>
       {U.sink(U.parallel([
-        drawImageData,
-        drawPixel,
         doUndoEffect,
       ]))}
       <Panel className="layout--full-size">
@@ -151,21 +119,14 @@ const AppContainer = ({ state, imageData, globalEvents }) => {
                     position={pixelPos}
                   />)}
 
-                {/* TODO: Extract canvas-related stuff to its own container */}
-                <canvas
-                  ref={U.refTo(dom)}
-                  className="c-canvas__body"
-                  width={width}
-                  height={height}
-                  onContextMenu={U.actions(U.preventDefault)}
-                  onMouseDown={pushEvent}
-                  onMouseMove={pushEvent}
-                  onMouseUp={pushEvent}
-                  style={{
-                    width: R.multiply(scale, width),
-                    height: R.multiply(scale, height),
-                  }}
-                />
+                <CanvasIndex {...{
+                  dom,
+                  width,
+                  height,
+                  scale,
+                  imageData,
+                  fgColor,
+                }} />
               </div>
             </Panel>
 

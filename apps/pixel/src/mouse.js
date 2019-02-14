@@ -2,27 +2,6 @@
 import * as K from 'kefir';
 import * as U from 'karet.util';
 import * as R from 'kefir.ramda';
-import * as S from '@etotama/core.shared';
-
-const mouseEvBus = U.bus();
-
-/** @type {Function} */
-export const pushEvent = U.actions(S.persist, U.through(U.doPush(mouseEvBus), S.call0));
-
-/** @type {MouseEvent$} */
-export const events = U.toProperty(mouseEvBus);
-
-/** @return {MouseEvent$} */
-const takeEvent = type => U.skipUnless(R.whereEq({ type }), events);
-
-/** @type {MouseEvent$} */
-export const onMouseDown = takeEvent('mousedown');
-
-/** @type {MouseEvent$} */
-export const onMouseMove = takeEvent('mousemove');
-
-/** @type {MouseEvent$} */
-export const onMouseUp = takeEvent('mouseup');
 
 const takeEvents = source => type => U.thru(
   source,
@@ -52,19 +31,6 @@ export const mouseEventsFrom = source => ({
 
 //
 
-/** @type {MouseEvent$} */
-export const onMouseDrag = U.thru(
-  onMouseDown,
-  U.flatMapLatest(() => U.takeUntilBy(
-    U.takeFirst(1, onMouseUp),
-    onMouseUp
-  )),
-);
-
-export const onMouseDraw = U.parallel([onMouseDown, onMouseDrag]);
-
-//
-
 /**
  *
  * @param {MouseEvent$} event
@@ -88,6 +54,14 @@ const getPixelPosition = (position, scale) => U.thru(
   R.map(R.pipe(R.apply(R.divide), U.trunc)),
   U.skipDuplicates(R.equals),
 );
+
+export const eventsFrom = (dom) => {
+  const events = mouseEventsFrom(dom);
+
+  return {
+    events,
+  };
+};
 
 /**
  *

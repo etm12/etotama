@@ -3,7 +3,7 @@ import * as K from 'kefir';
 import * as U from 'karet.util';
 import * as L from 'kefir.partial.lenses';
 import * as S from '@etotama/core.shared';
-import { Canvas } from './containers/editor/meta';
+import { Canvas } from './containers/canvas/meta';
 import { saveAs } from 'file-saver';
 
 //
