@@ -1,27 +1,30 @@
+/**
+ * @module Panel
+ *
+ * Exposes a number of components that can be used to create "layoutable"
+ * panels, which act as containers for UI elements themselves.
+ *
+ * @todo Add support for collapsible panels
+ */
 import * as React from 'karet';
 import * as U from 'karet.util';
 
 //
 
-export const PanelHeader = ({ children }) => (
+export const PanelHeader = ({ children }) =>
   <header className="c-panel__header">
     {children}
-  </header>
-);
+  </header>;
 
 //
 
-export const PanelBody = ({ children }) => (
-  <div className="c-panel__body">{children}</div>
-);
+export const PanelBody = ({ children }) =>
+  <div className="c-panel__body">{children}</div>;
 
-export const PanelFooter = ({ children }) => (
-  <footer className={U.cns(
-    'c-panel__footer',
-  )}>
+export const PanelFooter = ({ children }) =>
+  <footer className="c-panel__footer">
     {children}
-  </footer>
-)
+  </footer>;
 
 //
 
@@ -34,10 +37,6 @@ export const Panel = props => {
     className,
     center,
     textSize,
-    // eslint-disable-next-line
-    name,
-    // eslint-disable-next-line
-    component,
     direction = 'vertical',
   } = props;
 
@@ -65,5 +64,7 @@ export const Panel = props => {
     </section>
   );
 };
+
+//
 
 export default Panel;
