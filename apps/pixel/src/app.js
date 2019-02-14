@@ -11,15 +11,14 @@ import * as S from '@etotama/core.shared';
 
 import { pushEvent, withBoundContext } from './mouse';
 import { saveImageDataU } from './canvas';
-import Grid from './layout/grid';
 import { Panel, PanelHeader, PanelBody } from './layout/panel';
-import { StatusBar, StatusLabel, StatusIndicator } from './components/status-bar';
+import { StatusIndicator } from './components/status-bar';
 import { Canvas, Color } from './containers/editor/meta';
 import { Guide, OffsetGuide } from './components/dev/guide';
 import PaletteColorPicker from './components/palette-color-picker';
 import PaletteColors from './components/palette-colors';
 import TimeControlButton from './components/time-control-button';
-import logo from './assets/logo.svg';
+import AppHeader from './components/app-header';
 
 //
 
@@ -60,14 +59,15 @@ const AppContainer = ({ state, imageData, globalEvents }) => {
     viewPosition,
     U.flatMapLatest(ix =>
       U.template({
-        ix,
+        ixL: L.slice(ix.start, ix.end),
         event: shouldDraw,
         color: fgColor,
       }),
     ),
+    // TODO: Fixme
     // U.skipDuplicates((prev, next) => R.equals(prev.event, next.event)),
-    U.consume(({ ix, color }) => {
-      U.view([H.present, L.slice(ix.start, ix.end)], imageData)
+    U.consume(({ ixL, color }) => {
+      U.view([H.present, ixL], imageData)
        .set([...L.get(Color.hexI, color), 255]);
     }),
   );
@@ -109,21 +109,8 @@ const AppContainer = ({ state, imageData, globalEvents }) => {
         doUndoEffect,
       ]))}
       <Panel className="layout--full-size">
-        <Grid
-          height={3}
-          columns={[10, 'auto', 10]}
-          className="c-app-header"
-        >
-          <div className="c-app-header__brand">
-            <img
-              className="c-app-header__logo"
-              src={logo}
-              alt="pixel logo"
-            />
-          </div>
-          <div className="c-app-header__body">Top kek</div>
-          <div className="c-app-header__meta">Bar</div>
-        </Grid>
+        {/* Application header section */}
+        <AppHeader info={info} />
 
         <Panel direction="horizontal">
           <Panel size={5}>
@@ -140,10 +127,7 @@ const AppContainer = ({ state, imageData, globalEvents }) => {
               </PanelBody>
             </Panel>
 
-            <Panel
-              textSize="tiny"
-              size={6}
-            >
+            <Panel textSize="tiny" size={6}>
               <PanelHeader>Dev</PanelHeader>
               <PanelBody>
                 <label>
@@ -162,27 +146,12 @@ const AppContainer = ({ state, imageData, globalEvents }) => {
             <Panel>
               <div className="c-canvas">
                 {U.when(U.view('annotate', debug),
-                <React.Fragment>
-                  <OffsetGuide offset={offset} />
-                  <Guide
-                    prefix="page"
-                    position={R.props(['pageX', 'pageY'], events)}
-                  />
-                  <Guide
-                    prefix="screen"
-                    position={R.props(['screenX', 'screenY'], events)}
-                  />
-                  <Guide
-                    prefix="client"
-                    position={R.props(['clientX', 'clientY'], events)}
-                  />
                   <Guide
                     prefix="pixel"
                     position={pixelPos}
-                  />
-                  <Guide prefix="offset" position={offsetDelta} />
-                </React.Fragment>)}
+                  />)}
 
+                {/* TODO: Extract canvas-related stuff to its own container */}
                 <canvas
                   ref={U.refTo(dom)}
                   className="c-canvas__body"
@@ -200,11 +169,7 @@ const AppContainer = ({ state, imageData, globalEvents }) => {
               </div>
             </Panel>
 
-            <Panel
-              size={6}
-              direction="horizontal"
-              textSize="tiny"
-            >
+            <Panel size={6} direction="horizontal" textSize="tiny">
               <Panel>
                 <PanelHeader>Save/load image</PanelHeader>
                 <PanelBody>
