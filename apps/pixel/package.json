@@ -1,12 +1,12 @@
 {
   "name": "@etotama/app.pixel",
-  "version": "0.6.0",
+  "version": "1.0.0",
   "license": "MIT",
   "homepage": "https://etm12.moe",
   "dependencies": {
-    "@etotama/core.shared": "0.6.0",
-    "@etotama/core.styles": "^0.1.0",
-    "@etotama/core.typedefs": "0.1.0",
+    "@etotama/core.shared": "1.0.0",
+    "@etotama/core.styles": "1.0.0",
+    "@etotama/core.typedefs": "1.0.0",
     "d3-color": "^1.2.3",
     "deep-object-diff": "^1.1.0",
     "file-saver": "^2.0.0",

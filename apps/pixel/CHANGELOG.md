@@ -3,6 +3,76 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0](https://github.com/etm12/etotama/compare/v0.6.0...v1.0.0) (2019-02-14)
+
+
+### Bug Fixes
+
+* **app.pixel:** Allow panels to autosize if no width specified ([c641a4a](https://github.com/etm12/etotama/commit/c641a4a))
+* **app.pixel:** Fix faulty z-index calculation ([da969bb](https://github.com/etm12/etotama/commit/da969bb))
+* **app.pixel:** Fix missing annotations ([1bfe085](https://github.com/etm12/etotama/commit/1bfe085))
+
+
+### Features
+
+* **app.pixel:** Add annotate mixin, helper functions ([4d9453a](https://github.com/etm12/etotama/commit/4d9453a))
+* **app.pixel:** Add AppHeader component ([ebb4181](https://github.com/etm12/etotama/commit/ebb4181))
+* **app.pixel:** Add color picker component to app ([be66a8c](https://github.com/etm12/etotama/commit/be66a8c))
+* **app.pixel:** Add color picker styles ([fb70e22](https://github.com/etm12/etotama/commit/fb70e22))
+* **app.pixel:** Add debug flag to UI ([43ed730](https://github.com/etm12/etotama/commit/43ed730))
+* **app.pixel:** Add drawing to canvas with reworked internals ([2123a52](https://github.com/etm12/etotama/commit/2123a52))
+* **app.pixel:** Add elevation defs ([bfa4cc3](https://github.com/etm12/etotama/commit/bfa4cc3))
+* **app.pixel:** Add FG/BG color picker component ([72873ed](https://github.com/etm12/etotama/commit/72873ed))
+* **app.pixel:** Add FG/BG color picker styles ([4fdbbae](https://github.com/etm12/etotama/commit/4fdbbae))
+* **app.pixel:** Add global button styles ([a755ce6](https://github.com/etm12/etotama/commit/a755ce6))
+* **app.pixel:** Add global event support to root component ([c126dd4](https://github.com/etm12/etotama/commit/c126dd4))
+* **app.pixel:** Add global keyboard event listeners ([d4e4780](https://github.com/etm12/etotama/commit/d4e4780))
+* **app.pixel:** Add global keyboard events for keyup and modifier keys ([fa96afb](https://github.com/etm12/etotama/commit/fa96afb))
+* **app.pixel:** Add global undo/redo event ([c5d379d](https://github.com/etm12/etotama/commit/c5d379d))
+* **app.pixel:** Add Grid layout component ([e0e8123](https://github.com/etm12/etotama/commit/e0e8123))
+* **app.pixel:** Add grid-gap helper classes ([c5a0ced](https://github.com/etm12/etotama/commit/c5a0ced))
+* **app.pixel:** Add helpers for binding canvas mouse events ([88dd4b4](https://github.com/etm12/etotama/commit/88dd4b4))
+* **app.pixel:** Add image save functionality ([1a6ed28](https://github.com/etm12/etotama/commit/1a6ed28))
+* **app.pixel:** Add initial version of BG/FG color picker ([d8b2989](https://github.com/etm12/etotama/commit/d8b2989))
+* **app.pixel:** Add KeyEvent constants ([278dabf](https://github.com/etm12/etotama/commit/278dabf))
+* **app.pixel:** Add meta to ensure imageData is always a clamped array ([e663e01](https://github.com/etm12/etotama/commit/e663e01))
+* **app.pixel:** Add PaletteColorPicker component ([a1524e7](https://github.com/etm12/etotama/commit/a1524e7))
+* **app.pixel:** Add pixel-specific cursor preview ([92a513f](https://github.com/etm12/etotama/commit/92a513f))
+* **app.pixel:** Add spacing choices to variables in stylesheets ([d8707d6](https://github.com/etm12/etotama/commit/d8707d6))
+* **app.pixel:** Add TimeControlButton component for undo/redo ([0a62334](https://github.com/etm12/etotama/commit/0a62334))
+* **app.pixel:** Add togglable input control ([71da45f](https://github.com/etm12/etotama/commit/71da45f))
+* **app.pixel:** Add top-level UI components ([d8c95b3](https://github.com/etm12/etotama/commit/d8c95b3))
+* **app.pixel:** Add undo/redo buttons ([e2eae01](https://github.com/etm12/etotama/commit/e2eae01))
+* **app.pixel:** Add z-index support for annotate mixin ([71fd5a3](https://github.com/etm12/etotama/commit/71fd5a3))
+* **app.pixel:** Allow annotation click-through ([302c43f](https://github.com/etm12/etotama/commit/302c43f))
+* **app.pixel:** Create dev-related mixins ([87488d9](https://github.com/etm12/etotama/commit/87488d9))
+* **app.pixel:** Extract canvas-related functionality ([3028238](https://github.com/etm12/etotama/commit/3028238))
+* **app.pixel:** Extract dev-only components to own file ([6933a5e](https://github.com/etm12/etotama/commit/6933a5e))
+* **app.pixel:** Implement Color meta helpers ([1265fca](https://github.com/etm12/etotama/commit/1265fca))
+* **app.pixel:** Implement mouse event listeners through DOM refs ([cac947b](https://github.com/etm12/etotama/commit/cac947b))
+* **app.pixel:** Implement undo/redo history for imageData ([5c690db](https://github.com/etm12/etotama/commit/5c690db))
+* **app.pixel:** Implement use of new components ([9d24902](https://github.com/etm12/etotama/commit/9d24902))
+* **app.pixel:** Improve canvas editor UI ([82fcc13](https://github.com/etm12/etotama/commit/82fcc13))
+* **app.pixel:** Improve default button styles ([2f996cf](https://github.com/etm12/etotama/commit/2f996cf))
+* **app.pixel:** Improve styles for debug ([63538d1](https://github.com/etm12/etotama/commit/63538d1))
+* **app.pixel:** Make sizing accessors verbose in case of error ([cacc6a6](https://github.com/etm12/etotama/commit/cacc6a6))
+* **app.pixel:** Rename palette-related components ([f998ddd](https://github.com/etm12/etotama/commit/f998ddd))
+* **apps/pixel:** Add UI components ([409d52c](https://github.com/etm12/etotama/commit/409d52c))
+* **apps/pixel:** Improve general stylesheets for components ([ddc1fc4](https://github.com/etm12/etotama/commit/ddc1fc4))
+* **apps/pixel:** Start proper rewrite of full app ([dd4d93c](https://github.com/etm12/etotama/commit/dd4d93c))
+* **core.styles:** Relocate all stylesheets to their own package ([d663a1f](https://github.com/etm12/etotama/commit/d663a1f))
+
+
+### BREAKING CHANGES
+
+* **core.styles:** All styles are moved out of the application package to a shared core package
+* **app.pixel:** Image data is no longer a plain array, but instead the data is managed through the
+use of `partial.lenses.history`. Use the `H.present` lens to view the current imageData array.
+
+
+
+
+
 # [0.6.0](https://github.com/etm12/etotama/compare/v0.5.0...v0.6.0) (2019-02-08)
 
 
