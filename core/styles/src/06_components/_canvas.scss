@@ -1,9 +1,9 @@
 @mixin _make-canvas {
   $_class: #{$prefix}-canvas;
 
-  .#{$debug-root} .#{$_class} {
-    @include annotate('canvas');
-  }
+  // .#{$debug-root} .#{$_class} {
+  //   @include annotate('canvas');
+  // }
 
   .#{$_class} {
     position: relative;

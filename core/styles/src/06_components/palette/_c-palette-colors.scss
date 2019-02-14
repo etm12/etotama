@@ -2,14 +2,14 @@
   $_class: #{$prefix}-palette-color-picker;
   $_btn-class: #{$_class}__button;
 
-  .#{$_class} {
-    // border: solid 1px #f00;
-    // margin: .25rem;
-  }
+  // .#{$_class} {
+  //   // border: solid 1px #f00;
+  //   // margin: .25rem;
+  // }
 
-  .#{$debug-root} .#{$_class} {
-    @include annotate(palette);
-  }
+  // .#{$debug-root} .#{$_class} {
+  //   @include annotate(palette);
+  // }
 
   .#{$_btn-class} {
     border: none;
