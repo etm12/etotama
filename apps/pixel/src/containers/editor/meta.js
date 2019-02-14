@@ -2,6 +2,9 @@ import * as U from 'karet.util';
 import * as R from 'kefir.ramda';
 import * as L from 'kefir.partial.lenses';
 
+export const fstIn = U.view(0);
+export const sndIn = U.view(1);
+
 export const Canvas = {
   scaledSize: U.liftRec((w, h, m) => [w * m, h * m]),
   elOffset: U.through(
@@ -9,6 +12,7 @@ export const Canvas = {
     R.props(['left', 'top']),
   ),
   elContext: R.invoker(1, 'getContext')('2d'),
+  imageDataAsUint: U.view(L.reread(R.constructN(1, Uint8ClampedArray))),
 };
 
 export const Event = {
@@ -16,6 +20,9 @@ export const Event = {
 };
 
 export const Color = {
+  activeIn: idx => U.view(['active', idx]),
+  fgColorIn: palette => U.view(['colors', Color.activeIn(0)(palette)], palette),
+  bgColorIn: palette => U.view(['colors', Color.activeIn(1)(palette)], palette),
   hexI: [
     L.dropPrefix('#'), L.iso(
       R.splitEvery(2),

@@ -1,0 +1,27 @@
+@mixin _make-status-bar {
+  $_class: #{$prefix}-status-bar;
+
+  .#{$_class} {
+
+    align-items: center;
+  }
+
+  .#{$_class}-item {
+    padding: space(tiny);
+    margin-right: 2px;
+  }
+
+  .#{$_class}__indicator {
+    // border: solid 2px #f00;
+
+    &--active {
+      box-shadow: inset 0 -12px 0 0 $yellow;
+    }
+  }
+
+  .#{$_class}__label {
+    border: solid 1px #f00;
+  }
+}
+
+@include _make-status-bar();

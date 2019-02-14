@@ -3,7 +3,6 @@ import * as U from 'karet.util';
 import * as R from 'kefir.ramda';
 import * as L from 'kefir.partial.lenses';
 import * as M from './meta';
-import * as S from '@etotama/core.shared';
 import { Store } from '../../context';
 import { COLOR_CHANNELS } from '../../constants';
 import { takeMouseEventsFrom } from './_events';
@@ -17,19 +16,10 @@ const getIx = (x, y, w) => ({
   end: computeIx(x, y, w) + COLOR_CHANNELS,
 })
 
-const EditorImpl = ({ width, height, scale, imageData, palette, mousePosition }) => {
-  const dom = U.variable();
+const EditorImpl = ({ width, height, scale, imageData, palette, mousePosition, dom }) => {
   const domOffset = M.Canvas.elOffset(dom);
   const domContext = M.Canvas.elContext(dom);
   const domSize = M.Canvas.scaledSize(width, height, scale);
-
-  const mouseEv = U.bus();
-
-  const reportMouse = U.through(
-    R.props(['pageX', 'pageY']),
-    U.doPush(mouseEv),
-    S.call0,
-  );
 
   const { selected } = U.destructure(palette);
   const colorValue = U.view(M.Color.hexI, selected);
@@ -137,8 +127,6 @@ const EditorImpl = ({ width, height, scale, imageData, palette, mousePosition })
           style={canvasSize}
           width={width}
           height={height}
-          onMouseDown={reportMouse}
-          onMouseMove={reportMouse}
         />
         <svg className="editor__ruler" style={canvasSize}>
           <defs>
@@ -164,7 +152,7 @@ const EditorImpl = ({ width, height, scale, imageData, palette, mousePosition })
 const EditorContainer = () =>
   <React.Fragment>
     <Store.Consumer>
-      {({ state, imageData }) => {
+      {({ state, imageData, canvas: dom }) => {
         const { canvas, palette, mouse } = U.destructure(state);
         const { width, height, scale } = U.destructure(canvas);
         const { position } = U.destructure(mouse);
@@ -176,6 +164,7 @@ const EditorContainer = () =>
             scale,
             palette,
             imageData,
+            dom,
             mousePosition: position,
           }} />
         );

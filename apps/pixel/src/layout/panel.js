@@ -1,28 +1,30 @@
+/**
+ * @module Panel
+ *
+ * Exposes a number of components that can be used to create "layoutable"
+ * panels, which act as containers for UI elements themselves.
+ *
+ * @todo Add support for collapsible panels
+ */
 import * as React from 'karet';
 import * as U from 'karet.util';
-import * as R from 'kefir.ramda';
 
 //
 
-export const PanelHeader = ({ children }) => (
+export const PanelHeader = ({ children }) =>
   <header className="c-panel__header">
     {children}
-  </header>
-);
+  </header>;
 
 //
 
-export const PanelBody = ({ children }) => (
-  <div className="c-panel__body">{children}</div>
-);
+export const PanelBody = ({ children }) =>
+  <div className="c-panel__body">{children}</div>;
 
-export const PanelFooter = ({ children }) => (
-  <footer className={U.cns(
-    'c-panel__footer',
-  )}>
+export const PanelFooter = ({ children }) =>
+  <footer className="c-panel__footer">
     {children}
-  </footer>
-)
+  </footer>;
 
 //
 
@@ -34,8 +36,7 @@ export const Panel = props => {
     stretch,
     className,
     center,
-    name,
-    component,
+    textSize,
     direction = 'vertical',
   } = props;
 
@@ -45,9 +46,11 @@ export const Panel = props => {
 
   const classNames = [
     'c-panel',
+    className,
     U.when(main, 'c-panel--main'),
-    U.when(size, 'c-panel--fixed'),
+    U.ifElse(size, 'c-panel--fixed', 'c-panel--auto'),
     U.when(stretch, 'c-panel--stretch'),
+    U.when(textSize, U.string`c-panel--text-${textSize}`),
     U.string`c-panel--${direction}`,
     U.when(center, 'c-panel--center'),
     className,
@@ -61,5 +64,7 @@ export const Panel = props => {
     </section>
   );
 };
+
+//
 
 export default Panel;

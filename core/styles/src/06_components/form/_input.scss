@@ -1,0 +1,36 @@
+@mixin _make-togglable-input {
+  $_class: #{$prefix}-input-togglable;
+  $_font: $font-family-monospace;
+  $_font-size: font-size(small);
+
+  $_display-hover-border: solid 1px map-get($colors, divider);
+  $_edit-field-border: solid 2px $gray-700;
+
+  .#{$_class} {
+    &__display,
+    &__edit {
+      font-family: $font-family-monospace;
+      font-size: $_font-size;
+      padding: space(small);
+    }
+
+    &__display {
+      cursor: pointer;
+
+      &:hover {
+        border: $_display-hover-border;
+      }
+    }
+
+    &__edit {
+      border: none;
+      border-bottom: $_edit-field-border;
+
+      &-button {
+        margin-left: .25rem;
+      }
+    }
+  }
+}
+
+@include _make-togglable-input();

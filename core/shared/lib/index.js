@@ -1,10 +1,12 @@
 // @ts-check
 /// <reference path="./index.d.ts" />
+import * as U from 'karet.util';
 import * as L from 'partial.lenses';
 import * as R from 'ramda';
 import * as K from 'kefir';
 import * as C from 'd3-color';
 import * as Ls from './lenses';
+import { COLOR_CHANNELS } from './constants';
 
 //
 
@@ -54,7 +56,26 @@ export const obsObjectL = L.iso(
 // #region Canvas
 export const getBoundingRect = invoke0('getBoundingClientRect');
 export const getContext = invoke1('getContext', '2d');
+
+export const computeIx = (x, y, w) => ((y * w) + x) * COLOR_CHANNELS;
+export const getIx = (x, y, w) => ({
+  start: computeIx(x, y, w),
+  end: computeIx(x, y, w) + COLOR_CHANNELS,
+});
+
 // #endregion
+
+/**
+ * Create an event bus and return an object containing the bus and
+ * a function to push events into the stream with.
+ */
+export const eventBus = () => {
+  const bus = U.bus();
+  const pushEvent = U.actions(persist, U.through(U.doPush(bus), call0));
+  const events = U.flatMapLatest(x => U.toProperty(x), bus);
+
+  return { events, pushEvent };
+}
 
 //. offsetPositionBy :: Offset -> Position -> Position
 export const offsetPositionBy_ = ([sx, sy], [dx, dy]) => [dx - sx, dy - sy];
@@ -71,3 +92,7 @@ export const toColor = (x => (isColor(x) ? x : C.color(x)));
 export const toHex = R.invoker(0, 'hex');
 export const darken = (amount, color) => color.darker(amount);
 // #endregion
+
+const lenses = Ls;
+
+export { lenses };

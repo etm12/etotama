@@ -1,4 +1,4 @@
 import { createContext } from 'karet';
-import store, { imageData } from './store';
+import { state, imageData } from './store';
 
-export const Store = createContext({ store, imageData });
+export const Store = createContext({ state, imageData });

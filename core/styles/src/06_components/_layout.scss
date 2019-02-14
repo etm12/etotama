@@ -1,0 +1,17 @@
+.layout {
+  // border: solid 1px #f00;
+}
+
+.layout {
+  .layout--full-size {
+    height: 100vh;
+  }
+
+  &.layout--root {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+  }
+}

@@ -1,0 +1,39 @@
+@mixin make-button {
+  $c-btn-background: $gray-500 !default;
+  $c-btn-active-background: $gray-400 !default;
+  $c-btn-text-color: $gray-700 !default;
+
+  $_class: #{$prefix}-button;
+  $_custom-class: #{$_class}--custom;
+  $_active-class: #{$_class}--active;
+
+  .#{$_class} {
+    background-color: $c-btn-background;
+    color: $c-btn-text-color;
+    font-weight: $font-weight-bold;
+    border: none;
+    padding: $spacing-normal;
+    cursor: pointer;
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: .5;
+    }
+
+    &:hover,
+    &:active,
+    &:focus {
+      &:not(:disabled) {
+        background-color: $c-btn-active-background;
+      }
+    }
+
+    &.#{$_custom-class} {
+      &.#{$_active-class} {
+        border: solid 2px rgba(0, 0, 0, .3);
+      }
+    }
+  }
+}
+
+@include make-button();

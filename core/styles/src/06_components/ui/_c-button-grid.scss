@@ -1,0 +1,27 @@
+@mixin make-button-grid {
+  $_class: #{$prefix}-button-grid;
+
+  .#{$_class} {
+    display: grid;
+    border-radius: 3px;
+    overflow: hidden;
+
+    &.c-3-cols {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .#{$_class}:not(:first-of-type) {
+    margin-top: $spacing-normal;
+  }
+
+  .#{$_class} {
+    &--gap {
+      &-hairline {
+        grid-gap: 1px;
+      }
+    }
+  }
+}
+
+@include make-button-grid();

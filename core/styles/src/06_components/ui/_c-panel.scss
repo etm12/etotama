@@ -1,0 +1,93 @@
+@mixin make-panel {
+  $_font-size: font-size(normal);
+
+  $c-panel-font-family: $font-family-monospace;
+  $c-panel-corner-size: remify(6px);
+  $c-panel-base-spacing: space(tiny);
+  $c-panel-padding: space(tiny);
+  $c-panel-corner-color: $gray-700;
+  $c-panel-border-width: 2px;
+  $c-panel-border-color: $gray-500;
+
+  $c-panel-header-text-color: $gray-600 !default;
+
+  $_class: #{$prefix}-panel;
+  $_class-header: #{$_class}__header;
+  $_class-body: #{$_class}__body;
+  $_class-footer: #{$_class}__footer;
+
+  .#{$_class} {
+    display: flex;
+
+    &--text-tiny {
+      font-size: font-size(tiny);
+    }
+
+    &--text-small {
+      font-size: font-size(small);
+    }
+  }
+
+  .#{$_class-header},
+  .#{$_class-body},
+  .#{$_class-footer} {
+    padding: $c-panel-base-spacing;
+  }
+
+  .#{$_class-body} {
+    flex: auto;
+  }
+
+  .#{$_class-header} {
+    margin-bottom: $c-panel-base-spacing;
+    color: $c-panel-header-text-color;
+    font-weight: $font-weight-bold;
+  }
+
+  .#{$_class-footer} {
+    margin-top: $c-panel-base-spacing;
+    border-top: solid $c-panel-border-width $c-panel-border-color;
+  }
+
+  // Modifiers
+
+  .#{$_class}--auto {
+    flex: auto;
+  }
+
+  .#{$_class}--stretch {
+    flex: auto;
+
+    > :not(.#{$_class}--fixed) {
+      flex: auto;
+    }
+  }
+
+  .#{$_class}--vertical {
+    flex-direction: column;
+
+    > .#{$_class} {
+      &:not(:first-child) {
+        border-top: solid $c-panel-border-width $c-panel-border-color;
+      }
+    }
+  }
+
+  .#{$_class}--horizontal {
+    flex-direction: row;
+
+    > .#{$_class} {
+      &:not(:first-child) {
+        border-left: solid $c-panel-border-width $c-panel-border-color;
+      }
+    }
+  }
+
+  .#{$_class}--center > .#{$_class-body} {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+@include make-panel();

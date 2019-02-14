@@ -1,7 +1,9 @@
 export APP
 
 LERNA=node_modules/.bin/lerna
-VSCODE_DIR=.vscode
+
+log_success = (echo "\x1B[32m>> $1\x1B[39m")
+log_error = (>&2 echo "\x1B[31m>> $1\x1B[39m" && exit 1)
 
 ## Project
 
@@ -31,17 +33,6 @@ version:
 		--exact \
 		-m "chore(release): publish %s"
 
-## Working on project
-
-# Initialize VS Code workspace by installing recommended extensions
-.PHONY: $(EXTS)
-EXTS = $(shell jq '.recommendations[]' $(VSCODE_DIR)/extensions.json)
-
-# Install VS Code extensions
-.PHONY: install-vscode-extensions $(EXTS)
-install-vscode-extensions: $(EXTS)
-	$(shell code --install-extension $<)
-
 ## Derived "main level" targets
 
 # Make a build of the given target app
@@ -49,11 +40,11 @@ install-vscode-extensions: $(EXTS)
 target:
 ifneq ($(strip $(APP)),)
 	@scripts/get-version.js ci-target apps/$(APP)
-	@echo "Used generated env file" ;\
+	@$(call log_success, "Used generated env file")
 	$(shell cat apps/$(APP)/.env)
-	$(LERNA) run build --scope=@etotama/$(APP)
+	$(LERNA) run build --scope=@etotama/app.$(APP)
 else
-	@echo "No APP given"
+	@$(call log_error, "No \`APP\` given.")
 	exit 1
 endif
 
@@ -61,6 +52,10 @@ endif
 .PHONY: target-all
 target-all:
 	$(LERNA) run build
+
+.PHONY: pixel
+pixel:
+	$(MAKE) target APP=pixel
 
 # Build on CI
 .PHONY: ci-target

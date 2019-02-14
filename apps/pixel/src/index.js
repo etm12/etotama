@@ -4,18 +4,21 @@
  */
 import * as React from 'karet';
 import ReactDOM from 'react-dom';
-import './index.css';
+import '@etotama/core.styles';
+
 import App from './app';
 import * as serviceWorker from './serviceWorker';
-import store, { imageData } from './store';
+import { state, imageData } from './store';
 import { Store } from './context';
-import actions from './actions';
-
-import './styles/index.scss';
+import * as GlobalEvent from './global-events';
 
 ReactDOM.render(
-  <Store.Provider value={{ state: store, imageData }}>
-    <App actions={actions} />
+  <Store.Provider value={{ state, imageData }}>
+    <App
+      state={state}
+      imageData={imageData}
+      globalEvents={GlobalEvent}
+    />
   </Store.Provider>,
   document.getElementById('root'),
 );

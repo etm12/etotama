@@ -1,0 +1,41 @@
+@mixin _make-canvas {
+  $_class: #{$prefix}-canvas;
+
+  // .#{$debug-root} .#{$_class} {
+  //   @include annotate('canvas');
+  // }
+
+  .#{$_class} {
+    position: relative;
+    margin: 0;
+    padding: 0;
+
+    &__body {
+      margin: 1rem;
+      background-color: rgba(0, 255, 255, .1);
+    }
+
+    &__offset-guide {
+      font-size: map-get($font-sizes, tiny);
+      position: fixed;
+      left: 0;
+      top: 0;
+      border: solid 1px $_offset-guide-color;
+      background-color: rgba($_offset-guide-color, $_offset-guide-opacity);
+    }
+
+    &__guides {
+      position: fixed;
+      left: 0;
+      top: 0;
+
+      &.prefix-offset {
+        &.horizontal { left: 0; width: 100%; margin-top: -1px; height: 3px; }
+        &.vertical { top: 0; height: 100%; width: 3px; margin-left: -1px; position: absolute; }
+      }
+      @include _make-dev-guides();
+    }
+  }
+}
+
+@include _make-canvas();

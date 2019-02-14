@@ -1,0 +1,49 @@
+@mixin _make-palette-color-picker {
+  $_class: #{$prefix}-active-colors;
+  $_body-class: #{$_class}__body;
+  $_fg-class: #{$_class}__foreground;
+  $_bg-class: #{$_class}__background;
+
+  $_fg-z: get-elevation(base) + 2;
+  $_bg-z: get-elevation(base);
+
+  .#{$_class} {
+    padding: space(small);
+  }
+
+  // .#{$debug-root} .#{$_class} {
+  //   @include annotate('fg-bg picker');
+  // }
+
+  .#{$_body-class} {
+    position: relative;
+    height: 3.75rem;
+  }
+
+  .#{$_fg-class},
+  .#{$_bg-class} {
+    position: absolute;
+    border: solid .25rem rgba(0, 0, 0, .3);
+    background-color: #fff;
+  }
+
+  .#{$_fg-class} {
+    left: 0;
+    top: 0;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: $_fg-z;
+  }
+
+  .#{$_bg-class} {
+    position: absolute;
+    left: 1rem;
+    top: 1rem;
+    bottom: 0;
+    right: 0;
+    z-index: $_bg-z;
+    background-color: #000;
+  }
+}
+
+@include _make-palette-color-picker();

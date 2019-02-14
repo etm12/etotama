@@ -16,7 +16,7 @@
 ```
 git clone git@github.com:etm12/etotama.git
 cd etotama
-lerna bootstrap
+make init
 ```
 
 ## Modules

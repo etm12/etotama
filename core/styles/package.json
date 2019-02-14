@@ -1,0 +1,9 @@
+{
+  "name": "@etotama/core.styles",
+  "version": "0.1.0",
+  "description": "",
+  "main": "src/index.scss",
+  "keywords": [],
+  "author": "Stefan Rimaila <stefan@rimaila.fi> (https://stuf.github.io)",
+  "license": "MIT"
+}

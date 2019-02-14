@@ -13,9 +13,11 @@
     "d3-color": "^1.2.3",
     "infestines": "^0.4.11",
     "karet.lift": "^2.1.0",
+    "karet.util": "^0.19.1",
     "kefir": "^3.8.6",
     "partial.lenses": "^14.17.0",
     "ramda": "^0.26.1",
+    "react": "^16.8.1",
     "sanctuary": "^0.15.0",
     "sanctuary-def": "^0.18.1"
   },

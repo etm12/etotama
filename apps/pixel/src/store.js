@@ -2,24 +2,31 @@
  * @module Store
  * @namespace Pixel
  */
+import * as H from 'kefir.partial.lenses.history';
 import * as U from 'karet.util';
 import * as R from 'ramda';
 import * as L from 'partial.lenses';
 
 import palettes from './assets/palettes';
-import { COLOR_CHANNELS, PanelType } from './constants';
-import * as M from './_meta';
+import { COLOR_CHANNELS } from './constants';
+import * as S from '@etotama/core.shared';
 
 const colors = L.get(
-  M.hexStringL,
+  S.lenses.hexString,
   palettes.get('endesga-32.hex'),
 );
-
-
 
 //
 
 const initialState = {
+  debug: {
+    annotate: true,
+  },
+  input: {
+    metaPressed: false,
+    ctrlPressed: false,
+    altPressed: false,
+  },
   info: {
     name: {
       value: 'Untitled',
@@ -27,6 +34,7 @@ const initialState = {
     },
   },
   canvas: {
+    size: [24, 24],
     width: 24,
     height: 24,
     scale: 16,
@@ -35,30 +43,8 @@ const initialState = {
       top: 0,
     },
   },
-  panels: [
-    {
-      type: PanelType.PANEL,
-      props: {},
-      children: [
-        {
-          type: PanelType.PANEL,
-          header: 'Tools & Functions',
-          children: [
-            {
-              type: PanelType.PALETTE,
-            },
-          ],
-        },
-      ],
-    },
-  ],
-  brush: {
-    size: 2,
-  },
-  mouse: {
-    position: [0, 0],
-  },
   palette: {
+    active: [10, 16],
     selected: '#c28569',
     colors,
   },
@@ -66,23 +52,26 @@ const initialState = {
 
 //
 
-const store = U.atom(initialState);
+export const state = U.atom(initialState);
 
-export default store;
-window.store = store;
 //
 
 U.thru(
-  store,
+  state,
   U.debounce(500),
-).log('store');
+).log('state');
 
 // Image data
 
-export const imageData = U.atom();
+export const imageData = U.atom(
+  H.init(
+    { replacePeriod: 200 },
+    R.map(R.divide(R.__, 256), R.range(0, (24 * 24) * 4)),
+  ),
+);
 
 const imageDataShouldChange = U.thru(
-  store,
+  state,
   U.view(['canvas', L.props('width', 'height')]),
   U.skipDuplicates(R.equals),
   U.mapValue(({ width, height }) => (width * height) * COLOR_CHANNELS),
@@ -92,5 +81,5 @@ const imageDataShouldChange = U.thru(
 imageDataShouldChange
   .onValue(arr => {
     console.info('Image size has changed, creating new image data.');
-    imageData.set(arr);
+    imageData.view(H.present).set(arr);
   });

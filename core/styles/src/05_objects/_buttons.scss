@@ -1,0 +1,20 @@
+@mixin _make-buttons {
+  $_btn-border: $gray-500 !default;
+
+  //
+
+  $_class: #{$prefix}-button;
+  $_custom-class: #{$_class}--custom;
+  $_active-class: #{$_class}--active;
+
+  button {
+    border: solid 1px $_btn-border;
+    padding: space(small);
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }
+}
+
+@include _make-buttons();

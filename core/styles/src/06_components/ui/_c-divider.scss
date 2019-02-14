@@ -1,0 +1,28 @@
+@mixin make-divider {
+  $_class: #{$prefix}-divider;
+  $_color: map-get($colors, divider);
+
+  $_types: () !default;
+  $_types: map-merge(
+    (
+      'hairline': 1px,
+      'thin': 2px,
+      'normal': 4px,
+      'thick': 8px,
+    ),
+    $_types,
+  );
+
+  .#{$_class} {
+    background-color: $_color;
+    margin: $spacing-base 0;
+
+    @each $type, $value in $_types {
+      &--#{$type} {
+        height: $value;
+      }
+    }
+  }
+}
+
+@include make-divider();

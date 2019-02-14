@@ -1,10 +1,14 @@
 {
-  "name": "@etotama/pixel",
+  "name": "@etotama/app.pixel",
   "version": "0.6.0",
   "license": "MIT",
+  "homepage": "https://etm12.moe",
   "dependencies": {
     "@etotama/core.shared": "0.6.0",
+    "@etotama/core.styles": "^0.1.0",
+    "@etotama/core.typedefs": "0.1.0",
     "d3-color": "^1.2.3",
+    "deep-object-diff": "^1.1.0",
     "file-saver": "^2.0.0",
     "infestines": "^0.4.11",
     "karet": "^4.0.1",
@@ -15,10 +19,12 @@
     "kefir.ramda": "^0.26.0",
     "node-sass": "^4.11.0",
     "partial.lenses": "^14.17.0",
+    "prettier": "^1.16.4",
     "ramda": "^0.26.1",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
-    "react-scripts": "2.1.3"
+    "react-scripts": "2.1.3",
+    "typicons.font": "^2.0.9"
   },
   "scripts": {
     "start": "react-scripts start",

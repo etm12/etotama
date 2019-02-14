@@ -1,0 +1,25 @@
+@mixin make-key-value {
+  $_class: #{$prefix}-key-value;
+
+  .#{$_class} {
+    // border: solid 1px #f00;
+    display: flex;
+    font-family: $font-family-base;
+    font-size: $font-size-small;
+
+    &__label,
+    &__value {
+      @include pad-x($spacing-normal);
+    }
+
+    &__label {
+      font-weight: bold;
+    }
+
+    &__value {
+
+    }
+  }
+}
+
+@include make-key-value();
