@@ -17,7 +17,7 @@ import * as S from '@etotama/core.shared';
 import { withBoundContext } from './mouse';
 import { saveImageDataU } from './canvas';
 import { Panel, PanelHeader, PanelBody } from './layout/panel';
-import { StatusIndicator } from './components/status-bar';
+import { StatusGroup, StatusIndicator } from './components/status-bar';
 import { Canvas, Color } from './containers/canvas/meta';
 import { Guide } from './components/dev/guide';
 import PaletteColorPicker from './components/palette-color-picker';
@@ -185,9 +185,15 @@ const AppContainer = ({ state, imageData, globalEvents }) => {
             direction="horizontal"
             className="c-status-bar"
           >
-            <StatusIndicator active={flags.isControl} label="Ctrl ⌃" />
-            <StatusIndicator active={flags.isOption} label="Alt ⌥" />
-            <StatusIndicator active={flags.isMeta} label="Meta ⌘" />
+            <StatusGroup>
+              <StatusIndicator active={flags.isControl} label="Ctrl ⌃" />
+              <StatusIndicator active={flags.isOption} label="Alt ⌥" />
+              <StatusIndicator active={flags.isMeta} label="Meta ⌘" />
+            </StatusGroup>
+
+            <StatusGroup>
+              Foo
+            </StatusGroup>
           </Panel>
         </Panel>
       </Panel>

@@ -54,8 +54,8 @@ const CanvasIndex = ({ dom, width, height, scale, imageData, fgColor }) => {
 
   const relativeFrom = relativePositionFrom(offset, scale);
 
-  const xs = relativeFrom(events.onMouseMove);
-  const posIx = indexForPosition(xs, width);
+  const pos = relativeFrom(events.onMouseMove);
+  const posIx = indexForPosition(pos, width);
 
   const drawOnDrag = U.thru(
     posIx,

@@ -12,6 +12,9 @@ const takeOnly = U.skipUnless;
 
 export const onSwitchCurrentColors = takeOnly(whereCode('KeyX'), KeyboardEvent.onKeyDown);
 export const onDoUndo = takeOnly(withMetaKeyAnd(whereCode('KeyZ')), KeyboardEvent.onKeyDown);
+export const onDoSave = takeOnly(withMetaKeyAnd(whereCode('KeyS')), KeyboardEvent.onKeyDown);
+
+//
 
 export const onMeta = takeOnly(x => x.key === 'Meta', KeyboardEvent.onKeyDown);
 export const onControl = takeOnly(x => x.key === 'Control', KeyboardEvent.onKeyDown);

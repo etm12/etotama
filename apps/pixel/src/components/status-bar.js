@@ -31,6 +31,17 @@ export const StatusIndicator = ({ className, label, active }) => {
   );
 }
 
+export const StatusGroup = ({ className, children }) => {
+  return (
+    <div className={U.cns(
+      U.string`${classPrefix}__group`,
+      className,
+    )}>
+      {children}
+    </div>
+  );
+}
+
 export const StatusBar = ({ className, children }) => {
   return (
     <div

@@ -16,17 +16,15 @@ export const PanelHeader = ({ children }) =>
     {children}
   </header>;
 
-//
-
 export const PanelBody = ({ children }) =>
-  <div className="c-panel__body">{children}</div>;
+  <div className="c-panel__body">
+    {children}
+  </div>;
 
 export const PanelFooter = ({ children }) =>
   <footer className="c-panel__footer">
     {children}
   </footer>;
-
-//
 
 export const Panel = props => {
   const {
