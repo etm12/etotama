@@ -1,4 +1,5 @@
 // @ts-check
+/// <reference path="./index.d.ts" />
 import * as U from 'karet.util';
 import * as R from 'kefir.ramda';
 import * as L from 'kefir.partial.lenses';
@@ -11,7 +12,6 @@ const takeEvent = R.curry((type, source) => U.thru(
 const takeEvents = events => src => L.transform(
   L.seq([
     L.entries,
-    L.log(),
     L.modifyOp(([_, v]) => [v, takeEvent(v, src)]),
   ]),
   events,
