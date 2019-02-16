@@ -77,6 +77,18 @@ export const eventBus = () => {
   return { events, pushEvent };
 }
 
+/**
+ * @param {string} type
+ * @return {K.Property<Event, any>}
+ */
+export const takeEvent = R.curry((type, source) => U.thru(
+  U.fromEvents(source, type, R.identity),
+  U.toProperty,
+));
+
+export const takeEventU = U.liftRec(takeEvent);
+
+
 //. offsetPositionBy :: Offset -> Position -> Position
 export const offsetPositionBy_ = ([sx, sy], [dx, dy]) => [dx - sx, dy - sy];
 export const offsetPositionBy = R.curry(offsetPositionBy_)

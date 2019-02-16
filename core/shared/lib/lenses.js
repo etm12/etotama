@@ -23,6 +23,18 @@ export const Obs = {
   ),
 };
 
+//
+
+const envBaseL = ['navigator'];
+
+export const Env = {
+  language: [envBaseL, 'language'],
+  dnt: [envBaseL, 'doNotTrack', L.reread(x => !!(+x))],
+  os: [envBaseL, 'platform'],
+};
+
+//
+
 export const hexString = [L.split('\n'), L.array(L.inverse(L.dropPrefix('#')))];
 
 export const showAsPair = L.reread(([x, y]) => `(${x}, ${y})`);
