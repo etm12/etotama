@@ -1,8 +1,8 @@
 // @ts-check
 /// <reference path="./index.d.ts" />
 import * as U from 'karet.util';
-import * as L from 'partial.lenses';
-import * as R from 'ramda';
+import * as L from 'kefir.partial.lenses';
+import * as R from 'kefir.ramda';
 import * as K from 'kefir';
 import * as C from 'd3-color';
 import * as Ls from './lenses';
