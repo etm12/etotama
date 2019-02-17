@@ -17,7 +17,7 @@ import * as S from '@etotama/core.shared';
 import { withBoundContext } from './mouse';
 import { saveImageDataU } from './canvas';
 import { Panel, PanelHeader, PanelBody } from './layout/panel';
-import { StatusGroup, StatusIndicator } from './components/status-bar';
+import { StatusGroup, StatusLabel, StatusIndicator } from './components/status-bar';
 import { Canvas, Color } from './containers/canvas/meta';
 import { Guide } from './components/dev/guide';
 import PaletteColorPicker from './components/palette-color-picker';
@@ -192,7 +192,9 @@ const AppContainer = ({ state, imageData, globalEvents }) => {
             </StatusGroup>
 
             <StatusGroup>
-              Foo
+              <StatusLabel>
+                {U.view(S.lenses.showAsPair, pixel)}
+              </StatusLabel>
             </StatusGroup>
           </Panel>
         </Panel>

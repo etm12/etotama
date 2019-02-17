@@ -52,6 +52,7 @@ const getPixelPosition = (position, scale) => U.thru(
   U.template([position, [scale, scale]]),
   R.transpose,
   R.map(R.pipe(R.apply(R.divide), U.trunc)),
+  U.startWith([0, 0]),
   U.skipDuplicates(R.equals),
 );
 
