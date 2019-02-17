@@ -59,8 +59,7 @@ codecov: test
 
 .PHONY: ci-test
 ci-test:
-	$(LERNA) run ci:test:cov --scope=@etotama/core.* && \
-	$(CODECOV)
+	$(LERNA) run ci:test:cov --scope=@etotama/core.*
 
 # Build all targets
 .PHONY: target-all
@@ -73,7 +72,7 @@ pixel:
 
 # Build on CI
 .PHONY: ci-target
-ci-target: init ci-test target
+ci-target: init target
 
 # Perform housekeeping
 .PHONY: tidy
