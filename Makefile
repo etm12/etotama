@@ -1,6 +1,7 @@
 export APP
 
 LERNA=node_modules/.bin/lerna
+CODECOV=node_modules/.bin/codecov
 
 log_success = (echo "\x1B[32m>> $1\x1B[39m")
 log_error = (>&2 echo "\x1B[31m>> $1\x1B[39m" && exit 1)
@@ -48,6 +49,19 @@ else
 	exit 1
 endif
 
+.PHONY: test
+test:
+	$(LERNA) run test:cov --scope=@etotama/core.*
+
+.PHONY: codecov
+codecov: test
+	$(CODECOV)
+
+.PHONY: ci-test
+ci-test:
+	$(LERNA) run test:cov --scope=@etotama/core.* && \
+	$(CODECOV)
+
 # Build all targets
 .PHONY: target-all
 target-all:
@@ -59,7 +73,7 @@ pixel:
 
 # Build on CI
 .PHONY: ci-target
-ci-target: init target
+ci-target: init ci-test target
 
 # Perform housekeeping
 .PHONY: tidy
