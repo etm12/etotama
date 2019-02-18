@@ -1,0 +1,5 @@
+---
+exclude_paths:
+  - '**/__tests__/*.js'
+  - '**/test/*.spec.js'
+  - '**/*.md'
