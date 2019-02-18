@@ -5,4 +5,5 @@ module.exports = {
     "!**/vendor/**",
     "!**/coverage/**"
   ],
+  "testEnvironment": "node",
 };

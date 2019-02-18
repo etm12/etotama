@@ -37,6 +37,13 @@ test(S.invoke2.name, () => {
   expect(fn(input)).toEqual(output);
 })
 
+test(S.call0.name, () => {
+  const fn = jest.fn();
+  S.call0(fn);
+
+  expect(fn).toBeCalled();
+})
+
 test(S.camelTokens.name, () => {
   expect(S.camelTokens('thisThatThen')).toEqual(['this', 'That', 'Then']);
 });

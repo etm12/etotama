@@ -29,7 +29,7 @@ export const apply = I.curry(function apply(f, xs) {
 
 export const invoke0 = I.curry(function invoke0 (m, o) {
   return o[m]();
-});``
+});
 
 export const invoke1 = I.curry(function invoke1 (m, x, o) {
   return o[m](x);
@@ -63,6 +63,7 @@ export const persist = e => e.persist();
 // #endregion
 
 // #region OBS
+// @deprecated
 export const obsObjectL = L.iso(
   L.modify(L.keys, camelKebab),
   L.modify(L.keys, kebabCamel),
@@ -73,11 +74,11 @@ export const obsObjectL = L.iso(
 export const getBoundingRect = invoke0('getBoundingClientRect');
 export const getContext = invoke1('getContext', '2d');
 
-export const computeIx = I.curry(function (x, y, w) {
+export const computeIx = I.curry(function computeIx (x, y, w) {
   return ((y * w) + x) * COLOR_CHANNELS;
 });
 
-export const getIx = I.curry(function (x, y, w) {
+export const getIx = I.curry(function getIx (x, y, w) {
   return {
     start: computeIx(x, y, w),
     end: computeIx(x, y, w) + COLOR_CHANNELS,
@@ -90,18 +91,18 @@ export const getIx = I.curry(function (x, y, w) {
  * Create an event bus and return an object containing the bus and
  * a function to push events into the stream with.
  */
-export const eventBus = () => {
+export const eventBus = I.defineNameU(() => {
   const bus = U.bus();
   const pushEvent = U.actions(persist, U.through(U.doPush(bus), call0));
   const events = U.flatMapLatest(x => U.toProperty(x), bus);
 
   return { events, pushEvent };
-}
+}, 'eventBus');
 
 /**
  * @param {string} type
  */
-export const takeEvent = I.curry(function (type, source) {
+export const takeEvent = I.curry(function takeEvent (type, source) {
   return U.thru(
     U.fromEvents(source, type, R.identity),
     U.toProperty,
@@ -112,12 +113,18 @@ export const takeEventU = I.defineNameU(U.liftRec(takeEvent), 'takeEventU');
 
 
 //. offsetPositionBy :: Offset -> Position -> Position
-export const offsetPositionBy_ = ([sx, sy], [dx, dy]) => [dx - sx, dy - sy];
-export const offsetPositionBy = R.curry(offsetPositionBy_);
+export const offsetPositionBy_ = I.curry(function offsetPositionBy_ ([sx, sy], [dx, dy]) {
+  return [dx - sx, dy - sy];
+});
+
+export const offsetPositionBy = I.defineNameU(U.liftRec(offsetPositionBy_), 'offsetPositionBy');
 
 //. scalePositionBy :: Int -> Position -> Position
-export const scalePositionBy_ = (r, [x, y]) => [Math.trunc(x / r), Math.trunc(y / r)];
-export const scalePositionBy = R.curry(scalePositionBy_);
+export const scalePositionBy_ = I.curry(function scalePositionBy_ (r, [x, y]) {
+  return [Math.trunc(x / r), Math.trunc(y / r)];
+});
+
+export const scalePositionBy = I.defineNameU(scalePositionBy_, 'scalePositionBy');
 
 // #region Colors
 const isColor = x => (x instanceof C.color);

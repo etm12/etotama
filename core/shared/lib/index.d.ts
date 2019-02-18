@@ -6,6 +6,7 @@ declare let S: S.Static;
 declare namespace S {
   type Pair<T0, T1> = [T0, T1];
   type Position = Pair<number, number>;
+  type PositionIx = { start: number, end: number };
 
   type Ary0Fn<R> = () => R;
   type Ary1Fn<T1, R> = (t1: T1) => R;
@@ -76,7 +77,12 @@ declare namespace S {
     invoke2<T1, T2, R>(m: string): CurriedAry3<T1, T2, R>;
 
     computeIx(x: number, y: number, w: number): number;
-    getIx(x: number, y: number, w: number): { start: number, end: number };
+    computeIx(x: number, y: number): (w: number) => number;
+    computeIx(x: number): CurriedAry2<number, number, number>;
+
+    getIx(x: number, y: number, w: number): PositionIx;
+    getIx(x: number, y: number): (w: number) => PositionIx;
+    getIx(x: number): CurriedAry2<number, number, PositionIx>;
 
     lenses: typeof lenses;
   }

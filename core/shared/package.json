@@ -15,7 +15,6 @@
   "dependencies": {
     "d3-color": "^1.2.3",
     "infestines": "^0.4.11",
-    "karet.lift": "^2.1.0",
     "karet.util": "^0.19.1",
     "kefir": "^3.8.6",
     "kefir.partial.lenses": "^14.17.0",
