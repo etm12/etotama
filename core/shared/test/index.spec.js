@@ -1,3 +1,4 @@
+import * as C from 'd3-color';
 import * as S from '../lib/index';
 
 //
@@ -55,8 +56,15 @@ test.todo(S.persist.name);
 test.todo(S.getBoundingRect.name);
 test.todo(S.getContext.name);
 
-test.todo(S.computeIx.name);
-test.todo(S.getIx.name);
+test(S.computeIx.name, () => {
+  const { x, y, w } = { x: 1, y: 0, w: 10 };
+  expect(S.computeIx(x, y, w)).toBe(4);
+});
+
+test(S.getIx.name, () => {
+  const { x, y, w } = { x: 1, y: 0, w: 10 };
+  expect(S.getIx(x, y, w)).toEqual({ start: 4, end: 8 });
+});
 
 test.todo(S.eventBus.name);
 test.todo(S.takeEvent.name);
@@ -65,6 +73,21 @@ test.todo(S.takeEventU.name);
 test.todo(S.offsetPositionBy.name);
 test.todo(S.scalePositionBy.name);
 
-test.todo(S.toColor.name);
-test.todo(S.toHex.name);
-test.todo(S.darken.name);
+test(S.toColor.name, () => {
+  const x = S.toColor('#f00');
+  expect(x).toBeInstanceOf(C.color);
+});
+
+test(S.toHex.name, () => {
+  const c = S.toColor('#f00');
+  const x = S.toHex(c);
+  expect(x).toBe('#ff0000');
+});
+
+test(S.darken.name, () => {
+  const c = S.toColor('#f00');
+  const x = S.darken(1, c);
+  const x2 = S.darken(1)(c);
+  expect(x.hex()).toBe('#b30000');
+  expect(x2.hex()).toBe('#b30000');
+});
