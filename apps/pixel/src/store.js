@@ -8,7 +8,6 @@ import * as R from 'ramda';
 import * as L from 'partial.lenses';
 
 import palettes from './assets/palettes';
-import { COLOR_CHANNELS } from './constants';
 import * as S from '@etotama/core.shared';
 
 const colors = L.get(
@@ -70,16 +69,16 @@ export const imageData = U.atom(
   ),
 );
 
-const imageDataShouldChange = U.thru(
-  state,
-  U.view(['canvas', L.props('width', 'height')]),
-  U.skipDuplicates(R.equals),
-  U.mapValue(({ width, height }) => (width * height) * COLOR_CHANNELS),
-  U.mapValue(R.constructN(1, Uint8ClampedArray)),
-);
+// const imageDataShouldChange = U.thru(
+//   state,
+//   U.view(['canvas', L.props('width', 'height')]),
+//   U.skipDuplicates(R.equals),
+//   U.mapValue(({ width, height }) => (width * height) * COLOR_CHANNELS),
+//   U.mapValue(R.constructN(1, Uint8ClampedArray)),
+// );
 
-imageDataShouldChange
-  .onValue(arr => {
-    console.info('Image size has changed, creating new image data.');
-    imageData.view(H.present).set(arr);
-  });
+// imageDataShouldChange
+//   .onValue(arr => {
+//     console.info('Image size has changed, creating new image data.');
+//     imageData.view(H.present).set(arr);
+//   });

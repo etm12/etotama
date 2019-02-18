@@ -2,8 +2,17 @@
   $_class: #{$prefix}-status-bar;
 
   .#{$_class} {
-
     align-items: center;
+  }
+
+  .#{$_class}__group {
+    display: flex;
+    padding: .5rem;
+
+    & + & {
+      border-left: solid line-width(thin) $layout-border-color;
+      margin-left: .5rem;
+    }
   }
 
   .#{$_class}-item {
@@ -20,7 +29,7 @@
   }
 
   .#{$_class}__label {
-    border: solid 1px #f00;
+    // border: solid 1px #f00;
   }
 }
 
