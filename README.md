@@ -5,6 +5,8 @@
 
 ---
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/72894a926e7b4175a5a21467e98eb87d)](https://app.codacy.com/app/stuf/etotama?utm_source=github.com&utm_medium=referral&utm_content=etm12/etotama&utm_campaign=Badge_Grade_Dashboard)
+
 ## Contents
 
   - [Getting started](#getting-started)
