@@ -72,7 +72,7 @@ pixel:
 
 # Build on CI
 .PHONY: ci-target
-ci-target: init target
+ci-target: init ci-test target
 
 # Perform housekeeping
 .PHONY: tidy
