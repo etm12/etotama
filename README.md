@@ -3,6 +3,11 @@
   <img src="https://raw.githubusercontent.com/etm12/etotama/master/assets/logo.png" alt="干支娘" />
 </center>
 
+[![codecov](https://codecov.io/gh/etm12/etotama/branch/master/graph/badge.svg)](https://codecov.io/gh/etm12/etotama)
+[![Build Status](https://travis-ci.org/etm12/etotama.svg?branch=master)](https://travis-ci.org/etm12/etotama)
+[![Build Status](https://travis-ci.org/etm12/etotama.svg?branch=develop)](https://travis-ci.org/etm12/etotama)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/015958894a4b429fa8e0a858706cfb93)](https://www.codacy.com/app/stuf/etotama?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=etm12/etotama&amp;utm_campaign=Badge_Grade)
+
 ---
 
 ## Contents
