@@ -30,7 +30,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "ci:test:cov": "npm test -- --collectCoverage && codecov"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -42,6 +43,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "codecov": "^3.2.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.9.1",
     "enzyme-to-json": "^3.3.5",
