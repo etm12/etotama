@@ -5,6 +5,14 @@ import { testEq } from './util';
 
 const runTests = R.pipe(R.filter(x => x.length), R.forEach(R.apply(testEq)));
 
+describe('CSS', () => {
+  runTests([
+    ['c', () => S.CLASS_PREFIX],
+    ['c-prefixed', () => S.prefixCn('prefixed')],
+    ['c-prefixed--suffix', () => S.prefixC(S.prefixCn('prefixed'), '--suffix')],
+  ]);
+});
+
 describe('Functions', () => {
   runTests([
     [-5, () => S.flip((a, b) => a - b)(5, 0)],
