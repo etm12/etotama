@@ -11,7 +11,7 @@ describe('StatusBar', () => {;
     test('has not inadvertently changed', () => {
       Component.displayName = k;
 
-      expect(mount(<Component />)).toMatchSnapshot();
+      expect(mount(<Component />).children().first()).toMatchSnapshot();
     });
   });
 });

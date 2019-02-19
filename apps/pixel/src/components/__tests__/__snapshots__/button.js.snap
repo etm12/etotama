@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Button /> mounts without crashing 1`] = `
+exports[`Button mounts without crashing 1`] = `
 <Button>
   <button
     className="c-button"
@@ -15,7 +15,7 @@ exports[`<Button /> mounts without crashing 1`] = `
 </Button>
 `;
 
-exports[`<Button /> set height properly as rems 1`] = `
+exports[`Button set height properly as rems 1`] = `
 <Button
   height={6}
 >

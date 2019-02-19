@@ -2,7 +2,7 @@ import * as React from 'karet';
 import { mount } from 'enzyme';
 import Button from '../button';
 
-describe('<Button />', () => {
+describe('Button', () => {
   test('mounts without crashing', () => {
     const result = mount(<Button />);
     expect(result).toMatchSnapshot();

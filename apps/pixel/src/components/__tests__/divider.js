@@ -2,7 +2,7 @@ import * as React from 'karet';
 import { mount } from 'enzyme';
 import Divider from '../divider';
 
-describe('<Divider />', () => {
+describe('Divider', () => {
   test('mounts without crashing', () => {
     mount(<Divider />);
   });
