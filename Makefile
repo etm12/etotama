@@ -59,7 +59,7 @@ codecov: test
 
 .PHONY: ci-test
 ci-test:
-	$(LERNA) run ci:test:cov --scope=@etotama/core.*
+	$(LERNA) run ci:test:cov
 
 # Build all targets
 .PHONY: target-all
