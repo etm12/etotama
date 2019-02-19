@@ -9,6 +9,11 @@ import * as C from 'd3-color';
 import * as Ls from './lenses';
 import { COLOR_CHANNELS } from './constants';
 
+export const CLASS_PREFIX = 'c';
+
+export const prefixCn = R.concat(`${CLASS_PREFIX}-`);
+export const prefixC = R.concat;
+
 //
 
 // @ts-ignore

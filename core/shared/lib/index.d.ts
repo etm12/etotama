@@ -37,6 +37,13 @@ declare namespace S {
   }
 
   interface Static {
+    // Helpers
+
+    CLASS_PREFIX: 'c';
+    prefixCn(cn: string): string;
+    prefixC(c: string, s: string): string;
+    prefixC(c: string): (s: string) => string;
+
     // Functions
 
     takeAllArgs(...xs: any[]): any[];
