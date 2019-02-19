@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StatusBar StatusBar.StatusBar has not inadvertently changed 1`] = `
+<StatusBar>
+  <div
+    className="c-status-bar"
+  >
+    Status
+  </div>
+</StatusBar>
+`;
+
+exports[`StatusBar StatusBar.StatusGroup has not inadvertently changed 1`] = `
+<StatusGroup>
+  <div
+    className="c-status-bar__group"
+  />
+</StatusGroup>
+`;
+
+exports[`StatusBar StatusBar.StatusIndicator has not inadvertently changed 1`] = `
+<StatusIndicator>
+  <div
+    className="c-status-bar__indicator c-status-bar-item"
+  />
+</StatusIndicator>
+`;
+
+exports[`StatusBar StatusBar.StatusLabel has not inadvertently changed 1`] = `
+<StatusLabel>
+  <div
+    className="c-status-bar__label"
+  />
+</StatusLabel>
+`;

@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Button /> mounts without crashing 1`] = `
+<Button>
+  <button
+    className="c-button"
+    onClick={[Function]}
+    style={
+      Object {
+        "backgroundColor": undefined,
+        "height": undefined,
+      }
+    }
+  />
+</Button>
+`;
+
+exports[`<Button /> set height properly as rems 1`] = `
+<Button
+  height={6}
+>
+  <button
+    className="c-button"
+    onClick={[Function]}
+    style={
+      Object {
+        "backgroundColor": undefined,
+        "height": "6rem",
+      }
+    }
+  />
+</Button>
+`;

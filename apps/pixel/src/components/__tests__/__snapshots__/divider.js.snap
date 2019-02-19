@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Divider /> has not inadvertently changed 1`] = `
+<Divider>
+  <div
+    className="c-divider c-divider--thin"
+  />
+</Divider>
+`;
