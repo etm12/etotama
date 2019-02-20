@@ -6,7 +6,16 @@
   "keywords": [],
   "author": "Stefan Rimaila <stefan@rimaila.fi> (https://stuf.github.io)",
   "license": "MIT",
+  "scripts": {
+    "test": "jest"
+  },
   "dependencies": {
     "normalize.css": "^8.0.1"
+  },
+  "devDependencies": {
+    "jest": "23.6.0",
+    "node-sass": "^4.11.0",
+    "sass-jest": "^0.1.7",
+    "sass-true": "^4.0.0"
   }
 }
