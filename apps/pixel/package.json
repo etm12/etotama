@@ -20,6 +20,9 @@
     "not op_mini all"
   ],
   "dependencies": {
+    "@etotama/core.shared": "1.0.1",
+    "@etotama/core.styles": "1.0.1",
+    "@etotama/core.typedefs": "1.0.1",
     "d3-color": "^1.2.3",
     "deep-object-diff": "^1.1.0",
     "file-saver": "^2.0.0",
