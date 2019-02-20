@@ -39,6 +39,7 @@ export const hexString = [L.split('\n'), L.array(L.inverse(L.dropPrefix('#')))];
 
 export const showAsPair = L.reread(([x, y]) => `(${x}, ${y})`);
 
+// TODO: Write isos
 export const toPx = L.reread(x => `${x}px`);
 export const toPct = L.reread(x => `${x}%`);
 export const toPctU = [L.reread(R.multiply(100)), toPct];

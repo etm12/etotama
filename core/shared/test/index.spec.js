@@ -1,9 +1,6 @@
 import * as C from 'd3-color';
-import * as R from 'kefir.ramda';
 import * as S from '../lib/index';
-import { testEq } from './util';
-
-const runTests = R.pipe(R.filter(x => x.length), R.forEach(R.apply(testEq)));
+import { runTests } from './util';
 
 describe('CSS', () => {
   runTests([

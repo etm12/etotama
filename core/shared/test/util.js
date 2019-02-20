@@ -45,3 +45,5 @@ export const testEq = (expect, thunk) =>
       check(actual);
     }
   });
+
+export const runTests = R.pipe(R.filter(x => x.length), R.forEach(R.apply(testEq)));
