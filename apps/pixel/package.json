@@ -3,10 +3,23 @@
   "version": "1.0.1",
   "license": "MIT",
   "homepage": "https://etm12.moe",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "ci:test:cov": "npm test -- --collectCoverage && codecov"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
   "dependencies": {
-    "@etotama/core.shared": "1.0.1",
-    "@etotama/core.styles": "1.0.1",
-    "@etotama/core.typedefs": "1.0.1",
     "d3-color": "^1.2.3",
     "deep-object-diff": "^1.1.0",
     "file-saver": "^2.0.0",
@@ -26,28 +39,11 @@
     "react-scripts": "^2.1.5",
     "typicons.font": "^2.0.9"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "ci:test:cov": "npm test -- --collectCoverage && codecov"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ],
   "devDependencies": {
     "codecov": "^3.2.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.9.1",
     "enzyme-to-json": "^3.3.5",
-    "jest": "23.6.0",
     "jest-enzyme": "^7.0.1",
     "react-test-renderer": "^16.8.2",
     "sinon": "^7.2.4"

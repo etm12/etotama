@@ -1,6 +1,9 @@
 import * as React from 'karet';
 import * as U from 'karet.util';
 
+/**
+ * @param {Props} props
+ */
 const PaletteColorPicker = ({ palette, onSwitchCurrentColors }) => {
   const currentColors = U.view('active', palette);
   const colorWithIx = ix => U.view(['colors', ix], palette);
@@ -27,3 +30,11 @@ const PaletteColorPicker = ({ palette, onSwitchCurrentColors }) => {
 };
 
 export default PaletteColorPicker;
+
+//
+
+/**
+ * @typedef {object} Props
+ * @prop {object} palette
+ * @prop {any} onSwitchCurrentColors
+ */
