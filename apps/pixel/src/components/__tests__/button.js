@@ -6,7 +6,7 @@ describe('Button', () => {
   test('mounts without crashing', () => {
     const result = mount(<Button />);
     expect(result).toMatchSnapshot();
-  })
+  });
 
   test('supports custom action', () => {
     const fn = jest.fn();

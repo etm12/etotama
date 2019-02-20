@@ -1,0 +1,995 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AppHeader mounts without crashing 1`] = `
+<AppHeader
+  info={
+    Atom {
+      "_activating": false,
+      "_active": true,
+      "_alive": true,
+      "_currentEvent": Object {
+        "type": "value",
+        "value": Object {
+          "editing": false,
+          "value": "",
+        },
+      },
+      "_dispatcher": Dispatcher {
+        "_inLoop": 0,
+        "_items": Array [
+          Object {
+            "fn": [Function],
+            "type": "any",
+          },
+        ],
+        "_removedItems": null,
+        "_spies": Array [],
+      },
+      "_logHandlers": null,
+      "_spyHandlers": null,
+    }
+  }
+>
+  <Grid
+    className="c-app-header"
+    columns={
+      Array [
+        10,
+        "auto",
+        10,
+      ]
+    }
+    height={3}
+  >
+    <div
+      className="c-grid c-app-header"
+      style={
+        Object {
+          "gridTemplateColumns": "10rem auto 10rem",
+          "height": "3rem",
+          "width": undefined,
+        }
+      }
+    >
+      <div
+        className="c-app-header__brand"
+      >
+        <img
+          alt="pixel logo"
+          className="c-app-header__logo"
+          src="logo.svg"
+        />
+        <header
+          className="c-app-header__title"
+        >
+          pixel
+        </header>
+      </div>
+      <div
+        className="c-app-header__body"
+      >
+        <TogglableInput
+          data={
+            LensedAtom {
+              "_$onAny": [Function],
+              "_activating": false,
+              "_active": true,
+              "_alive": true,
+              "_currentEvent": Object {
+                "type": "value",
+                "value": undefined,
+              },
+              "_dispatcher": Dispatcher {
+                "_inLoop": 0,
+                "_items": Array [
+                  Object {
+                    "fn": [Function],
+                    "type": "any",
+                  },
+                  Object {
+                    "fn": [Function],
+                    "type": "any",
+                  },
+                ],
+                "_removedItems": null,
+                "_spies": Array [],
+              },
+              "_lens": "name",
+              "_logHandlers": null,
+              "_source": Atom {
+                "_activating": false,
+                "_active": true,
+                "_alive": true,
+                "_currentEvent": Object {
+                  "type": "value",
+                  "value": Object {
+                    "editing": false,
+                    "value": "",
+                  },
+                },
+                "_dispatcher": Dispatcher {
+                  "_inLoop": 0,
+                  "_items": Array [
+                    Object {
+                      "fn": [Function],
+                      "type": "any",
+                    },
+                  ],
+                  "_removedItems": null,
+                  "_spies": Array [],
+                },
+                "_logHandlers": null,
+                "_spyHandlers": null,
+              },
+              "_spyHandlers": null,
+            }
+          }
+        >
+          <FromClass
+            args={
+              Array [
+                "div",
+                Object {
+                  "__self": undefined,
+                  "__source": Object {
+                    "fileName": "/Users/stefan.rimaila/Projects/etotama/apps/pixel/src/components/togglable-input.js",
+                    "lineNumber": 20,
+                  },
+                  "className": "c-input-togglable",
+                },
+                Combine {
+                  "_activating": false,
+                  "_active": true,
+                  "_alive": true,
+                  "_currentEvent": Object {
+                    "type": "value",
+                    "value": undefined,
+                  },
+                  "_dispatcher": Dispatcher {
+                    "_inLoop": 0,
+                    "_items": Array [
+                      Object {
+                        "fn": [Function],
+                        "type": "any",
+                      },
+                    ],
+                    "_removedItems": null,
+                    "_spies": Array [],
+                  },
+                  "_f": [Function],
+                  "_h": [Function],
+                  "_logHandlers": null,
+                  "_n": 2,
+                  "_spyHandlers": null,
+                  "_x": Array [
+                    AnonymousObservable {
+                      "_$handleAny": [Function],
+                      "_activating": false,
+                      "_active": true,
+                      "_alive": true,
+                      "_currentEvent": Object {
+                        "type": "value",
+                        "value": undefined,
+                      },
+                      "_dispatcher": Dispatcher {
+                        "_inLoop": 0,
+                        "_items": Array [
+                          Object {
+                            "fn": [Function],
+                            "type": "any",
+                          },
+                        ],
+                        "_removedItems": null,
+                        "_spies": Array [],
+                      },
+                      "_getInitialCurrent": [Function],
+                      "_logHandlers": null,
+                      "_name": "merge.toProperty",
+                      "_source": Merge {
+                        "_$endHandlers": Array [
+                          Object {
+                            "handler": [Function],
+                            "obs": Combine {
+                              "_activating": false,
+                              "_active": true,
+                              "_alive": true,
+                              "_currentEvent": Object {
+                                "type": "value",
+                                "value": undefined,
+                              },
+                              "_dispatcher": Dispatcher {
+                                "_inLoop": 0,
+                                "_items": Array [
+                                  Object {
+                                    "fn": [Function],
+                                    "type": "any",
+                                  },
+                                  Object {
+                                    "fn": [Function],
+                                    "type": "end",
+                                  },
+                                ],
+                                "_removedItems": null,
+                                "_spies": Array [],
+                              },
+                              "_f": [Function],
+                              "_h": [Function],
+                              "_logHandlers": null,
+                              "_n": 2,
+                              "_spyHandlers": null,
+                              "_x": Array [
+                                AnonymousObservable {
+                                  "_$handleAny": [Function],
+                                  "_activating": false,
+                                  "_active": true,
+                                  "_alive": true,
+                                  "_currentEvent": Object {
+                                    "type": "value",
+                                    "value": undefined,
+                                  },
+                                  "_dispatcher": Dispatcher {
+                                    "_inLoop": 0,
+                                    "_items": Array [
+                                      Object {
+                                        "fn": [Function],
+                                        "type": "any",
+                                      },
+                                    ],
+                                    "_removedItems": null,
+                                    "_spies": Array [],
+                                  },
+                                  "_getInitialCurrent": [Function],
+                                  "_logHandlers": null,
+                                  "_name": "property.filter.flatMapLatest.map.toProperty",
+                                  "_source": AnonymousObservable {
+                                    "_$handleAny": [Function],
+                                    "_activating": false,
+                                    "_active": true,
+                                    "_alive": true,
+                                    "_dispatcher": Dispatcher {
+                                      "_inLoop": 0,
+                                      "_items": Array [
+                                        Object {
+                                          "fn": [Function],
+                                          "type": "any",
+                                        },
+                                      ],
+                                      "_removedItems": null,
+                                      "_spies": Array [],
+                                    },
+                                    "_fn": [Function],
+                                    "_logHandlers": null,
+                                    "_name": "property.filter.flatMapLatest.map",
+                                    "_source": FlatMap {
+                                      "_$endHandlers": Array [],
+                                      "_$handleMain": [Function],
+                                      "_$handleSubAny": [Function],
+                                      "_activating": false,
+                                      "_active": true,
+                                      "_alive": true,
+                                      "_concurLim": 1,
+                                      "_curSources": Array [],
+                                      "_currentlyAdding": null,
+                                      "_dispatcher": Dispatcher {
+                                        "_inLoop": 0,
+                                        "_items": Array [
+                                          Object {
+                                            "fn": [Function],
+                                            "type": "any",
+                                          },
+                                        ],
+                                        "_removedItems": null,
+                                        "_spies": Array [],
+                                      },
+                                      "_drop": "old",
+                                      "_fn": [Function],
+                                      "_lastCurrent": null,
+                                      "_logHandlers": null,
+                                      "_mainEnded": false,
+                                      "_name": "property.filter.flatMapLatest",
+                                      "_queue": Array [],
+                                      "_queueLim": 0,
+                                      "_source": AnonymousObservable {
+                                        "_$handleAny": [Function],
+                                        "_activating": false,
+                                        "_active": true,
+                                        "_alive": true,
+                                        "_currentEvent": null,
+                                        "_dispatcher": Dispatcher {
+                                          "_inLoop": 0,
+                                          "_items": Array [
+                                            Object {
+                                              "fn": [Function],
+                                              "type": "any",
+                                            },
+                                          ],
+                                          "_removedItems": null,
+                                          "_spies": Array [],
+                                        },
+                                        "_fn": [Function],
+                                        "_logHandlers": null,
+                                        "_name": "property.filter",
+                                        "_source": LensedAtom {
+                                          "_$onAny": [Function],
+                                          "_activating": false,
+                                          "_active": true,
+                                          "_alive": true,
+                                          "_currentEvent": Object {
+                                            "type": "value",
+                                            "value": undefined,
+                                          },
+                                          "_dispatcher": Dispatcher {
+                                            "_inLoop": 0,
+                                            "_items": Array [
+                                              Object {
+                                                "fn": [Function],
+                                                "type": "any",
+                                              },
+                                              Object {
+                                                "fn": [Function],
+                                                "type": "any",
+                                              },
+                                            ],
+                                            "_removedItems": null,
+                                            "_spies": Array [],
+                                          },
+                                          "_lens": "editing",
+                                          "_logHandlers": null,
+                                          "_source": LensedAtom {
+                                            "_$onAny": [Function],
+                                            "_activating": false,
+                                            "_active": true,
+                                            "_alive": true,
+                                            "_currentEvent": Object {
+                                              "type": "value",
+                                              "value": undefined,
+                                            },
+                                            "_dispatcher": Dispatcher {
+                                              "_inLoop": 0,
+                                              "_items": Array [
+                                                Object {
+                                                  "fn": [Function],
+                                                  "type": "any",
+                                                },
+                                                Object {
+                                                  "fn": [Function],
+                                                  "type": "any",
+                                                },
+                                              ],
+                                              "_removedItems": null,
+                                              "_spies": Array [],
+                                            },
+                                            "_lens": "name",
+                                            "_logHandlers": null,
+                                            "_source": Atom {
+                                              "_activating": false,
+                                              "_active": true,
+                                              "_alive": true,
+                                              "_currentEvent": Object {
+                                                "type": "value",
+                                                "value": Object {
+                                                  "editing": false,
+                                                  "value": "",
+                                                },
+                                              },
+                                              "_dispatcher": Dispatcher {
+                                                "_inLoop": 0,
+                                                "_items": Array [
+                                                  Object {
+                                                    "fn": [Function],
+                                                    "type": "any",
+                                                  },
+                                                ],
+                                                "_removedItems": null,
+                                                "_spies": Array [],
+                                              },
+                                              "_logHandlers": null,
+                                              "_spyHandlers": null,
+                                            },
+                                            "_spyHandlers": null,
+                                          },
+                                          "_spyHandlers": null,
+                                        },
+                                        "_spyHandlers": null,
+                                      },
+                                      "_spyHandlers": null,
+                                    },
+                                    "_spyHandlers": null,
+                                  },
+                                  "_spyHandlers": null,
+                                },
+                              ],
+                            },
+                          },
+                        ],
+                        "_$handleSubAny": [Function],
+                        "_activating": false,
+                        "_active": true,
+                        "_alive": true,
+                        "_concurLim": -1,
+                        "_curSources": Array [
+                          Combine {
+                            "_activating": false,
+                            "_active": true,
+                            "_alive": true,
+                            "_currentEvent": Object {
+                              "type": "value",
+                              "value": undefined,
+                            },
+                            "_dispatcher": Dispatcher {
+                              "_inLoop": 0,
+                              "_items": Array [
+                                Object {
+                                  "fn": [Function],
+                                  "type": "any",
+                                },
+                                Object {
+                                  "fn": [Function],
+                                  "type": "end",
+                                },
+                              ],
+                              "_removedItems": null,
+                              "_spies": Array [],
+                            },
+                            "_f": [Function],
+                            "_h": [Function],
+                            "_logHandlers": null,
+                            "_n": 2,
+                            "_spyHandlers": null,
+                            "_x": Array [
+                              AnonymousObservable {
+                                "_$handleAny": [Function],
+                                "_activating": false,
+                                "_active": true,
+                                "_alive": true,
+                                "_currentEvent": Object {
+                                  "type": "value",
+                                  "value": undefined,
+                                },
+                                "_dispatcher": Dispatcher {
+                                  "_inLoop": 0,
+                                  "_items": Array [
+                                    Object {
+                                      "fn": [Function],
+                                      "type": "any",
+                                    },
+                                  ],
+                                  "_removedItems": null,
+                                  "_spies": Array [],
+                                },
+                                "_getInitialCurrent": [Function],
+                                "_logHandlers": null,
+                                "_name": "property.filter.flatMapLatest.map.toProperty",
+                                "_source": AnonymousObservable {
+                                  "_$handleAny": [Function],
+                                  "_activating": false,
+                                  "_active": true,
+                                  "_alive": true,
+                                  "_dispatcher": Dispatcher {
+                                    "_inLoop": 0,
+                                    "_items": Array [
+                                      Object {
+                                        "fn": [Function],
+                                        "type": "any",
+                                      },
+                                    ],
+                                    "_removedItems": null,
+                                    "_spies": Array [],
+                                  },
+                                  "_fn": [Function],
+                                  "_logHandlers": null,
+                                  "_name": "property.filter.flatMapLatest.map",
+                                  "_source": FlatMap {
+                                    "_$endHandlers": Array [],
+                                    "_$handleMain": [Function],
+                                    "_$handleSubAny": [Function],
+                                    "_activating": false,
+                                    "_active": true,
+                                    "_alive": true,
+                                    "_concurLim": 1,
+                                    "_curSources": Array [],
+                                    "_currentlyAdding": null,
+                                    "_dispatcher": Dispatcher {
+                                      "_inLoop": 0,
+                                      "_items": Array [
+                                        Object {
+                                          "fn": [Function],
+                                          "type": "any",
+                                        },
+                                      ],
+                                      "_removedItems": null,
+                                      "_spies": Array [],
+                                    },
+                                    "_drop": "old",
+                                    "_fn": [Function],
+                                    "_lastCurrent": null,
+                                    "_logHandlers": null,
+                                    "_mainEnded": false,
+                                    "_name": "property.filter.flatMapLatest",
+                                    "_queue": Array [],
+                                    "_queueLim": 0,
+                                    "_source": AnonymousObservable {
+                                      "_$handleAny": [Function],
+                                      "_activating": false,
+                                      "_active": true,
+                                      "_alive": true,
+                                      "_currentEvent": null,
+                                      "_dispatcher": Dispatcher {
+                                        "_inLoop": 0,
+                                        "_items": Array [
+                                          Object {
+                                            "fn": [Function],
+                                            "type": "any",
+                                          },
+                                        ],
+                                        "_removedItems": null,
+                                        "_spies": Array [],
+                                      },
+                                      "_fn": [Function],
+                                      "_logHandlers": null,
+                                      "_name": "property.filter",
+                                      "_source": LensedAtom {
+                                        "_$onAny": [Function],
+                                        "_activating": false,
+                                        "_active": true,
+                                        "_alive": true,
+                                        "_currentEvent": Object {
+                                          "type": "value",
+                                          "value": undefined,
+                                        },
+                                        "_dispatcher": Dispatcher {
+                                          "_inLoop": 0,
+                                          "_items": Array [
+                                            Object {
+                                              "fn": [Function],
+                                              "type": "any",
+                                            },
+                                            Object {
+                                              "fn": [Function],
+                                              "type": "any",
+                                            },
+                                          ],
+                                          "_removedItems": null,
+                                          "_spies": Array [],
+                                        },
+                                        "_lens": "editing",
+                                        "_logHandlers": null,
+                                        "_source": LensedAtom {
+                                          "_$onAny": [Function],
+                                          "_activating": false,
+                                          "_active": true,
+                                          "_alive": true,
+                                          "_currentEvent": Object {
+                                            "type": "value",
+                                            "value": undefined,
+                                          },
+                                          "_dispatcher": Dispatcher {
+                                            "_inLoop": 0,
+                                            "_items": Array [
+                                              Object {
+                                                "fn": [Function],
+                                                "type": "any",
+                                              },
+                                              Object {
+                                                "fn": [Function],
+                                                "type": "any",
+                                              },
+                                            ],
+                                            "_removedItems": null,
+                                            "_spies": Array [],
+                                          },
+                                          "_lens": "name",
+                                          "_logHandlers": null,
+                                          "_source": Atom {
+                                            "_activating": false,
+                                            "_active": true,
+                                            "_alive": true,
+                                            "_currentEvent": Object {
+                                              "type": "value",
+                                              "value": Object {
+                                                "editing": false,
+                                                "value": "",
+                                              },
+                                            },
+                                            "_dispatcher": Dispatcher {
+                                              "_inLoop": 0,
+                                              "_items": Array [
+                                                Object {
+                                                  "fn": [Function],
+                                                  "type": "any",
+                                                },
+                                              ],
+                                              "_removedItems": null,
+                                              "_spies": Array [],
+                                            },
+                                            "_logHandlers": null,
+                                            "_spyHandlers": null,
+                                          },
+                                          "_spyHandlers": null,
+                                        },
+                                        "_spyHandlers": null,
+                                      },
+                                      "_spyHandlers": null,
+                                    },
+                                    "_spyHandlers": null,
+                                  },
+                                  "_spyHandlers": null,
+                                },
+                                "_spyHandlers": null,
+                              },
+                            ],
+                          },
+                        ],
+                        "_currentlyAdding": null,
+                        "_dispatcher": Dispatcher {
+                          "_inLoop": 0,
+                          "_items": Array [
+                            Object {
+                              "fn": [Function],
+                              "type": "any",
+                            },
+                          ],
+                          "_removedItems": null,
+                          "_spies": Array [],
+                        },
+                        "_drop": "new",
+                        "_initialised": true,
+                        "_logHandlers": null,
+                        "_queue": Array [],
+                        "_queueLim": 0,
+                        "_spyHandlers": null,
+                      },
+                      "_spyHandlers": null,
+                    },
+                  ],
+                },
+                AnonymousObservable {
+                  "_$handleAny": [Function],
+                  "_activating": false,
+                  "_active": true,
+                  "_alive": true,
+                  "_currentEvent": Object {
+                    "type": "value",
+                    "value": <FromClass
+                      args={
+                        Array [
+                          "div",
+                          Object {
+                            "__self": undefined,
+                            "__source": Object {
+                              "fileName": "/Users/stefan.rimaila/Projects/etotama/apps/pixel/src/components/togglable-input.js",
+                              "lineNumber": 56,
+                            },
+                            "className": "c-input-togglable__display",
+                            "onClick": [Function],
+                          },
+                          LensedAtom {
+                            "_$onAny": [Function],
+                            "_activating": false,
+                            "_active": true,
+                            "_alive": true,
+                            "_currentEvent": Object {
+                              "type": "value",
+                              "value": undefined,
+                            },
+                            "_dispatcher": Dispatcher {
+                              "_inLoop": 0,
+                              "_items": Array [
+                                Object {
+                                  "fn": [Function],
+                                  "type": "any",
+                                },
+                              ],
+                              "_removedItems": null,
+                              "_spies": Array [],
+                            },
+                            "_lens": "value",
+                            "_logHandlers": null,
+                            "_source": LensedAtom {
+                              "_$onAny": [Function],
+                              "_activating": false,
+                              "_active": true,
+                              "_alive": true,
+                              "_currentEvent": Object {
+                                "type": "value",
+                                "value": undefined,
+                              },
+                              "_dispatcher": Dispatcher {
+                                "_inLoop": 0,
+                                "_items": Array [
+                                  Object {
+                                    "fn": [Function],
+                                    "type": "any",
+                                  },
+                                  Object {
+                                    "fn": [Function],
+                                    "type": "any",
+                                  },
+                                ],
+                                "_removedItems": null,
+                                "_spies": Array [],
+                              },
+                              "_lens": "name",
+                              "_logHandlers": null,
+                              "_source": Atom {
+                                "_activating": false,
+                                "_active": true,
+                                "_alive": true,
+                                "_currentEvent": Object {
+                                  "type": "value",
+                                  "value": Object {
+                                    "editing": false,
+                                    "value": "",
+                                  },
+                                },
+                                "_dispatcher": Dispatcher {
+                                  "_inLoop": 0,
+                                  "_items": Array [
+                                    Object {
+                                      "fn": [Function],
+                                      "type": "any",
+                                    },
+                                  ],
+                                  "_removedItems": null,
+                                  "_spies": Array [],
+                                },
+                                "_logHandlers": null,
+                                "_spyHandlers": null,
+                              },
+                              "_spyHandlers": null,
+                            },
+                            "_spyHandlers": null,
+                          },
+                        ]
+                      }
+                    />,
+                  },
+                  "_dispatcher": Dispatcher {
+                    "_inLoop": 0,
+                    "_items": Array [
+                      Object {
+                        "fn": [Function],
+                        "type": "any",
+                      },
+                    ],
+                    "_removedItems": null,
+                    "_spies": Array [],
+                  },
+                  "_getInitialCurrent": null,
+                  "_logHandlers": null,
+                  "_name": "property.flatMapLatest.toProperty",
+                  "_source": FlatMap {
+                    "_$endHandlers": Array [],
+                    "_$handleMain": [Function],
+                    "_$handleSubAny": [Function],
+                    "_activating": false,
+                    "_active": true,
+                    "_alive": true,
+                    "_concurLim": 1,
+                    "_curSources": Array [],
+                    "_currentlyAdding": null,
+                    "_dispatcher": Dispatcher {
+                      "_inLoop": 0,
+                      "_items": Array [
+                        Object {
+                          "fn": [Function],
+                          "type": "any",
+                        },
+                      ],
+                      "_removedItems": null,
+                      "_spies": Array [],
+                    },
+                    "_drop": "old",
+                    "_fn": [Function],
+                    "_hadNoEvSinceDeact": false,
+                    "_lastCurrent": undefined,
+                    "_logHandlers": null,
+                    "_mainEnded": false,
+                    "_name": "property.flatMapLatest",
+                    "_queue": Array [],
+                    "_queueLim": 0,
+                    "_source": LensedAtom {
+                      "_$onAny": [Function],
+                      "_activating": false,
+                      "_active": true,
+                      "_alive": true,
+                      "_currentEvent": Object {
+                        "type": "value",
+                        "value": undefined,
+                      },
+                      "_dispatcher": Dispatcher {
+                        "_inLoop": 0,
+                        "_items": Array [
+                          Object {
+                            "fn": [Function],
+                            "type": "any",
+                          },
+                          Object {
+                            "fn": [Function],
+                            "type": "any",
+                          },
+                        ],
+                        "_removedItems": null,
+                        "_spies": Array [],
+                      },
+                      "_lens": "editing",
+                      "_logHandlers": null,
+                      "_source": LensedAtom {
+                        "_$onAny": [Function],
+                        "_activating": false,
+                        "_active": true,
+                        "_alive": true,
+                        "_currentEvent": Object {
+                          "type": "value",
+                          "value": undefined,
+                        },
+                        "_dispatcher": Dispatcher {
+                          "_inLoop": 0,
+                          "_items": Array [
+                            Object {
+                              "fn": [Function],
+                              "type": "any",
+                            },
+                            Object {
+                              "fn": [Function],
+                              "type": "any",
+                            },
+                          ],
+                          "_removedItems": null,
+                          "_spies": Array [],
+                        },
+                        "_lens": "name",
+                        "_logHandlers": null,
+                        "_source": Atom {
+                          "_activating": false,
+                          "_active": true,
+                          "_alive": true,
+                          "_currentEvent": Object {
+                            "type": "value",
+                            "value": Object {
+                              "editing": false,
+                              "value": "",
+                            },
+                          },
+                          "_dispatcher": Dispatcher {
+                            "_inLoop": 0,
+                            "_items": Array [
+                              Object {
+                                "fn": [Function],
+                                "type": "any",
+                              },
+                            ],
+                            "_removedItems": null,
+                            "_spies": Array [],
+                          },
+                          "_logHandlers": null,
+                          "_spyHandlers": null,
+                        },
+                        "_spyHandlers": null,
+                      },
+                      "_spyHandlers": null,
+                    },
+                    "_spyHandlers": null,
+                  },
+                  "_spyHandlers": null,
+                },
+              ]
+            }
+          >
+            <div
+              className="c-input-togglable"
+            >
+              <FromClass
+                args={
+                  Array [
+                    "div",
+                    Object {
+                      "__self": undefined,
+                      "__source": Object {
+                        "fileName": "/Users/stefan.rimaila/Projects/etotama/apps/pixel/src/components/togglable-input.js",
+                        "lineNumber": 56,
+                      },
+                      "className": "c-input-togglable__display",
+                      "onClick": [Function],
+                    },
+                    LensedAtom {
+                      "_$onAny": [Function],
+                      "_activating": false,
+                      "_active": true,
+                      "_alive": true,
+                      "_currentEvent": Object {
+                        "type": "value",
+                        "value": undefined,
+                      },
+                      "_dispatcher": Dispatcher {
+                        "_inLoop": 0,
+                        "_items": Array [
+                          Object {
+                            "fn": [Function],
+                            "type": "any",
+                          },
+                        ],
+                        "_removedItems": null,
+                        "_spies": Array [],
+                      },
+                      "_lens": "value",
+                      "_logHandlers": null,
+                      "_source": LensedAtom {
+                        "_$onAny": [Function],
+                        "_activating": false,
+                        "_active": true,
+                        "_alive": true,
+                        "_currentEvent": Object {
+                          "type": "value",
+                          "value": undefined,
+                        },
+                        "_dispatcher": Dispatcher {
+                          "_inLoop": 0,
+                          "_items": Array [
+                            Object {
+                              "fn": [Function],
+                              "type": "any",
+                            },
+                            Object {
+                              "fn": [Function],
+                              "type": "any",
+                            },
+                          ],
+                          "_removedItems": null,
+                          "_spies": Array [],
+                        },
+                        "_lens": "name",
+                        "_logHandlers": null,
+                        "_source": Atom {
+                          "_activating": false,
+                          "_active": true,
+                          "_alive": true,
+                          "_currentEvent": Object {
+                            "type": "value",
+                            "value": Object {
+                              "editing": false,
+                              "value": "",
+                            },
+                          },
+                          "_dispatcher": Dispatcher {
+                            "_inLoop": 0,
+                            "_items": Array [
+                              Object {
+                                "fn": [Function],
+                                "type": "any",
+                              },
+                            ],
+                            "_removedItems": null,
+                            "_spies": Array [],
+                          },
+                          "_logHandlers": null,
+                          "_spyHandlers": null,
+                        },
+                        "_spyHandlers": null,
+                      },
+                      "_spyHandlers": null,
+                    },
+                  ]
+                }
+              >
+                <div
+                  className="c-input-togglable__display"
+                  onClick={[Function]}
+                />
+              </FromClass>
+            </div>
+          </FromClass>
+        </TogglableInput>
+      </div>
+      <div
+        className="c-app-header__meta"
+      >
+        0.6.0
+        -
+        @
+        <abbr />
+      </div>
+    </div>
+  </Grid>
+</AppHeader>
+`;
