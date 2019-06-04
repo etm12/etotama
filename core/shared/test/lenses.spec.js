@@ -25,9 +25,11 @@ describe('Units', () => {
     ['123%', () => L.get(Ls.toPct, 123)],
     [123, () => L.set(Ls.toPct, 123, undefined)],
     ['12300%', () => L.get(Ls.toPctU, 123)],
-    [123, () => L.set(Ls.toPctU, 123, undefined)],
+    [123, () => L.set(Ls.toPctU, '12300%', undefined)],
     ['123rem', () => L.get(Ls.toRem, 123)],
     [123, () => L.set(Ls.toRem, 123, undefined)],
+    ['123deg', () => L.get(Ls.toDeg, 123)],
+    [123, () => L.set(Ls.toDeg, 123, undefined)],
   ]);
 
   test('L.get(Ls.toColor, \'#f00\') => instanceof Color', () => {
@@ -38,11 +40,11 @@ describe('Units', () => {
 
 describe('Transforms', () => {
   runTests([
-    ['foo(123)', () => L.get(Ls.toCssTransform('foo'), 123)],
-    [123, () => L.set(Ls.toCssTransform('foo'), 123, undefined)],
+    ['foo(123)', () => L.get(Ls.toCssTransform('foo'), '123')],
+    ['123', () => L.set(Ls.toCssTransform('foo'), 'foo(123)', undefined)],
     ['translateX(100px)', () => L.get(Ls.translateX, 100)],
-    [100, () => L.set(Ls.translateX, 100, undefined)],
+    [100, () => L.set(Ls.translateX, 'translateX(100px)', undefined)],
     ['translateY(100px)', () => L.get(Ls.translateY, 100)],
-    [100, () => L.set(Ls.translateY, 100, undefined)],
+    [100, () => L.set(Ls.translateY, 'translateY(100px)', undefined)],
   ]);
 });

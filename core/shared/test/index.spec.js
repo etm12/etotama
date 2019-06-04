@@ -27,9 +27,6 @@ describe('Strings', () => {
     [['this', 'that', 'then'], () => S.kebabTokens('this-that-then')],
     ['Foo', () => S.capitalize('foo')],
   ]);
-
-  test.todo(S.camelKebab.name);
-  test.todo(S.kebabCamel.name);
 });
 
 describe('Arrays', () => {
@@ -72,6 +69,8 @@ describe('Canvas', () => {
   test.todo(S.getBoundingRect.name);
   test.todo(S.getContext.name);
 
-  test.todo(S.offsetPositionBy.name);
-  test.todo(S.scalePositionBy.name);
+  runTests([
+    [[-10, -10], () => S.offsetPositionBy([20, 20], [10, 10])],
+    [[20, 20], () => S.scalePositionBy(4, [80, 80])],
+  ]);
 });

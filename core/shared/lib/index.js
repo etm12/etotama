@@ -24,22 +24,46 @@ export const toObservable = x => (isObservable(x) ? x : K.constant(x));
 
 export const takeAllArgs = R.unapply(R.identity);
 
+/**
+ * Flip a function's two first arguments
+ */
 export const flip = I.curry(function flip(f, y, x) {
   return f(x, y);
 });
 
+/**
+ * Apply array as parameters to the given function
+ */
 export const apply = I.curry(function apply(f, xs) {
   return f.apply(f, xs);
 });
 
+/**
+ * Invoke the method `m` in `o` with zero arguments.
+ * Point-free equivalent of `o[m]()`.
+ *
+ * @sig String -> a -> b
+ */
 export const invoke0 = I.curry(function invoke0 (m, o) {
   return o[m]();
 });
 
+/**
+ * Invoke the method `m` in `o` with `x`.
+ * Point-free equivalent of `o[m](x)`.
+ *
+ * @sig String -> a -> b -> c
+ */
 export const invoke1 = I.curry(function invoke1 (m, x, o) {
   return o[m](x);
 });
 
+/**
+ * Invoke the method `m` in `o` with `x, y`.
+ * Point-free equivalent of `o[m](x, y)`.
+ *
+ * @sig String -> a -> b -> c -> d
+ */
 export const invoke2 = I.curry(function invoke2 (m, x, y, o) {
   return o[m](x, y);
 })
@@ -49,40 +73,67 @@ export const call0 = f => f();
 // #endregion
 
 // #region String parsing
-export const camelTokens = I.defineNameU(R.match(/(^[a-z]+|[A-Z][a-z]+)/g), 'camelTokens');
-export const kebabTokens = I.defineNameU(invoke1('split', '-'), 'kebabTokens');
+/**
+ * Split the given camelCased string into array of words.
+ *
+ * @sig String -> [String]
+ */
+export const camelTokens =
+  I.defineNameU(R.match(/(^[a-z]+|[A-Z][a-z]+)/g), 'camelTokens');
+
+/**
+ * Split the given kebab-cased string into array of words.
+ *
+ * @sig String -> [String]
+ */
+export const kebabTokens =
+  I.defineNameU(invoke1('split', '-'), 'kebabTokens');
 // #endregion
 
 // #region String manipulation
+/**
+ * Format given string an upper-case first letter, rest lower-case
+ *
+ * @sig String -> String
+ */
 export const capitalize = I.defineNameU(R.converge(
   R.concat,
   [R.compose(R.toUpper, R.head), R.compose(R.toLower, R.tail)],
 ), 'capitalize');
-
-export const camelKebab = L.transform(Ls.camelKebab);
-export const kebabCamel = L.transform(Ls.kebabCamel);
 // #endregion
 
 // #region Event
-export const persist = e => e.persist();
-// #endregion
-
-// #region OBS
-// @deprecated
-export const obsObjectL = L.iso(
-  L.modify(L.keys, camelKebab),
-  L.modify(L.keys, kebabCamel),
-);
+/**
+ * @sig Event -> ()
+ */
+export const persist = invoke0('persist');
 // #endregion
 
 // #region Canvas
-export const getBoundingRect = invoke0('getBoundingClientRect');
-export const getContext = invoke1('getContext', '2d');
+/**
+ * @sig HTMLElement -> DOMRect
+ */
+export const getBoundingRect =
+  I.defineNameU(invoke0('getBoundingClientRect'), 'getBoundingRect');
 
+/**
+ * @sig HTMLCanvasElement -> CanvasRenderingContext2D
+ */
+export const getContext =
+  I.defineNameU(invoke1('getContext', '2d'), 'getContext');
+
+/**
+ * Compute a 1D array index from the given coordinates and width.
+ * @sig Int -> Int -> Int -> Int
+ */
 export const computeIx = I.curry(function computeIx (x, y, w) {
   return ((y * w) + x) * COLOR_CHANNELS;
 });
 
+/**
+ * Get start and end index for given coordinates from a 1D array.
+ * @sig Int -> Int -> Int -> { start :: Int, end :: Int }
+ */
 export const getIx = I.curry(function getIx (x, y, w) {
   return {
     start: computeIx(x, y, w),
@@ -114,22 +165,29 @@ export const takeEvent = I.curry(function takeEvent (type, source) {
   );
 });
 
-export const takeEventU = I.defineNameU(U.liftRec(takeEvent), 'takeEventU');
+export const takeEventU =
+  I.defineNameU(U.liftRec(takeEvent), 'takeEventU');
 
+/**
+ * @sig Offset -> Position -> Position
+ */
+export const offsetPositionBy_ =
+  I.curry(function offsetPositionBy_ ([sx, sy], [dx, dy]) {
+    return [dx - sx, dy - sy];
+  });
 
-//. offsetPositionBy :: Offset -> Position -> Position
-export const offsetPositionBy_ = I.curry(function offsetPositionBy_ ([sx, sy], [dx, dy]) {
-  return [dx - sx, dy - sy];
-});
+export const offsetPositionBy =
+  I.defineNameU(U.liftRec(offsetPositionBy_), 'offsetPositionBy');
 
-export const offsetPositionBy = I.defineNameU(U.liftRec(offsetPositionBy_), 'offsetPositionBy');
-
-//. scalePositionBy :: Int -> Position -> Position
-export const scalePositionBy_ = I.curry(function scalePositionBy_ (r, [x, y]) {
-  return [Math.trunc(x / r), Math.trunc(y / r)];
-});
-
-export const scalePositionBy = I.defineNameU(scalePositionBy_, 'scalePositionBy');
+/**
+ * Get pixel coordinates from scaled coordinates.
+ *
+ * @sig Int -> Position -> Position
+ */
+export const scalePositionBy =
+  I.curry(function scalePositionBy (r, [x, y]) {
+    return [Math.trunc(x / r), Math.trunc(y / r)];
+  });
 
 // #region Colors
 const isColor = x => (x instanceof C.color);

@@ -3,7 +3,8 @@ module.exports = {
     "**/*.{js,jsx}",
     "!**/node_modules/**",
     "!**/vendor/**",
-    "!**/coverage/**"
+    "!**/coverage/**",
+    "!**/jest.*"
   ],
   "testEnvironment": "node",
 };
