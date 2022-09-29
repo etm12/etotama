@@ -13,7 +13,7 @@
     "ci:test:cov": "npm run test:cov && codecov"
   },
   "dependencies": {
-    "d3-color": "^1.2.3",
+    "d3-color": "^3.1.0",
     "infestines": "^0.4.11",
     "karet.lift": "^2.1.0",
     "karet.util": "^0.19.1",
